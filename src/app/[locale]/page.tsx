@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Briefcase, Car, Castle, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Snowflake, Sun, Train, Utensils, WashingMachine, Waves, Wifi, type LucideIcon } from "lucide-react";
+import { Briefcase, Car, Castle, CircleCheck, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Snowflake, Sun, Train, Utensils, WashingMachine, Waves, Wifi, type LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -79,6 +79,14 @@ export default async function LocalePage({ params }: Props) {
     [Waves, t.longStay.benefitBeach],
     [ShoppingBag, t.longStay.benefitNearby]
   ];
+  const nordicBenefits: Array<[LucideIcon, string]> = [
+    [Sun, t.nordic.benefitSun],
+    [Snowflake, t.nordic.benefitWinter],
+    [Waves, t.nordic.benefitBeach],
+    [MapPinned, t.nordic.benefitWalk],
+    [Plane, t.nordic.benefitAirport]
+  ];
+  const hostBenefits = [t.host.benefitCare, t.host.benefitWhatsapp, t.host.benefitTips];
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
@@ -207,7 +215,7 @@ export default async function LocalePage({ params }: Props) {
               </div>
             </div>
             <div>
-              <LocationMap ariaLabel={t.location.map} openLabel={t.location.openMap} />
+              <LocationMap ariaLabel={t.location.map} openLabel={t.location.openMap} note={t.location.exactAfterBooking} />
               <h3>{t.location.airportTitle}</h3>
               <p>{t.location.airportText}</p>
               <div className="arrival-grid">
@@ -251,9 +259,16 @@ export default async function LocalePage({ params }: Props) {
               <p className="lead">{t.nordic.text}</p>
               <p>{t.nordic.text2}</p>
             </div>
-            <div className="host-card nordic-card">
-              <strong>FI · SV · NO</strong>
-              <span>Fuengirola · Costa del Sol</span>
+            <div className="host-card info-card nordic-card">
+              <Sun aria-hidden="true" size={34} />
+              <ul className="info-list">
+                {nordicBenefits.map(([Icon, label]) => (
+                  <li key={label}>
+                    <Icon aria-hidden="true" size={18} />
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
@@ -345,9 +360,21 @@ export default async function LocalePage({ params }: Props) {
                 <WhatsAppButton locale={locale} label={t.common.whatsappHost} />
               </div>
             </div>
-            <div className="host-card">
+            <div className="host-card info-card host-profile-card">
+              <Smile aria-hidden="true" size={34} />
               <strong>Nieves</strong>
-              <span>{property.communicationLanguages.join(" · ")}</span>
+              <div className="host-languages" aria-label={t.host.languages}>
+                <span>🇪🇸 Español</span>
+                <span>🇬🇧 English</span>
+              </div>
+              <ul className="info-list">
+                {hostBenefits.map((label) => (
+                  <li key={label}>
+                    <CircleCheck aria-hidden="true" size={18} />
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>

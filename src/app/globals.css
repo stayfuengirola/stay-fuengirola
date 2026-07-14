@@ -118,8 +118,7 @@ img { max-width: 100%; display: block; }
 .leaflet-map { min-height: 360px; height: 360px; width: 100%; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #eef7f4; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
 .leaflet-container { font: inherit; }
 .map-link { display: inline-flex; margin-top: 10px; color: var(--blue); font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
-.stay-map-marker { display: grid; place-items: center; border-radius: 999px; background: rgba(255,255,255,.92); border: 2px solid var(--blue); box-shadow: 0 8px 20px rgba(4,78,99,.28); }
-.stay-map-marker span { width: 12px; height: 12px; display: block; border-radius: 999px; background: var(--blue); }
+.map-note { margin: 8px 0 0; color: var(--muted); font-size: .92rem; }
 .arrival-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
 .arrival-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
 .arrival-card svg { color: var(--blue); margin-bottom: 8px; }
@@ -135,6 +134,13 @@ img { max-width: 100%; display: block; }
 .host-section { background: #f7eedf; }
 .host-card { min-height: 320px; display: grid; place-items: center; align-content: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); }
 .host-card strong { font-family: Georgia, "Times New Roman", serif; color: var(--blue-deep); font-size: clamp(2.4rem, 6vw, 4.5rem); }
+.info-card { padding: 28px; gap: 16px; text-align: left; }
+.info-card > svg { color: var(--blue); }
+.info-card strong { font-size: clamp(1.9rem, 4vw, 3rem); text-align: center; }
+.info-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; width: min(100%, 390px); }
+.info-list li { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: center; color: #405157; }
+.info-list svg { color: var(--blue); }
+.host-languages { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; color: var(--blue-deep); font-weight: 800; }
 .nordic-section { background: #fffaf0; }
 .nordic-card strong { font-size: clamp(1.7rem, 5vw, 3.2rem); }
 .explore-card { padding: 20px; }

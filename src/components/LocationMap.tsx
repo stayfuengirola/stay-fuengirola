@@ -5,14 +5,16 @@ import { useEffect, useRef } from "react";
 import { property } from "@/config/property";
 
 const apartmentLocation: LatLngExpression = [property.mapCoordinates.latitude, property.mapCoordinates.longitude];
-const openStreetMapUrl = `https://www.openstreetmap.org/#map=17/${property.mapCoordinates.latitude}/${property.mapCoordinates.longitude}`;
+const approximateRadius = 280;
+const openStreetMapUrl = `https://www.openstreetmap.org/#map=16/${property.mapCoordinates.latitude}/${property.mapCoordinates.longitude}`;
 
 type Props = {
   ariaLabel: string;
   openLabel: string;
+  note: string;
 };
 
-export function LocationMap({ ariaLabel, openLabel }: Props) {
+export function LocationMap({ ariaLabel, openLabel, note }: Props) {
   const mapElement = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<LeafletMap | null>(null);
 
@@ -35,17 +37,15 @@ export function LocationMap({ ariaLabel, openLabel }: Props) {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-      const markerIcon = L.divIcon({
-        className: "stay-map-marker",
-        html: "<span></span>",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-        popupAnchor: [0, -16]
-      });
-
-      L.marker(apartmentLocation, { icon: markerIcon })
+      L.circle(apartmentLocation, {
+        radius: approximateRadius,
+        color: "#0f7f9b",
+        weight: 2,
+        fillColor: "#0f7f9b",
+        fillOpacity: 0.18
+      })
         .addTo(map)
-        .bindPopup("<strong>Stay Fuengirola</strong><br />Apartamento Veramar<br />Fuengirola · Costa del Sol")
+        .bindPopup("<strong>📍 Zona del apartamento</strong><br />Fuengirola · Costa del Sol")
         .openPopup();
 
       mapInstance.current = map;
@@ -67,6 +67,7 @@ export function LocationMap({ ariaLabel, openLabel }: Props) {
       <a href={openStreetMapUrl} target="_blank" rel="noopener noreferrer" className="map-link">
         {openLabel}
       </a>
+      <p className="map-note">{note}</p>
     </div>
   );
 }
