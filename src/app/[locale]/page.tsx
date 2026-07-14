@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Briefcase, Car, Coffee, Home, MapPinned, Palmtree, Plane, Sun, Train, Waves } from "lucide-react";
+import { Briefcase, Car, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Sun, Train, Waves, type LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -58,13 +58,20 @@ export default async function LocalePage({ params }: Props) {
       .filter((item) => item.altKey)
       .map((item) => [item.altKey!, t.gallery[item.altKey!.split(".")[1]] ?? item.fallbackAlt])
   );
+  const areaCards: { key: string; icon: LucideIcon; title: string; text: string }[] = [
+    { key: "beaches", icon: Waves, title: t.area.beachesTitle, text: t.area.beachesText },
+    { key: "shopping", icon: ShoppingBag, title: t.area.shoppingTitle, text: t.area.shoppingText },
+    { key: "transport", icon: Train, title: t.area.transportTitle, text: t.area.transportText },
+    { key: "leisure", icon: Smile, title: t.area.leisureTitle, text: t.area.leisureText },
+    { key: "airport", icon: Plane, title: t.area.airportTitle, text: t.area.airportText }
+  ];
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     name: property.name,
     description: t.meta.description,
     telephone: property.whatsappPhone,
-    address: { "@type": "PostalAddress", streetAddress: property.publicArea, addressLocality: "Fuengirola", addressRegion: "Málaga", addressCountry: "ES" },
+    address: { "@type": "PostalAddress", addressLocality: "Fuengirola", addressRegion: "Málaga", addressCountry: "ES" },
     url: `${siteUrl}/${locale}`,
     image: galleryImages.map((item) => `${siteUrl}${item.src}`),
     amenityFeature: services.map((service) => ({ "@type": "LocationFeatureSpecification", name: t.services[service.key] }))
@@ -72,7 +79,7 @@ export default async function LocalePage({ params }: Props) {
 
   return (
     <div className="shell">
-      <Header locale={locale} nav={t.nav} bookingLabel={t.common.booking} menuLabel={t.common.menu} />
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
       <main>
         <section className="hero">
           <Image className="hero-img image-cover" src="/images/living-room.webp" alt={t.gallery.living} fill priority sizes="100vw" />
@@ -171,7 +178,7 @@ export default async function LocalePage({ params }: Props) {
             <div>
               <h2 className="section-title">{t.location.title}</h2>
               <p className="lead">{t.location.text}</p>
-              <p className="small location-zone">{t.location.zoneLabel}: {property.publicArea}</p>
+              <p className="small location-note">{t.location.note}</p>
               <div className="distances">
                 {distances.map((item) => (
                   <div className="distance" key={item.key}>
@@ -206,16 +213,9 @@ export default async function LocalePage({ params }: Props) {
           <div className="container">
             <h2 className="section-title">{t.area.title}</h2>
             <div className="area-grid">
-              {[
-                ["beaches", "/images/fuengirola-beach.webp", t.area.beachesTitle, t.area.beachesText],
-                ["restaurants", "/images/kitchen.webp", t.area.restaurantsTitle, t.area.restaurantsText],
-                ["mijas", "/images/mijas-pueblo.webp", t.area.mijasTitle, t.area.mijasText],
-                ["malaga", "/images/terrace.webp", t.area.malagaTitle, t.area.malagaText]
-              ].map(([key, src, title, text]) => (
+              {areaCards.map(({ key, icon: Icon, title, text }) => (
                 <article className="area-card" key={key}>
-                  <div className="card-media">
-                    <Image src={src} alt={title} fill sizes="(max-width: 900px) 100vw, 25vw" className="image-cover" />
-                  </div>
+                  <Icon aria-hidden="true" size={26} />
                   <div>
                     <h3>{title}</h3>
                     <p>{text}</p>
@@ -305,7 +305,6 @@ export default async function LocalePage({ params }: Props) {
                 </article>
               ))}
             </div>
-            <p style={{ marginTop: 24 }}><BookingButton label={t.common.booking} /></p>
           </div>
         </section>
 
@@ -318,7 +317,6 @@ export default async function LocalePage({ params }: Props) {
               <p className="small">{t.host.languages}</p>
               <div className="cta-row">
                 <WhatsAppButton locale={locale} label={t.common.whatsappHost} />
-                <BookingButton label={t.common.booking} className="cta secondary" />
               </div>
             </div>
             <div className="host-card">
@@ -386,9 +384,6 @@ export default async function LocalePage({ params }: Props) {
           </div>
         </div>
       </footer>
-      <div className="mobile-sticky">
-        <BookingButton label={t.common.booking} />
-      </div>
       <WhatsAppButton locale={locale} label={t.common.whatsapp} className="whatsapp-float" />
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

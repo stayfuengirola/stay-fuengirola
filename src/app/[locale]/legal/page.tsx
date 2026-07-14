@@ -26,7 +26,7 @@ export default async function LegalPage({ params }: Props) {
   const t = getDictionary(locale);
   return (
     <div className="shell">
-      <Header locale={locale} nav={t.nav} bookingLabel={t.common.booking} menuLabel={t.common.menu} />
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
       <main className="section">
         <div className="container">
           <h1 className="section-title" id="legal">{t.legal.title}</h1>

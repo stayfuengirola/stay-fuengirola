@@ -2,9 +2,10 @@
 
 import type { LatLngExpression, Map as LeafletMap } from "leaflet";
 import { useEffect, useRef } from "react";
+import { property } from "@/config/property";
 
-const approximateLocation: LatLngExpression = [36.5357, -4.6266];
-const openStreetMapUrl = "https://www.openstreetmap.org/search?query=Calle%20Burgos%2C%20Fuengirola%2C%20Malaga%2C%20Spain";
+const apartmentLocation: LatLngExpression = [property.mapCoordinates.latitude, property.mapCoordinates.longitude];
+const openStreetMapUrl = `https://www.openstreetmap.org/#map=17/${property.mapCoordinates.latitude}/${property.mapCoordinates.longitude}`;
 
 type Props = {
   ariaLabel: string;
@@ -25,7 +26,7 @@ export function LocationMap({ ariaLabel, openLabel }: Props) {
       if (!active || !mapElement.current || mapInstance.current) return;
 
       const map = L.map(mapElement.current, {
-        center: approximateLocation,
+        center: apartmentLocation,
         zoom: 15,
         scrollWheelZoom: false
       });
@@ -42,7 +43,7 @@ export function LocationMap({ ariaLabel, openLabel }: Props) {
         popupAnchor: [0, -16]
       });
 
-      L.marker(approximateLocation, { icon: markerIcon })
+      L.marker(apartmentLocation, { icon: markerIcon })
         .addTo(map)
         .bindPopup("<strong>Stay Fuengirola</strong><br />Apartamento Veramar<br />Fuengirola · Costa del Sol")
         .openPopup();

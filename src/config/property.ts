@@ -5,8 +5,11 @@ export const property = {
   name: "Apartamento Veramar en Fuengirola",
   shortName: "Stay Fuengirola",
   location: "Fuengirola, Málaga, España",
-  publicArea: "Calle Burgos, Fuengirola",
   regionLabel: "Fuengirola · Costa del Sol",
+  mapCoordinates: {
+    latitude: 36.5357,
+    longitude: -4.6266
+  },
   type: "Apartamento o estudio privado completo",
   size: "35 m²",
   guests: 4,

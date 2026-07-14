@@ -2,7 +2,6 @@
 
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { BookingButton } from "@/components/BookingButton";
 import { LanguageSelect } from "@/components/LanguageSelect";
 import { property } from "@/config/property";
 import { Locale } from "@/i18n/locales";
@@ -10,11 +9,10 @@ import { Locale } from "@/i18n/locales";
 type Props = {
   locale: Locale;
   nav: Record<string, string>;
-  bookingLabel: string;
   menuLabel: string;
 };
 
-export function Header({ locale, nav, bookingLabel, menuLabel }: Props) {
+export function Header({ locale, nav, menuLabel }: Props) {
   const [open, setOpen] = useState(false);
   const links = [
     ["#apartment", nav.apartment],
@@ -40,7 +38,6 @@ export function Header({ locale, nav, bookingLabel, menuLabel }: Props) {
         </nav>
         <div className="header-actions">
           <LanguageSelect locale={locale} />
-          <BookingButton label={bookingLabel} />
           <button className="hamburger" aria-label={menuLabel} aria-expanded={open} onClick={() => setOpen((value) => !value)}>
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
@@ -53,7 +50,6 @@ export function Header({ locale, nav, bookingLabel, menuLabel }: Props) {
               {label}
             </a>
           ))}
-          <BookingButton label={bookingLabel} />
         </nav>
       ) : null}
     </header>
