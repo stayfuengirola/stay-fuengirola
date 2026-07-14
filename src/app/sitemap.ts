@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/locales";
-import { siteUrl } from "@/lib/urls";
+import { alternateLanguages, siteUrl } from "@/lib/urls";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return locales.flatMap((locale) => [
@@ -8,13 +8,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/${locale}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
-      priority: 1
+      priority: 1,
+      alternates: { languages: alternateLanguages() }
     },
     {
       url: `${siteUrl}/${locale}/legal`,
       lastModified: new Date(),
       changeFrequency: "yearly" as const,
-      priority: 0.3
+      priority: 0.2,
+      alternates: { languages: alternateLanguages("/legal") }
     }
   ]);
 }

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
 import { property } from "@/config/property";
+import { seoByLocale } from "@/config/seo";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
+import { alternateLanguages, localizedPath, siteUrl } from "@/lib/urls";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -15,8 +17,27 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   if (!isLocale(locale)) return {};
-  const t = getDictionary(locale);
-  return { title: `${t.legal.title} | ${property.name}`, description: t.legal.text };
+  const seo = seoByLocale[locale];
+  const url = `${siteUrl}${localizedPath(locale, "/legal")}`;
+  return {
+    title: seo.legalTitle,
+    description: seo.legalDescription,
+    alternates: { canonical: url, languages: alternateLanguages("/legal") },
+    robots: { index: false, follow: true },
+    openGraph: {
+      title: seo.legalTitle,
+      description: seo.legalDescription,
+      url,
+      siteName: property.brandName,
+      locale,
+      type: "website"
+    },
+    twitter: {
+      card: "summary",
+      title: seo.legalTitle,
+      description: seo.legalDescription
+    }
+  };
 }
 
 export default async function LegalPage({ params }: Props) {

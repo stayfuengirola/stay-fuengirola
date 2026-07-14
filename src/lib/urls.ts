@@ -7,5 +7,8 @@ export function localizedPath(locale: Locale, hash = "") {
 }
 
 export function alternateLanguages(hash = "") {
-  return Object.fromEntries(locales.map((locale) => [locale, `${siteUrl}${localizedPath(locale, hash)}`]));
+  return {
+    ...Object.fromEntries(locales.map((locale) => [locale, `${siteUrl}${localizedPath(locale, hash)}`])),
+    "x-default": `${siteUrl}${localizedPath("en", hash)}`
+  };
 }

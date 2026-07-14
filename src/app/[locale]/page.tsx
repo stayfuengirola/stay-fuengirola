@@ -8,9 +8,11 @@ import { Gallery } from "@/components/Gallery";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { CookieConsent } from "@/components/CookieConsent";
 import { LocationMap } from "@/components/LocationMap";
+import { bookingUrl } from "@/config/booking";
 import { distances } from "@/config/distances";
 import { property } from "@/config/property";
 import { reviews, reviewScores } from "@/config/reviews";
+import { seoByLocale, seoKeywords } from "@/config/seo";
 import { services } from "@/config/services";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, localeLabels, locales } from "@/i18n/locales";
@@ -29,20 +31,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isLocale(rawLocale)) return {};
   const locale = rawLocale;
   const dictionary = getDictionary(locale);
+  const seo = seoByLocale[locale];
   const url = `${siteUrl}/${locale}`;
+  const ogImage = { url: "/images/completo.webp", width: 1600, height: 1067, alt: dictionary.gallery.panoramic };
 
   return {
-    title: dictionary.meta.title,
-    description: dictionary.meta.description,
+    title: seo.title,
+    description: seo.description,
+    keywords: seoKeywords,
     alternates: { canonical: url, languages: alternateLanguages() },
     openGraph: {
-      title: dictionary.meta.title,
-      description: dictionary.meta.description,
+      title: seo.title,
+      description: seo.description,
       url,
       siteName: property.brandName,
       locale,
       type: "website",
-      images: [{ url: "/images/living-room.webp", width: 1400, height: 980, alt: dictionary.gallery.living }]
+      images: [ogImage]
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+      images: [ogImage.url]
     }
   };
 }
@@ -89,14 +100,25 @@ export default async function LocalePage({ params }: Props) {
   const hostBenefits = [t.host.benefitCare, t.host.benefitWhatsapp, t.host.benefitTips];
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
+    "@type": ["LodgingBusiness", "Apartment"],
     name: property.name,
-    description: t.meta.description,
+    alternateName: [property.brandName, property.featuredAccommodation],
+    description: seoByLocale[locale].description,
     telephone: property.whatsappPhone,
-    address: { "@type": "PostalAddress", addressLocality: "Fuengirola", addressRegion: "Málaga", addressCountry: "ES" },
+    address: { "@type": "PostalAddress", addressLocality: "Fuengirola", addressRegion: "Malaga", addressCountry: "ES" },
+    geo: { "@type": "GeoCoordinates", latitude: property.mapCoordinates.latitude, longitude: property.mapCoordinates.longitude },
     url: `${siteUrl}/${locale}`,
     image: galleryImages.map((item) => `${siteUrl}${item.src}`),
-    amenityFeature: services.map((service) => ({ "@type": "LocationFeatureSpecification", name: t.services[service.key] }))
+    amenityFeature: services.map((service) => ({ "@type": "LocationFeatureSpecification", name: t.services[service.key], value: true })),
+    numberOfRooms: property.beds,
+    maximumAttendeeCapacity: property.guests,
+    floorSize: { "@type": "QuantitativeValue", value: 35, unitCode: "MTK" },
+    containsPlace: {
+      "@type": "Accommodation",
+      name: property.featuredAccommodation,
+      occupancy: { "@type": "QuantitativeValue", maxValue: property.guests }
+    },
+    sameAs: [bookingUrl]
   };
 
   return (
