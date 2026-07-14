@@ -1,20 +1,51 @@
 import { NextRequest, NextResponse } from "next/server";
-import { defaultLocale, isLocale } from "@/i18n/locales";
+
+const locales = ["es", "en", "fi", "sv", "no"] as const;
+const defaultLocale = "en";
+const localeAliases: Record<string, (typeof locales)[number]> = {
+  es: "es",
+  en: "en",
+  fi: "fi",
+  sv: "sv",
+  no: "no",
+  nb: "no",
+  nn: "no"
+};
+
+function isLocale(value: string): value is (typeof locales)[number] {
+  return (locales as readonly string[]).includes(value);
+}
+
+function detectLocale(acceptLanguage: string) {
+  for (const language of acceptLanguage.split(",")) {
+    const code = language.trim().split(";")[0]?.split("-")[0]?.toLowerCase();
+    if (code && localeAliases[code]) return localeAliases[code];
+  }
+
+  return defaultLocale;
+}
 
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname !== "/") {
+  const { pathname } = request.nextUrl;
+
+  if (pathname === "/") {
+    const preferred = detectLocale(request.headers.get("accept-language") ?? "");
+    return NextResponse.redirect(new URL(`/${preferred}`, request.url));
+  }
+
+  const firstSegment = pathname.split("/")[1];
+
+  if (firstSegment && !isLocale(firstSegment)) {
+    return NextResponse.redirect(new URL(`/${defaultLocale}`, request.url));
+  }
+
+  if (firstSegment && isLocale(firstSegment)) {
     return NextResponse.next();
   }
 
-  const acceptLanguage = request.headers.get("accept-language") ?? "";
-  const preferred = acceptLanguage
-    .split(",")
-    .map((part) => part.trim().split(";")[0]?.slice(0, 2).toLowerCase())
-    .find((part) => part && isLocale(part));
-
-  return NextResponse.redirect(new URL(`/${preferred ?? defaultLocale}`, request.url));
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: "/:path*"
+  matcher: ["/((?!api|_next/static|_next/image|images|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)"]
 };
