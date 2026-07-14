@@ -1,6 +1,6 @@
 import { Locale, locales } from "@/i18n/locales";
 
-export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com";
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://stayfuengirola.com";
 
 export function localizedPath(locale: Locale, hash = "") {
   return `/${locale}${hash}`;

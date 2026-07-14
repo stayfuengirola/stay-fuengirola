@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com")
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://stayfuengirola.com")
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
