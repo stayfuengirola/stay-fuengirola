@@ -170,6 +170,14 @@ export default async function LocalePage({ params }: Props) {
           </div>
         </section>
 
+        <section className="image-break" aria-label={t.gallery.panoramic}>
+          <div className="container">
+            <div className="support-photo support-photo-wide">
+              <Image src="/images/completo.webp" alt={t.gallery.panoramic} fill sizes="(max-width: 1120px) calc(100vw - 32px), 1120px" loading="lazy" className="image-cover" />
+            </div>
+          </div>
+        </section>
+
         <Gallery title={t.gallery.title} intro={t.gallery.intro} images={galleryImages} labels={galleryLabels} controls={{ close: t.common.close, next: t.common.next, previous: t.common.previous }} />
 
         <section className="section">
@@ -191,6 +199,14 @@ export default async function LocalePage({ params }: Props) {
               {[t.amenities.kitchen, t.amenities.bathroom, t.amenities.living, t.amenities.other].map((group, index) => (
                 <ul key={index}>{group.map((item) => <li key={item}>{item}</li>)}</ul>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="image-break" aria-label={t.gallery.sofa}>
+          <div className="container">
+            <div className="support-photo">
+              <Image src="/images/sofa.webp" alt={t.gallery.sofa} fill sizes="(max-width: 1120px) calc(100vw - 32px), 1120px" loading="lazy" className="image-cover" />
             </div>
           </div>
         </section>
@@ -231,6 +247,14 @@ export default async function LocalePage({ params }: Props) {
                   </article>
                 ))}
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="image-break" aria-label={t.gallery.living}>
+          <div className="container">
+            <div className="support-photo">
+              <Image src="/images/living-room.webp" alt={t.gallery.living} fill sizes="(max-width: 1120px) calc(100vw - 32px), 1120px" loading="lazy" className="image-cover" />
             </div>
           </div>
         </section>
@@ -320,6 +344,14 @@ export default async function LocalePage({ params }: Props) {
           </div>
         </section>
 
+        <section className="image-break" aria-label={t.gallery.dining}>
+          <div className="container">
+            <div className="support-photo">
+              <Image src="/images/terrace.webp" alt={t.gallery.dining} fill sizes="(max-width: 1120px) calc(100vw - 32px), 1120px" loading="lazy" className="image-cover" />
+            </div>
+          </div>
+        </section>
+
         <section className="section" id="reviews">
           <div className="container">
             <h2 className="section-title">{t.reviews.title}</h2>
@@ -345,6 +377,14 @@ export default async function LocalePage({ params }: Props) {
                   <p>{t.reviews[review.textKey]}</p>
                 </article>
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="image-break" aria-label={t.gallery.sofa}>
+          <div className="container">
+            <div className="support-photo support-photo-cosy">
+              <Image src="/images/sofa.webp" alt={t.gallery.sofa} fill sizes="(max-width: 1120px) calc(100vw - 32px), 1120px" loading="lazy" className="image-cover" />
             </div>
           </div>
         </section>
