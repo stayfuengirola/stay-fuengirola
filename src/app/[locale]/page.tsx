@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Briefcase, Car, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Sun, Train, Waves, type LucideIcon } from "lucide-react";
+import { Briefcase, Car, Castle, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Sun, Train, Waves, type LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -65,6 +65,12 @@ export default async function LocalePage({ params }: Props) {
     { key: "leisure", icon: Smile, title: t.area.leisureTitle, text: t.area.leisureText },
     { key: "airport", icon: Plane, title: t.area.airportTitle, text: t.area.airportText }
   ];
+  const distanceIcons: Record<string, LucideIcon> = {
+    beach: Waves,
+    shopping: ShoppingBag,
+    castle: Castle,
+    train: Train
+  };
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
@@ -180,12 +186,16 @@ export default async function LocalePage({ params }: Props) {
               <p className="lead">{t.location.text}</p>
               <p className="small location-note">{t.location.note}</p>
               <div className="distances">
-                {distances.map((item) => (
+                {distances.map((item) => {
+                  const Icon = distanceIcons[item.icon];
+                  return (
                   <div className="distance" key={item.key}>
-                    <strong>{item.value}</strong>
+                    <Icon aria-hidden="true" size={22} />
+                    <strong>{t.location[item.timeKey]}</strong>
                     <div>{t.location[item.key]}</div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
             <div>

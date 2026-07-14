@@ -111,6 +111,7 @@ img { max-width: 100%; display: block; }
 .location-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: stretch; }
 .distances { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
 .distance { padding: 16px; }
+.distance svg { color: var(--blue); margin-bottom: 8px; }
 .distance strong { color: var(--blue-deep); }
 .location-note { margin-top: 14px; font-weight: 700; color: var(--blue-deep); }
 .map-panel { margin-bottom: 22px; }
