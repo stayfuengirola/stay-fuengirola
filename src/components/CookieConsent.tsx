@@ -1,18 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-const key = "fuengirola-cookie-consent";
+import { cookieConsentStorageKey } from "@/config/analytics";
 
 export function CookieConsent({ title, text, accept, reject }: { title: string; text: string; accept: string; reject: string }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setVisible(!localStorage.getItem(key));
+    setVisible(!localStorage.getItem(cookieConsentStorageKey));
   }, []);
 
   function choose(value: string) {
-    localStorage.setItem(key, value);
+    localStorage.setItem(cookieConsentStorageKey, value);
+    window.gtag?.("consent", "update", {
+      analytics_storage: value === "accepted" ? "granted" : "denied"
+    });
     setVisible(false);
   }
 

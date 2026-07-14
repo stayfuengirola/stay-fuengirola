@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { isLocale, Locale, locales } from "@/i18n/locales";
 
 export function generateStaticParams() {
@@ -17,7 +18,10 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <GoogleAnalytics />
+      </body>
     </html>
   );
 }

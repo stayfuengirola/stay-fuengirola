@@ -245,7 +245,7 @@ const en: Dictionary = {
   },
   cookies: {
     title: "Cookie preferences",
-    text: "This website only prepares a consent layer for future analytics. No external analytics services are active yet.",
+    text: "We use Google Analytics to understand visits and improve the website. You can accept or reject analytics cookies.",
     accept: "Accept",
     reject: "Reject"
   },
@@ -253,7 +253,7 @@ const en: Dictionary = {
     title: "Legal information",
     text: "This website provides information about Apartamento Veramar Fuengirola. Availability, bookings and payments are managed independently by Booking.com.",
     privacy: "The WhatsApp button opens an external service. The user voluntarily decides whether to start the conversation. This website does not store the message sent through WhatsApp. Booking.com independently manages reservations and payments.",
-    cookies: "No external analytics or advertising cookies are currently active. This notice is prepared for future consent management."
+    cookies: "This website uses Google Analytics to measure visits and improve content. Analytics storage is controlled by the cookie preference shown on the website."
   }
 };
 
@@ -288,8 +288,8 @@ const es: Dictionary = {
   faq: { ...en.faq, title: "Preguntas antes de reservar", checkinQ: "¿A qué hora se puede entrar?", checkinA: "De 15:00 a 18:00. Es necesario comunicar con antelación la hora aproximada de llegada.", checkoutQ: "¿A qué hora debe dejarse el apartamento?", checkoutA: "Entre las 10:00 y las 11:00.", beachQ: "¿A qué distancia está la playa?", beachA: "La Playa de Fuengirola se encuentra aproximadamente a 600 metros.", poolQ: "¿La piscina abre todo el año?", poolA: "No. Es una piscina comunitaria de temporada que suele abrir aproximadamente del 20 de junio al 15 de septiembre.", parkingQ: "¿Hay aparcamiento?", parkingA: "Puede haber plazas comunitarias sujetas a disponibilidad, pero no se garantiza una plaza. Se recomienda consultar antes de la llegada.", petsQ: "¿Se admiten mascotas?", petsA: "No se admiten mascotas.", smokingQ: "¿Se puede fumar?", smokingA: "No. Está prohibido fumar dentro del alojamiento.", childrenQ: "¿Se admiten niños?", childrenA: "Sí, pueden alojarse niños de cualquier edad. No hay cunas ni camas supletorias.", capacityQ: "¿Cuántas personas pueden alojarse?", capacityA: "Hasta cuatro personas, utilizando una cama de matrimonio y un sofá cama doble.", bookingQ: "¿Cómo puedo reservar?", bookingA: "La disponibilidad, los precios y la reserva se gestionan mediante Booking.com.", questionQ: "¿Puedo hacer una consulta antes de reservar?", questionA: "Sí. Puedes contactar con Nieves por WhatsApp.", airportQ: "¿Cómo llegar desde el aeropuerto?", airportA: "El Aeropuerto de Málaga se encuentra aproximadamente a 25 kilómetros. Se puede llegar en coche, taxi o transporte público, combinando el tren de cercanías con un pequeño desplazamiento hasta el apartamento.", winterQ: "¿Es adecuado para estancias de invierno?", winterA: "Sí. El alojamiento dispone de calefacción, aire acondicionado, cocina equipada, lavadora y Wi-Fi, por lo que puede resultar cómodo para estancias fuera de temporada. La piscina no está disponible durante el invierno." },
   closing: { title: "¿Listo para disfrutar Fuengirola cerca de la playa?", text: "Comprueba fechas, precios y condiciones de reserva de forma segura en Booking.com." },
   footer: { legal: "Aviso legal", privacy: "Privacidad", cookies: "Cookies", current: "Actualmente presentamos Apartamento Veramar en Fuengirola.", disclaimer: "Esta es la web informativa del alojamiento Apartamento Veramar Fuengirola. La disponibilidad, las reservas y los pagos se gestionan mediante Booking.com, una plataforma externa e independiente." },
-  cookies: { title: "Preferencias de cookies", text: "Esta web solo deja preparado el consentimiento para futuras analíticas. Todavía no hay servicios externos activos.", accept: "Aceptar", reject: "Rechazar" },
-  legal: { title: "Información legal", text: "Esta web ofrece información sobre Apartamento Veramar Fuengirola. La disponibilidad, las reservas y los pagos se gestionan de forma independiente mediante Booking.com.", privacy: "El botón de WhatsApp abre un servicio externo. El usuario decide voluntariamente iniciar la conversación. Esta web no almacena el mensaje enviado mediante WhatsApp. Booking.com gestiona de forma independiente la reserva y los pagos.", cookies: "Actualmente no hay cookies externas de analítica ni publicidad activas. Este aviso queda preparado para una futura gestión del consentimiento." }
+  cookies: { title: "Preferencias de cookies", text: "Utilizamos Google Analytics para entender las visitas y mejorar la web. Puedes aceptar o rechazar las cookies de analítica.", accept: "Aceptar", reject: "Rechazar" },
+  legal: { title: "Información legal", text: "Esta web ofrece información sobre Apartamento Veramar Fuengirola. La disponibilidad, las reservas y los pagos se gestionan de forma independiente mediante Booking.com.", privacy: "El botón de WhatsApp abre un servicio externo. El usuario decide voluntariamente iniciar la conversación. Esta web no almacena el mensaje enviado mediante WhatsApp. Booking.com gestiona de forma independiente la reserva y los pagos.", cookies: "Esta web utiliza Google Analytics para medir visitas y mejorar el contenido. El almacenamiento de analítica se controla mediante las preferencias de cookies mostradas en la web." }
 };
 
 const fi: Dictionary = {
@@ -314,8 +314,8 @@ const fi: Dictionary = {
   rules: { title: "Säännöt ja hyödylliset tiedot", checkin: "Sisäänkirjautuminen: 15.00-18.00. Arvioitu saapumisaika on ilmoitettava etukäteen.", checkout: "Uloskirjautuminen: 10.00-11.00.", rules: "Tupakointi on kielletty. Juhlat ja tapahtumat eivät ole sallittuja. Lemmikit eivät ole sallittuja. Lapset ovat tervetulleita kaikenikäisinä; vauvansänkyjä tai lisävuoteita ei ole. Alle 18-vuotiaiden tulee majoittua vanhemman tai laillisen huoltajan kanssa.", damages: "Vieraat vastaavat oleskelun aikana aiheuttamistaan vahingoista Booking.com-varauksen ehtojen mukaisesti.", cancellation: "Peruutus-, ennakkomaksu- ja maksuehdot voivat vaihdella päivämäärien ja valitun hinnan mukaan. Tarkista tarkat ehdot Booking.comissa varauksen yhteydessä.", pool: "Majoituksessa on kausiluonteinen yhteinen ulkouima-allas, joka sopii kaikenikäisille. Se on yleensä avoinna noin 20.6.-15.9., mutta päivämäärät voivat vaihdella taloyhtiön mukaan.", parking: "Rakennuksessa voi olla yhteisiä pysäköintipaikkoja saatavuuden mukaan. Paikkaa ei voida taata, erityisesti sesonkiaikana. Kysy ennen saapumista, jos tarvitset lisätietoja." },
   faq: { ...en.faq, title: "Kysymyksiä ennen varausta", checkinQ: "Mihin aikaan voi kirjautua sisään?", checkinA: "Kello 15.00-18.00. Arvioitu saapumisaika tulee ilmoittaa etukäteen.", checkoutQ: "Mihin aikaan asunto tulee luovuttaa?", checkoutA: "Kello 10.00-11.00.", beachQ: "Kuinka kaukana ranta on?", beachA: "Fuengirolan ranta on noin 600 metrin päässä.", poolQ: "Onko uima-allas avoinna ympäri vuoden?", poolA: "Ei. Se on kausiluonteinen yhteinen allas, joka on yleensä avoinna noin 20.6.-15.9.", parkingQ: "Onko pysäköintiä?", parkingA: "Yhteisiä paikkoja voi olla saatavuuden mukaan, mutta paikkaa ei taata. Suosittelemme kysymään ennen saapumista.", petsQ: "Ovatko lemmikit sallittuja?", petsA: "Lemmikit eivät ole sallittuja.", smokingQ: "Saako tupakoida?", smokingA: "Ei. Tupakointi on kielletty majoitustilassa.", childrenQ: "Ovatko lapset sallittuja?", childrenA: "Kyllä, kaikenikäiset lapset voivat majoittua. Vauvansänkyjä tai lisävuoteita ei ole.", capacityQ: "Kuinka monta henkilöä voi majoittua?", capacityA: "Enintään neljä henkilöä, parivuoteessa ja parivuodesohvalla.", bookingQ: "Miten voin varata?", bookingA: "Saatavuus, hinnat ja varaus hoidetaan Booking.comin kautta.", questionQ: "Voinko kysyä ennen varausta?", questionA: "Kyllä. Voit ottaa yhteyttä Nieveseen WhatsAppissa.", airportQ: "Miten saapua lentokentältä?", airportA: "Malagan lentoasema on noin 25 km päässä. Perille pääsee autolla, taksilla tai julkisilla kulkuvälineillä.", winterQ: "Sopiiko asunto talvikauden oleskeluun?", winterA: "Kyllä. Majoituksessa on lämmitys, ilmastointi, varusteltu keittiö, pesukone ja Wi-Fi. Uima-allas ei ole käytettävissä talvella." },
   footer: { ...en.footer, legal: "Lakiteksti", privacy: "Tietosuoja", cookies: "Evästeet", current: "Esittelemme tällä hetkellä Apartamento Veramaria Fuengirolassa." },
-  cookies: { ...en.cookies, title: "Evästeasetukset", accept: "Hyväksy", reject: "Hylkää" },
-  legal: { ...en.legal, title: "Lakitiedot" }
+  cookies: { ...en.cookies, title: "Evästeasetukset", text: "Käytämme Google Analyticsia käyntien ymmärtämiseen ja sivuston parantamiseen. Voit hyväksyä tai hylätä analytiikkaevästeet.", accept: "Hyväksy", reject: "Hylkää" },
+  legal: { ...en.legal, title: "Lakitiedot", cookies: "Tämä verkkosivusto käyttää Google Analyticsia käyntien mittaamiseen ja sisällön parantamiseen. Analytiikan tallennusta hallitaan sivustolla näytettävien evästeasetusten kautta." }
 };
 
 const sv: Dictionary = {
@@ -340,8 +340,8 @@ const sv: Dictionary = {
   rules: { ...en.rules, title: "Regler och praktisk information", checkin: "Incheckning: 15.00-18.00. Gäster ska meddela ungefärlig ankomsttid i förväg.", checkout: "Utcheckning: 10.00-11.00." },
   faq: { ...en.faq, title: "Frågor före bokning", checkinQ: "När kan jag checka in?", checkoutQ: "När ska lägenheten lämnas?", questionQ: "Kan jag fråga något före bokning?" },
   footer: { ...en.footer, legal: "Juridisk information", privacy: "Integritet", cookies: "Cookies", current: "För närvarande presenterar vi Apartamento Veramar i Fuengirola." },
-  cookies: { ...en.cookies, title: "Cookieinställningar", accept: "Acceptera", reject: "Avvisa" },
-  legal: { ...en.legal, title: "Juridisk information" }
+  cookies: { ...en.cookies, title: "Cookieinställningar", text: "Vi använder Google Analytics för att förstå besök och förbättra webbplatsen. Du kan acceptera eller avvisa analyscookies.", accept: "Acceptera", reject: "Avvisa" },
+  legal: { ...en.legal, title: "Juridisk information", cookies: "Denna webbplats använder Google Analytics för att mäta besök och förbättra innehållet. Lagring för analys styrs via de cookieinställningar som visas på webbplatsen." }
 };
 
 const no: Dictionary = {
@@ -366,8 +366,8 @@ const no: Dictionary = {
   rules: { ...en.rules, title: "Regler og nyttig informasjon", checkin: "Innsjekking: 15.00-18.00. Gjester må oppgi omtrentlig ankomsttid på forhånd.", checkout: "Utsjekking: 10.00-11.00." },
   faq: { ...en.faq, title: "Spørsmål før booking", checkinQ: "Når kan jeg sjekke inn?", checkoutQ: "Når må leiligheten forlates?", questionQ: "Kan jeg stille et spørsmål før booking?" },
   footer: { ...en.footer, legal: "Juridisk informasjon", privacy: "Personvern", cookies: "Informasjonskapsler", current: "For øyeblikket presenterer vi Apartamento Veramar i Fuengirola." },
-  cookies: { ...en.cookies, title: "Innstillinger for informasjonskapsler", accept: "Godta", reject: "Avslå" },
-  legal: { ...en.legal, title: "Juridisk informasjon" }
+  cookies: { ...en.cookies, title: "Innstillinger for informasjonskapsler", text: "Vi bruker Google Analytics for å forstå besøk og forbedre nettsiden. Du kan godta eller avslå analyse-informasjonskapsler.", accept: "Godta", reject: "Avslå" },
+  legal: { ...en.legal, title: "Juridisk informasjon", cookies: "Dette nettstedet bruker Google Analytics for å måle besøk og forbedre innholdet. Lagring for analyse styres av innstillingene for informasjonskapsler som vises på nettstedet." }
 };
 
 export const dictionaries: Record<Locale, Dictionary> = { es, en, fi, sv, no };
