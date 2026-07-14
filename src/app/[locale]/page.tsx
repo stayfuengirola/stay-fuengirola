@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Briefcase, Car, Castle, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Sun, Train, Waves, type LucideIcon } from "lucide-react";
+import { Briefcase, Car, Castle, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Snowflake, Sun, Train, Utensils, WashingMachine, Waves, Wifi, type LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -71,6 +71,14 @@ export default async function LocalePage({ params }: Props) {
     castle: Castle,
     train: Train
   };
+  const longStayBenefits: Array<[LucideIcon, string]> = [
+    [Wifi, t.longStay.benefitWifi],
+    [Utensils, t.longStay.benefitKitchen],
+    [WashingMachine, t.longStay.benefitWasher],
+    [Snowflake, t.longStay.benefitClimate],
+    [Waves, t.longStay.benefitBeach],
+    [ShoppingBag, t.longStay.benefitNearby]
+  ];
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
@@ -284,7 +292,15 @@ export default async function LocalePage({ params }: Props) {
             </div>
             <div className="long-stay-card">
               <Briefcase aria-hidden="true" size={36} />
-              <strong>Oct · Nov · Dec · Jan · Feb · Mar</strong>
+              <strong>{t.longStay.cardTitle}</strong>
+              <ul className="long-stay-list">
+                {longStayBenefits.map(([Icon, label]) => (
+                  <li key={label}>
+                    <Icon aria-hidden="true" size={18} />
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
