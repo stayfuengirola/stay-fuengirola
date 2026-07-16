@@ -162,6 +162,148 @@ img { max-width: 100%; display: block; }
 .guide-card strong, .guide-detail-card strong { color: var(--green); font-size: .92rem; }
 .guide-detail { max-width: 840px; }
 .guide-detail-card { margin-top: 28px; padding: 32px; }
+.guide-article { max-width: 960px; }
+.guide-hero-card {
+  margin-top: 28px;
+  padding: clamp(30px, 5vw, 54px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.guide-hero-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: var(--sand-soft);
+  color: var(--blue);
+  margin-bottom: 18px;
+}
+.guide-kicker {
+  margin: 0 0 10px;
+  color: var(--green);
+  font-weight: 800;
+}
+.guide-hero-card h1 {
+  max-width: 780px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.15rem, 5vw, 4.1rem);
+  line-height: 1.03;
+  letter-spacing: 0;
+  color: var(--blue-deep);
+  margin: 0 0 18px;
+}
+.guide-hero-card p { max-width: 760px; margin: 0; color: var(--muted); font-size: 1.08rem; }
+.airport-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 28px 0 52px; }
+.airport-option {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(18,57,70,.05);
+  padding: 22px;
+  display: grid;
+  gap: 14px;
+}
+.airport-option.recommended { border-color: rgba(120,155,130,.55); background: #fbfefb; }
+.airport-option svg { color: var(--blue); }
+.airport-option h2 { margin: 0; color: var(--blue-deep); font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; }
+.airport-option dl { display: grid; gap: 10px; margin: 0; }
+.airport-option dl div { display: grid; grid-template-columns: 18px 1fr; column-gap: 8px; row-gap: 1px; }
+.airport-option dt { color: var(--muted); font-size: .82rem; }
+.airport-option dd { grid-column: 2; margin: 0; font-weight: 800; color: var(--ink); }
+.airport-option strong { color: var(--green); font-size: .92rem; }
+.guide-content-section {
+  padding: 34px 0;
+  border-top: 1px solid var(--line);
+}
+.guide-content-section h2,
+.guide-related h2,
+.guide-cta h2,
+.guide-recommendation h2 {
+  margin: 0 0 14px;
+  color: var(--blue-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+  line-height: 1.12;
+}
+.guide-content-section p { max-width: 760px; margin: 0 0 14px; color: #405157; font-size: 1.03rem; }
+.guide-map-block { margin: 8px 0 46px; }
+.guide-map-block iframe {
+  display: block;
+  width: 100%;
+  height: 430px;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  background: #eef7f4;
+}
+.guide-recommendation {
+  margin: 28px 0;
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 18px;
+  background: #eef7f4;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.guide-recommendation svg { color: var(--green); }
+.guide-recommendation p { margin: 0; color: #405157; }
+.guide-faq-list { display: grid; gap: 10px; margin-top: 18px; }
+.guide-faq-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(18,57,70,.05);
+  overflow: hidden;
+}
+.guide-faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-weight: 800;
+}
+.guide-faq-item summary::-webkit-details-marker { display: none; }
+.guide-faq-item summary svg { color: var(--blue); flex: 0 0 auto; }
+.guide-faq-item p { margin: 0; padding: 0 18px 18px 46px; color: var(--muted); }
+.guide-check-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; max-width: 780px; }
+.guide-check-list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; color: #405157; }
+.guide-check-list svg { color: var(--green); margin-top: 3px; }
+.guide-related { padding: 42px 0; border-top: 1px solid var(--line); }
+.guide-related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; }
+.guide-related-card {
+  min-height: 170px;
+  padding: 20px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(18,57,70,.05);
+}
+.guide-related-card svg { color: var(--blue); }
+.guide-related-card strong { color: var(--blue-deep); font-family: Georgia, "Times New Roman", serif; font-size: 1.18rem; }
+.guide-related-card span { color: var(--muted); font-size: .94rem; }
+.guide-cta {
+  padding: clamp(30px, 5vw, 46px);
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.guide-cta svg { color: var(--blue); }
+.guide-cta p { max-width: 620px; margin: 0; color: var(--muted); }
 .long-stay-section { background: #eef7f4; }
 .long-stay-card { min-height: 280px; display: grid; place-items: center; align-content: center; gap: 16px; padding: 24px; text-align: center; }
 .long-stay-card strong { color: var(--blue-deep); font-size: clamp(1.25rem, 2vw, 1.65rem); }
@@ -192,7 +334,7 @@ img { max-width: 100%; display: block; }
   .nav { display: none; }
   .hamburger { display: inline-grid; }
   .mobile-nav { position: fixed; top: 70px; left: 0; right: 0; background: #fffaf0; border-bottom: 1px solid var(--line); padding: 16px; display: grid; gap: 12px; }
-  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid { grid-template-columns: 1fr; }
+  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid, .airport-options, .guide-related-grid { grid-template-columns: 1fr; }
   .quick { transform: none; padding-top: 18px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .gallery-button:first-child { grid-column: span 2; min-height: 320px; }
@@ -220,6 +362,11 @@ img { max-width: 100%; display: block; }
   .gallery-button:first-child { grid-column: auto; }
   .image-break { padding-bottom: 56px; }
   .support-photo, .support-photo-wide, .support-photo-cosy { aspect-ratio: 4 / 3; }
+  .guide-hero-card { padding: 26px; }
+  .guide-map-block iframe { height: 320px; }
+  .guide-recommendation { grid-template-columns: 1fr; padding: 22px; }
+  .guide-faq-item p { padding-left: 18px; }
+  .airport-option { padding: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
