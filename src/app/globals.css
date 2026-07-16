@@ -151,6 +151,17 @@ img { max-width: 100%; display: block; }
 .explore-card h3 { margin: 12px 0 4px; color: var(--blue-deep); }
 .explore-card strong { color: var(--green); font-size: .92rem; }
 .explore-card p { color: var(--muted); }
+.guide-page { min-height: calc(100vh - 76px); }
+.guide-eyebrow { background: #fff; color: var(--blue-deep); border-color: var(--line); margin-bottom: 18px; }
+.guide-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+.guide-card, .guide-detail-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
+.guide-card { min-height: 220px; padding: 22px; display: grid; align-content: start; gap: 10px; }
+.guide-card svg, .guide-detail-card svg { color: var(--blue); }
+.guide-card h2 { margin: 4px 0 0; color: var(--blue-deep); font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; line-height: 1.15; }
+.guide-card p { margin: 0; color: var(--muted); }
+.guide-card strong, .guide-detail-card strong { color: var(--green); font-size: .92rem; }
+.guide-detail { max-width: 840px; }
+.guide-detail-card { margin-top: 28px; padding: 32px; }
 .long-stay-section { background: #eef7f4; }
 .long-stay-card { min-height: 280px; display: grid; place-items: center; align-content: center; gap: 16px; padding: 24px; text-align: center; }
 .long-stay-card strong { color: var(--blue-deep); font-size: clamp(1.25rem, 2vw, 1.65rem); }
@@ -181,7 +192,7 @@ img { max-width: 100%; display: block; }
   .nav { display: none; }
   .hamburger { display: inline-grid; }
   .mobile-nav { position: fixed; top: 70px; left: 0; right: 0; background: #fffaf0; border-bottom: 1px solid var(--line); padding: 16px; display: grid; gap: 12px; }
-  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid { grid-template-columns: 1fr; }
+  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid { grid-template-columns: 1fr; }
   .quick { transform: none; padding-top: 18px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .gallery-button:first-child { grid-column: span 2; min-height: 320px; }

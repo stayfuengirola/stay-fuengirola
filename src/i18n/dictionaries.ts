@@ -24,6 +24,7 @@ type Dictionary = {
   footer: Record<string, string>;
   cookies: Record<string, string>;
   legal: Record<string, string>;
+  guide: Record<string, string>;
 };
 
 const en: Dictionary = {
@@ -31,7 +32,7 @@ const en: Dictionary = {
     title: "Stay Fuengirola | Apartamento Veramar",
     description: "Holiday apartment in Fuengirola for winter holidays and long stays on the Costa del Sol, 600 m from the beach and an easy base for Marbella, Málaga and Mijas."
   },
-  nav: { apartment: "Apartment", gallery: "Gallery", location: "Location", reviews: "Reviews", faq: "Questions" },
+  nav: { apartment: "Apartment", gallery: "Gallery", location: "Location", reviews: "Reviews", faq: "Questions", guide: "Guide" },
   common: {
     booking: "Check availability on Booking",
     bookingLong: "Check availability and book on Booking.com",
@@ -281,6 +282,30 @@ const en: Dictionary = {
     text: "This website provides information about Apartamento Veramar Fuengirola. Availability, bookings and payments are managed independently by Booking.com.",
     privacy: "The WhatsApp button opens an external service. The user voluntarily decides whether to start the conversation. This website does not store the message sent through WhatsApp. Booking.com independently manages reservations and payments.",
     cookies: "This website uses Google Analytics to measure visits and improve content. Analytics storage is controlled by the cookie preference shown on the website."
+  },
+  guide: {
+    metaTitle: "Fuengirola Guide | Stay Fuengirola",
+    metaDescription: "Practical Fuengirola guide for guests: airport, beaches, supermarkets, restaurants, shopping, transport, excursions and rainy-day ideas.",
+    title: "Fuengirola Guide",
+    intro: "A practical guide for planning your stay in Fuengirola, with local information prepared for future updates.",
+    comingSoon: "Coming soon",
+    back: "Back to the guide",
+    airport: "How to arrive from the airport",
+    beaches: "Beaches",
+    supermarkets: "Supermarkets",
+    restaurants: "Restaurants",
+    shopping: "Shopping",
+    transport: "Transport",
+    excursions: "Excursions",
+    rain: "What to do when it rains",
+    airportText: "Connections from Malaga Airport to Fuengirola.",
+    beachesText: "Beaches and seaside walks close to the apartment.",
+    supermarketsText: "Nearby supermarkets and practical shopping.",
+    restaurantsText: "Future recommendations for places to eat in Fuengirola.",
+    shoppingText: "Miramar, local shops and useful services.",
+    transportText: "Train, taxi and ways to move around the Costa del Sol.",
+    excursionsText: "Easy day trips from Fuengirola.",
+    rainText: "Ideas for quieter or rainy days."
   }
 };
 
@@ -290,7 +315,7 @@ const es: Dictionary = {
     title: "Stay Fuengirola | Apartamento Veramar",
     description: "Apartamento en Fuengirola para vacaciones de invierno y estancias largas en la Costa del Sol, a 600 m de la playa y con fácil acceso a Marbella, Málaga y Mijas."
   },
-  nav: { apartment: "Apartamento", gallery: "Galería", location: "Ubicación", reviews: "Opiniones", faq: "Preguntas" },
+  nav: { apartment: "Apartamento", gallery: "Galería", location: "Ubicación", reviews: "Opiniones", faq: "Preguntas", guide: "Guía" },
   common: { ...en.common, booking: "Ver disponibilidad en Booking", bookingLong: "Ver disponibilidad y reservar en Booking.com", whatsapp: "Preguntar por WhatsApp", whatsappHost: "Preguntar a Nieves por WhatsApp", trust: "La disponibilidad, los precios y la reserva se consultan de forma segura en Booking.com.", close: "Cerrar", next: "Imagen siguiente", previous: "Imagen anterior", menu: "Abrir menú", size: "Superficie", guests: "Huéspedes", beach: "Playa", rating: "Valoración", language: "Idioma" },
   hero: { eyebrow: "Fuengirola · Costa del Sol", title: "Tu rincón de sol cerca de la playa", text: "Un apartamento luminoso y confortable para disfrutar del sol de invierno en Fuengirola, estancias largas y escapadas por Marbella y la Costa del Sol." },
   summary: { size: "35 m²", guests: "Hasta 4 huéspedes", beach: "Playa a 600 m", rating: "9,4 sobre 10" },
@@ -316,13 +341,14 @@ const es: Dictionary = {
   closing: { title: "¿Listo para disfrutar Fuengirola cerca de la playa?", text: "Comprueba fechas, precios y condiciones de reserva de forma segura en Booking.com." },
   footer: { legal: "Aviso legal", privacy: "Privacidad", cookies: "Cookies", current: "Actualmente presentamos Apartamento Veramar en Fuengirola.", disclaimer: "Esta es la web informativa del alojamiento Apartamento Veramar Fuengirola. La disponibilidad, las reservas y los pagos se gestionan mediante Booking.com, una plataforma externa e independiente." },
   cookies: { title: "Preferencias de cookies", text: "Utilizamos Google Analytics para entender las visitas y mejorar la web. Puedes aceptar o rechazar las cookies de analítica.", accept: "Aceptar", reject: "Rechazar" },
-  legal: { title: "Información legal", text: "Esta web ofrece información sobre Apartamento Veramar Fuengirola. La disponibilidad, las reservas y los pagos se gestionan de forma independiente mediante Booking.com.", privacy: "El botón de WhatsApp abre un servicio externo. El usuario decide voluntariamente iniciar la conversación. Esta web no almacena el mensaje enviado mediante WhatsApp. Booking.com gestiona de forma independiente la reserva y los pagos.", cookies: "Esta web utiliza Google Analytics para medir visitas y mejorar el contenido. El almacenamiento de analítica se controla mediante las preferencias de cookies mostradas en la web." }
+  legal: { title: "Información legal", text: "Esta web ofrece información sobre Apartamento Veramar Fuengirola. La disponibilidad, las reservas y los pagos se gestionan de forma independiente mediante Booking.com.", privacy: "El botón de WhatsApp abre un servicio externo. El usuario decide voluntariamente iniciar la conversación. Esta web no almacena el mensaje enviado mediante WhatsApp. Booking.com gestiona de forma independiente la reserva y los pagos.", cookies: "Esta web utiliza Google Analytics para medir visitas y mejorar el contenido. El almacenamiento de analítica se controla mediante las preferencias de cookies mostradas en la web." },
+  guide: { ...en.guide, metaTitle: "Guía de Fuengirola | Stay Fuengirola", metaDescription: "Guía práctica de Fuengirola para huéspedes: aeropuerto, playas, supermercados, restaurantes, compras, transporte, excursiones y planes de lluvia.", title: "Guía de Fuengirola", intro: "Una guía práctica para preparar tu estancia en Fuengirola, con información local lista para ampliarse poco a poco.", comingSoon: "Próximamente", back: "Volver a la guía", airport: "Cómo llegar desde el aeropuerto", beaches: "Playas", supermarkets: "Supermercados", restaurants: "Restaurantes", shopping: "Compras", transport: "Transporte", excursions: "Excursiones", rain: "Qué hacer cuando llueve", airportText: "Conexiones desde el Aeropuerto de Málaga hasta Fuengirola.", beachesText: "Playas y paseos junto al mar cerca del apartamento.", supermarketsText: "Supermercados cercanos y compras prácticas.", restaurantsText: "Futuras recomendaciones para comer en Fuengirola.", shoppingText: "Miramar, comercios locales y servicios útiles.", transportText: "Tren, taxi y formas de moverse por la Costa del Sol.", excursionsText: "Excursiones fáciles desde Fuengirola.", rainText: "Ideas para días tranquilos o con lluvia." }
 };
 
 const fi: Dictionary = {
   ...en,
   meta: { title: "Stay Fuengirola | Apartamento Veramar", description: "Loma-asunto Fuengirolassa talvilomille ja pidemmille oleskeluille Costa del Solilla, 600 m rannalta ja helppo tukikohta Marbellaan, Malagaan ja Mijasiin." },
-  nav: { apartment: "Asunto", gallery: "Galleria", location: "Sijainti", reviews: "Arviot", faq: "Kysymykset" },
+  nav: { apartment: "Asunto", gallery: "Galleria", location: "Sijainti", reviews: "Arviot", faq: "Kysymykset", guide: "Opas" },
   common: { ...en.common, booking: "Tarkista saatavuus Bookingissa", bookingLong: "Tarkista saatavuus ja varaa Booking.comissa", whatsapp: "Kysy WhatsAppissa", whatsappHost: "Kysy Nievesiltä WhatsAppissa", trust: "Saatavuus, hinnat ja varaus tarkistetaan turvallisesti Booking.comissa.", menu: "Avaa valikko", size: "Koko", guests: "Vieraat", beach: "Ranta", rating: "Arvio", language: "Kieli" },
   hero: { eyebrow: "Fuengirola · Costa del Sol", title: "Aurinkoinen paikkasi lähellä rantaa", text: "Valoisa ja mukava asunto talviaurinkoon, pidempiin oleskeluihin ja rauhallisiin päiviin Fuengirolassa, lähellä Marbellaa ja Costa del Solin kohteita." },
   summary: { size: "35 m²", guests: "Enintään 4 vierasta", beach: "Ranta 600 m", rating: "9,4 / 10" },
@@ -342,13 +368,14 @@ const fi: Dictionary = {
   faq: { ...en.faq, title: "Kysymyksiä ennen varausta", checkinQ: "Mihin aikaan voi kirjautua sisään?", checkinA: "Kello 15.00-21.00. Arvioitu saapumisaika tulee ilmoittaa etukäteen.", checkoutQ: "Mihin aikaan asunto tulee luovuttaa?", checkoutA: "Klo 12.00 mennessä.", beachQ: "Kuinka kaukana ranta on?", beachA: "Fuengirolan ranta on noin 600 metrin päässä.", poolQ: "Onko uima-allas avoinna ympäri vuoden?", poolA: "Ei. Se on kausiluonteinen yhteinen allas, joka on yleensä avoinna noin 20.6.-15.9.", parkingQ: "Onko pysäköintiä?", parkingA: "Yhteisiä paikkoja voi olla saatavuuden mukaan, mutta paikkaa ei taata. Suosittelemme kysymään ennen saapumista.", petsQ: "Ovatko lemmikit sallittuja?", petsA: "Lemmikit eivät ole sallittuja.", smokingQ: "Saako tupakoida?", smokingA: "Ei. Tupakointi on kielletty majoitustilassa.", childrenQ: "Ovatko lapset sallittuja?", childrenA: "Kyllä, kaikenikäiset lapset voivat majoittua. Vauvansänkyjä tai lisävuoteita ei ole.", capacityQ: "Kuinka monta henkilöä voi majoittua?", capacityA: "Enintään neljä henkilöä, parivuoteessa ja parivuodesohvalla.", bookingQ: "Miten voin varata?", bookingA: "Saatavuus, hinnat ja varaus hoidetaan Booking.comin kautta.", questionQ: "Voinko kysyä ennen varausta?", questionA: "Kyllä. Voit ottaa yhteyttä Nieveseen WhatsAppissa.", airportQ: "Miten saapua lentokentältä?", airportA: "Malagan lentoasema on noin 25 km päässä. Perille pääsee autolla, taksilla tai julkisilla kulkuvälineillä.", winterQ: "Sopiiko asunto talvikauden oleskeluun?", winterA: "Kyllä. Majoituksessa on lämmitys, ilmastointi, varusteltu keittiö, pesukone ja Wi-Fi. Uima-allas ei ole käytettävissä talvella." },
   footer: { ...en.footer, legal: "Lakiteksti", privacy: "Tietosuoja", cookies: "Evästeet", current: "Esittelemme tällä hetkellä Apartamento Veramaria Fuengirolassa." },
   cookies: { ...en.cookies, title: "Evästeasetukset", text: "Käytämme Google Analyticsia käyntien ymmärtämiseen ja sivuston parantamiseen. Voit hyväksyä tai hylätä analytiikkaevästeet.", accept: "Hyväksy", reject: "Hylkää" },
-  legal: { ...en.legal, title: "Lakitiedot", cookies: "Tämä verkkosivusto käyttää Google Analyticsia käyntien mittaamiseen ja sisällön parantamiseen. Analytiikan tallennusta hallitaan sivustolla näytettävien evästeasetusten kautta." }
+  legal: { ...en.legal, title: "Lakitiedot", cookies: "Tämä verkkosivusto käyttää Google Analyticsia käyntien mittaamiseen ja sisällön parantamiseen. Analytiikan tallennusta hallitaan sivustolla näytettävien evästeasetusten kautta." },
+  guide: { ...en.guide, metaTitle: "Fuengirola-opas | Stay Fuengirola", title: "Fuengirola-opas", intro: "Käytännön opas Fuengirolassa oleskelun suunnitteluun. Sisältöä täydennetään vähitellen.", comingSoon: "Tulossa pian", back: "Takaisin oppaaseen", airport: "Saapuminen lentoasemalta", beaches: "Rannat", supermarkets: "Supermarketit", restaurants: "Ravintolat", shopping: "Ostokset", transport: "Liikkuminen", excursions: "Retket", rain: "Mitä tehdä sateella" }
 };
 
 const sv: Dictionary = {
   ...en,
   meta: { title: "Stay Fuengirola | Apartamento Veramar", description: "Semesterlägenhet i Fuengirola för vintersemester och längre vistelser på Costa del Sol, 600 m från stranden och med enkel tillgång till Marbella, Málaga och Mijas." },
-  nav: { apartment: "Lägenhet", gallery: "Galleri", location: "Läge", reviews: "Omdömen", faq: "Frågor" },
+  nav: { apartment: "Lägenhet", gallery: "Galleri", location: "Läge", reviews: "Omdömen", faq: "Frågor", guide: "Guide" },
   common: { ...en.common, booking: "Se tillgänglighet på Booking", bookingLong: "Se tillgänglighet och boka på Booking.com", whatsapp: "Fråga via WhatsApp", whatsappHost: "Fråga Nieves via WhatsApp", trust: "Tillgänglighet, priser och bokning kontrolleras säkert på Booking.com.", menu: "Öppna meny", size: "Storlek", guests: "Gäster", beach: "Strand", rating: "Betyg", language: "Språk" },
   hero: { eyebrow: "Fuengirola · Costa del Sol", title: "Din soliga plats nära stranden", text: "En ljus och bekväm lägenhet för vintersol, längre vistelser och lugna dagar i Fuengirola, nära Marbella och resten av Costa del Sol." },
   summary: { size: "35 m²", guests: "Upp till 4 gäster", beach: "Strand 600 m", rating: "9,4 av 10" },
@@ -368,13 +395,14 @@ const sv: Dictionary = {
   faq: { ...en.faq, title: "Frågor före bokning", checkinQ: "När kan jag checka in?", checkinA: "Från 15.00 till 21.00. Du behöver meddela ungefärlig ankomsttid i förväg.", checkoutQ: "När ska lägenheten lämnas?", checkoutA: "Senast 12.00.", questionQ: "Kan jag fråga något före bokning?" },
   footer: { ...en.footer, legal: "Juridisk information", privacy: "Integritet", cookies: "Cookies", current: "För närvarande presenterar vi Apartamento Veramar i Fuengirola." },
   cookies: { ...en.cookies, title: "Cookieinställningar", text: "Vi använder Google Analytics för att förstå besök och förbättra webbplatsen. Du kan acceptera eller avvisa analyscookies.", accept: "Acceptera", reject: "Avvisa" },
-  legal: { ...en.legal, title: "Juridisk information", cookies: "Denna webbplats använder Google Analytics för att mäta besök och förbättra innehållet. Lagring för analys styrs via de cookieinställningar som visas på webbplatsen." }
+  legal: { ...en.legal, title: "Juridisk information", cookies: "Denna webbplats använder Google Analytics för att mäta besök och förbättra innehållet. Lagring för analys styrs via de cookieinställningar som visas på webbplatsen." },
+  guide: { ...en.guide, metaTitle: "Fuengirola-guide | Stay Fuengirola", title: "Fuengirola-guide", intro: "En praktisk guide för att planera din vistelse i Fuengirola. Innehållet fylls på steg för steg.", comingSoon: "Kommer snart", back: "Tillbaka till guiden", airport: "Från flygplatsen", beaches: "Stränder", supermarkets: "Mataffärer", restaurants: "Restauranger", shopping: "Shopping", transport: "Transport", excursions: "Utflykter", rain: "Vad man kan göra när det regnar" }
 };
 
 const no: Dictionary = {
   ...en,
   meta: { title: "Stay Fuengirola | Apartamento Veramar", description: "Ferieleilighet i Fuengirola for vinterferie og lengre opphold på Costa del Sol, 600 m fra stranden og med enkel tilgang til Marbella, Málaga og Mijas." },
-  nav: { apartment: "Leilighet", gallery: "Galleri", location: "Beliggenhet", reviews: "Omtaler", faq: "Spørsmål" },
+  nav: { apartment: "Leilighet", gallery: "Galleri", location: "Beliggenhet", reviews: "Omtaler", faq: "Spørsmål", guide: "Guide" },
   common: { ...en.common, booking: "Se tilgjengelighet på Booking", bookingLong: "Se tilgjengelighet og bestill på Booking.com", whatsapp: "Spør på WhatsApp", whatsappHost: "Spør Nieves på WhatsApp", trust: "Tilgjengelighet, priser og booking sjekkes trygt på Booking.com.", menu: "Åpne meny", size: "Størrelse", guests: "Gjester", beach: "Strand", rating: "Vurdering", language: "Språk" },
   hero: { eyebrow: "Fuengirola · Costa del Sol", title: "Ditt solrike sted nær stranden", text: "En lys og komfortabel leilighet for vintersol, lengre opphold og rolige dager i Fuengirola, nær Marbella og resten av Costa del Sol." },
   summary: { size: "35 m²", guests: "Opptil 4 gjester", beach: "Strand 600 m", rating: "9,4 av 10" },
@@ -394,7 +422,8 @@ const no: Dictionary = {
   faq: { ...en.faq, title: "Spørsmål før booking", checkinQ: "Når kan jeg sjekke inn?", checkinA: "Fra 15.00 til 21.00. Du må oppgi omtrentlig ankomsttid på forhånd.", checkoutQ: "Når må leiligheten forlates?", checkoutA: "Senest 12.00.", questionQ: "Kan jeg stille et spørsmål før booking?" },
   footer: { ...en.footer, legal: "Juridisk informasjon", privacy: "Personvern", cookies: "Informasjonskapsler", current: "For øyeblikket presenterer vi Apartamento Veramar i Fuengirola." },
   cookies: { ...en.cookies, title: "Innstillinger for informasjonskapsler", text: "Vi bruker Google Analytics for å forstå besøk og forbedre nettsiden. Du kan godta eller avslå analyse-informasjonskapsler.", accept: "Godta", reject: "Avslå" },
-  legal: { ...en.legal, title: "Juridisk informasjon", cookies: "Dette nettstedet bruker Google Analytics for å måle besøk og forbedre innholdet. Lagring for analyse styres av innstillingene for informasjonskapsler som vises på nettstedet." }
+  legal: { ...en.legal, title: "Juridisk informasjon", cookies: "Dette nettstedet bruker Google Analytics for å måle besøk og forbedre innholdet. Lagring for analyse styres av innstillingene for informasjonskapsler som vises på nettstedet." },
+  guide: { ...en.guide, metaTitle: "Fuengirola-guide | Stay Fuengirola", title: "Fuengirola-guide", intro: "En praktisk guide for å planlegge oppholdet ditt i Fuengirola. Innholdet fylles ut gradvis.", comingSoon: "Kommer snart", back: "Tilbake til guiden", airport: "Fra flyplassen", beaches: "Strender", supermarkets: "Supermarkeder", restaurants: "Restauranter", shopping: "Shopping", transport: "Transport", excursions: "Utflukter", rain: "Hva du kan gjøre når det regner" }
 };
 
 export const dictionaries: Record<Locale, Dictionary> = { es, en, fi, sv, no };

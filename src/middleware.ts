@@ -33,6 +33,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(`/${preferred}`, request.url));
   }
 
+  if (pathname === "/guia" || pathname.startsWith("/guia/")) {
+    return NextResponse.next();
+  }
+
   const firstSegment = pathname.split("/")[1];
 
   if (firstSegment && !isLocale(firstSegment)) {

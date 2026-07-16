@@ -15,11 +15,12 @@ type Props = {
 export function Header({ locale, nav, menuLabel }: Props) {
   const [open, setOpen] = useState(false);
   const links = [
-    ["#apartment", nav.apartment],
-    ["#gallery", nav.gallery],
-    ["#location", nav.location],
-    ["#reviews", nav.reviews],
-    ["#faq", nav.faq]
+    [`/${locale}#apartment`, nav.apartment],
+    [`/${locale}#gallery`, nav.gallery],
+    [`/${locale}#location`, nav.location],
+    [`/${locale}#reviews`, nav.reviews],
+    [`/${locale}#faq`, nav.faq],
+    [`/${locale}/guia`, nav.guide]
   ];
 
   return (
