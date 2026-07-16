@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Briefcase, Car, Castle, CircleCheck, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Snowflake, Sun, Train, Utensils, WashingMachine, Waves, Wifi, type LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
-import { BookingButton } from "@/components/BookingButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Gallery } from "@/components/Gallery";
 import { FaqAccordion } from "@/components/FaqAccordion";
@@ -132,7 +131,6 @@ export default async function LocalePage({ params }: Props) {
             <h1>{t.hero.title}</h1>
             <p>{t.hero.text}</p>
             <div className="cta-row">
-              <BookingButton label={t.common.booking} />
               <WhatsAppButton locale={locale} label={t.common.whatsapp} />
             </div>
             <div className="trust">{t.common.trust}</div>
@@ -187,7 +185,6 @@ export default async function LocalePage({ params }: Props) {
               <p className="lead">{t.description.text}</p>
               <p>{t.description.text2}</p>
               <p>{t.description.text3}</p>
-              <BookingButton label={t.common.booking} />
             </div>
           </div>
         </section>
@@ -468,7 +465,6 @@ export default async function LocalePage({ params }: Props) {
             <h2 className="section-title">{t.closing.title}</h2>
             <p>{t.closing.text}</p>
             <div className="cta-row">
-              <BookingButton label={t.common.bookingLong} />
               <WhatsAppButton locale={locale} label={t.common.whatsapp} />
             </div>
             <div className="trust">{t.common.trust}</div>
