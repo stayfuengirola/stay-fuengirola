@@ -24,7 +24,7 @@ export function WhatsAppButton({
     >
       {isFloating ? (
         <Image
-          src="/images/icons/whatsapp.png"
+          src="/images/icons/whatsapp.svg"
           alt=""
           width={34}
           height={34}
