@@ -342,13 +342,13 @@ img { max-width: 100%; display: block; }
 .guide-cta svg { color: var(--blue); }
 .guide-cta p { max-width: 620px; margin: 0; color: var(--muted); }
 .beach-guide-hero { overflow: hidden; }
-.beach-map-section { padding-bottom: 24px; }
-.beach-guide-map { height: 420px; margin-top: 18px; }
+.beach-map-section { position: relative; z-index: 0; padding-bottom: 24px; overflow: hidden; isolation: isolate; }
+.beach-guide-map { height: 420px; margin-top: 18px; contain: layout; clip-path: none; transform: none; }
 .beach-map-marker { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 999px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px rgba(18,57,70,.14); font-size: 18px; }
-.beach-quick-card { margin: 0 0 34px; padding: 26px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
+.beach-quick-card { position: relative; z-index: 1; margin: 0 0 34px; padding: 26px; overflow: hidden; isolation: isolate; contain: none; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 25px rgba(18,57,70,.05); transform: none; filter: none; backdrop-filter: none; perspective: none; will-change: auto; backface-visibility: hidden; }
 .beach-quick-card h2 { margin: 0 0 18px; color: var(--blue-deep); font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.45rem, 3vw, 2rem); }
-.beach-quick-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.beach-quick-item { display: grid; grid-template-columns: 28px 1fr; gap: 4px 10px; align-items: center; padding: 16px; background: #fffaf0; border: 1px solid var(--line); border-radius: 8px; }
+.beach-quick-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; transform: none; filter: none; }
+.beach-quick-item { position: relative; z-index: 1; display: grid; grid-template-columns: 28px 1fr; gap: 4px 10px; align-items: center; min-height: 86px; padding: 16px; overflow: hidden; isolation: isolate; contain: none; background: #fffaf0; border: 1px solid var(--line); border-radius: 8px; transform: none; filter: none; backdrop-filter: none; perspective: none; will-change: auto; backface-visibility: hidden; }
 .beach-quick-item svg { grid-row: span 2; color: var(--blue); }
 .beach-quick-item strong { color: var(--blue-deep); }
 .beach-quick-item span { color: var(--muted); font-weight: 800; }
