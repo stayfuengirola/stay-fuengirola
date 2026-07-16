@@ -1,23 +1,37 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
+  Accessibility,
   Car,
   CarTaxiFront,
+  Castle,
   CheckCircle2,
   CircleHelp,
   Clock,
+  Dog,
   Euro,
+  Footprints,
   Luggage,
   MapPin,
   MapPinned,
   Plane,
+  ShowerHead,
   Star,
+  Sun,
   TrainFront
+  ,
+  Umbrella,
+  Users,
+  Utensils,
+  Waves
 } from "lucide-react";
+import { BeachGuideMap } from "@/components/BeachGuideMap";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
 import { airportGuideContent } from "@/config/guideArticles";
+import { beachGuideContent } from "@/config/beachGuide";
 import {
   getGuideCategoryBySlug,
   getGuideCategoryPath,
@@ -35,6 +49,17 @@ type Props = { params: Promise<{ locale: string; slug: string }> };
 
 const optionIcons = [TrainFront, CarTaxiFront, Car, Luggage] as const;
 const relatedKeys = ["beaches", "supermarkets", "restaurants", "transport"] as const;
+const beachFeatureIcons = {
+  families: Users,
+  water: Waves,
+  showers: ShowerHead,
+  bars: Utensils,
+  sunbeds: Umbrella,
+  surf: Waves,
+  dogs: Dog,
+  toilets: CircleHelp,
+  accessible: Accessibility
+} as const;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => guideCategories.map((category) => ({ locale, slug: category.slugs[locale] })));
@@ -48,9 +73,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!category) return {};
   const t = getDictionary(locale);
   const isAirportGuide = category.key === "airport";
-  const content = airportGuideContent[locale];
-  const title = isAirportGuide ? content.metaTitle : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
-  const description = isAirportGuide ? content.metaDescription : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+  const isBeachGuide = category.key === "beaches";
+  const airportContent = airportGuideContent[locale];
+  const beachContent = beachGuideContent[locale];
+  const title = isAirportGuide ? airportContent.metaTitle : isBeachGuide ? beachContent.metaTitle : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+  const description = isAirportGuide ? airportContent.metaDescription : isBeachGuide ? beachContent.metaDescription : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
   const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
@@ -66,9 +93,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article"
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
-      description
+      description,
+      images: isBeachGuide ? ["/images/fuengirola-beach.webp"] : undefined
     }
   };
 }
@@ -91,6 +119,10 @@ export default async function GuideCategoryPage({ params }: Props) {
     return <AirportGuidePage locale={locale} dictionary={t} />;
   }
 
+  if (category.key === "beaches") {
+    return <BeachGuidePage locale={locale} dictionary={t} />;
+  }
+
   return (
     <div className="shell">
       <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
@@ -107,6 +139,229 @@ export default async function GuideCategoryPage({ params }: Props) {
             <strong>{t.guide.comingSoon}</strong>
           </div>
         </div>
+      </main>
+      <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
+    </div>
+  );
+}
+
+function BeachGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
+  const content = beachGuideContent[locale];
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "beaches")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const relatedHref = (key: (typeof content.related)[number]["hrefKey"]) => {
+    if (key === "castle" || key === "miramar") return `/${locale}#location`;
+    return getGuideCategoryPath(locale, key);
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Stay Fuengirola", item: `${siteUrl}/${locale}` },
+      { "@type": "ListItem", position: 2, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 3, name: content.breadcrumbArticle, item: articleUrl }
+    ]
+  };
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.h1,
+    description: content.metaDescription,
+    mainEntityOfPage: articleUrl,
+    image: [`${siteUrl}/images/fuengirola-beach.webp`],
+    author: { "@type": "Organization", name: property.brandName },
+    publisher: { "@type": "Organization", name: property.brandName },
+    about: content.schemaAbout,
+    inLanguage: locale,
+    dateModified: "2026-07-17"
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  };
+
+  return (
+    <div className="shell">
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
+      <main className="section guide-page">
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
+        <article className="container guide-article beach-article">
+          <Link className="text-link" href={getGuidePath(locale)}>
+            <ArrowLeft aria-hidden="true" size={18} />
+            {content.backLabel}
+          </Link>
+
+          <header className="guide-hero-card beach-guide-hero">
+            <span className="guide-hero-icon">
+              <Waves aria-hidden="true" size={30} />
+            </span>
+            <p className="guide-kicker">{content.kicker}</p>
+            <h1>{content.h1}</h1>
+            <p>{content.intro}</p>
+          </header>
+
+          <section className="guide-content-section beach-map-section" aria-label={content.mapTitle}>
+            <h2>{content.mapTitle}</h2>
+            <BeachGuideMap ariaLabel={content.mapAria} apartmentLabel={content.mapApartment} apartmentPopup={content.mapApartmentPopup} />
+          </section>
+
+          <section className="beach-quick-card">
+            <h2>{content.quickTitle}</h2>
+            <div className="beach-quick-grid">
+              {content.quickItems.map((item) => {
+                const Icon = item.icon === "castle" ? Castle : Waves;
+                return (
+                  <div className="beach-quick-item" key={item.label}>
+                    <Icon aria-hidden="true" size={22} />
+                    <strong>{item.label}</strong>
+                    <span>{item.time}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.sectionTitle}</h2>
+            <div className="beach-feature-grid">
+              {content.featureCards.map((card) => {
+                const Icon = beachFeatureIcons[card.icon];
+                return (
+                  <div className="beach-feature-card" key={card.title}>
+                    <Icon aria-hidden="true" size={24} />
+                    <strong>{card.title}</strong>
+                    <span>{card.text}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {content.beaches.map((beach) => (
+            <section className="guide-content-section beach-section" id={beach.key} key={beach.key}>
+              <div className="beach-image">
+                <Image src={beach.image} alt={beach.imageAlt} fill sizes="(max-width: 960px) calc(100vw - 32px), 960px" loading="lazy" className="image-cover" />
+              </div>
+              <div className="beach-section-grid">
+                <div>
+                  <p className="guide-kicker">{beach.badge}</p>
+                  <h2>{beach.name}</h2>
+                  <p className="beach-time">
+                    <Footprints aria-hidden="true" size={18} />
+                    {beach.walkingTime}
+                  </p>
+                  <p>{beach.description}</p>
+                </div>
+                <aside className="beach-fact-card" aria-label={`${content.ratingLabel}: ${beach.name}`}>
+                  <strong aria-label={content.ratingLabel}>★★★★★</strong>
+                  <h3>{content.idealTitle}</h3>
+                  <ul>
+                    {beach.idealFor.map((item) => (
+                      <li key={item}>
+                        <CheckCircle2 aria-hidden="true" size={17} />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </aside>
+              </div>
+              <div className="beach-detail-grid">
+                <div className="beach-services-card">
+                  <h3>{content.servicesTitle}</h3>
+                  <ul>
+                    {beach.services.map((service) => (
+                      <li key={service}>
+                        <CheckCircle2 aria-hidden="true" size={17} />
+                        {service}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="beach-tip-card">
+                  <Sun aria-hidden="true" size={22} />
+                  <h3>{content.tipTitle}</h3>
+                  <p>{beach.tip}</p>
+                </div>
+              </div>
+            </section>
+          ))}
+
+          <section className="guide-content-section">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="beach-comparison" role="table" aria-label={content.comparisonTitle}>
+              <div className="beach-comparison-row beach-comparison-head" role="row">
+                <span role="columnheader">{content.comparisonHeaders.beach}</span>
+                <span role="columnheader">{content.comparisonHeaders.distance}</span>
+                <span role="columnheader">{content.comparisonHeaders.families}</span>
+                <span role="columnheader">{content.comparisonHeaders.restaurants}</span>
+                <span role="columnheader">{content.comparisonHeaders.walking}</span>
+              </div>
+              {content.comparison.map((row) => (
+                <div className="beach-comparison-row" role="row" key={row.beach}>
+                  <strong role="cell">{row.beach}</strong>
+                  <span role="cell">{row.distance}</span>
+                  <span role="cell">{row.families}</span>
+                  <span role="cell">{row.restaurants}</span>
+                  <span role="cell">{row.walking}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.galleryTitle}</h2>
+            <p>{content.galleryIntro}</p>
+            <div className="beach-gallery">
+              {content.gallery.map((image) => (
+                <div className="beach-gallery-item" key={image.src}>
+                  <Image src={image.src} alt={image.alt} fill sizes="(max-width: 960px) calc(100vw - 32px), 440px" loading="lazy" className="image-cover" />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
+            <div className="guide-faq-list">
+              {content.faqs.map((item) => (
+                <details className="guide-faq-item" key={item.question}>
+                  <summary>
+                    <CircleHelp aria-hidden="true" size={18} />
+                    {item.question}
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-related" aria-labelledby="beach-related-title">
+            <h2 id="beach-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid beach-related-grid">
+              {content.related.map((item) => (
+                <Link className="guide-related-card" href={relatedHref(item.hrefKey)} key={item.title}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <p className="map-note">{content.sourceNote}</p>
+        </article>
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
     </div>

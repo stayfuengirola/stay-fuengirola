@@ -23,7 +23,7 @@ export const guideCategories = [
   },
   {
     key: "beaches",
-    status: "draft",
+    status: "published",
     slugs: { es: "playas", en: "beaches", fi: "rannat", sv: "strander", no: "strender" }
   },
   {
