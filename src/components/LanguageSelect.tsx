@@ -1,12 +1,14 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { getGuideCategoryByAnySlug, getGuideCategoryBySlug, getGuideCategoryPath, getGuidePath, isGuideBaseSegment } from "@/config/guides";
 import { Locale, localeLabels, locales } from "@/i18n/locales";
 
 export function LanguageSelect({ locale }: { locale: Locale }) {
   const router = useRouter();
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
   function changeLocale(nextLocale: Locale) {
     const parts = pathname.split("/");
@@ -19,10 +21,12 @@ export function LanguageSelect({ locale }: { locale: Locale }) {
         const category = getGuideCategoryBySlug(currentLocale, slug) ?? getGuideCategoryByAnySlug(slug);
         if (category) {
           router.push(getGuideCategoryPath(nextLocale, category.key));
+          setOpen(false);
           return;
         }
       }
       router.push(getGuidePath(nextLocale));
+      setOpen(false);
       return;
     }
 
@@ -32,20 +36,52 @@ export function LanguageSelect({ locale }: { locale: Locale }) {
     } else {
       router.push(`/${nextLocale}`);
     }
+    setOpen(false);
   }
 
+  function onKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape") setOpen(false);
+  }
+
+  const current = localeLabels[locale];
+
   return (
-    <select
-      className="language"
-      aria-label="Language"
-      value={locale}
-      onChange={(event) => changeLocale(event.target.value as Locale)}
+    <div
+      className="language-picker"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+      onKeyDown={onKeyDown}
     >
-      {locales.map((item) => (
-        <option key={item} value={item}>
-          {localeLabels[item].flag} {localeLabels[item].code}
-        </option>
-      ))}
-    </select>
+      <button
+        className="language"
+        type="button"
+        aria-label={`${current.name}. Change language`}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <span className={`flag flag-${locale}`} aria-hidden="true" />
+        <span>{current.code}</span>
+      </button>
+      {open ? (
+        <div className="language-menu" role="listbox" aria-label="Language">
+          {locales.map((item) => (
+            <button
+              className="language-option"
+              type="button"
+              key={item}
+              role="option"
+              aria-selected={item === locale}
+              onClick={() => changeLocale(item)}
+            >
+              <span className={`flag flag-${item}`} aria-hidden="true" />
+              <span>{localeLabels[item].code}</span>
+              <span className="sr-only">{localeLabels[item].name}</span>
+            </button>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }

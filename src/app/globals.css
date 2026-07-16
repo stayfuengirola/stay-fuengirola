@@ -26,6 +26,7 @@ body.no-scroll { overflow: hidden; }
 a { color: inherit; text-decoration: none; }
 button, select { font: inherit; }
 img { max-width: 100%; display: block; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .image-cover { object-fit: cover; object-position: center; }
 .image-contain { object-fit: contain; object-position: center; width: auto; height: auto; }
 .image-bedroom { object-position: center top; }
@@ -57,7 +58,21 @@ img { max-width: 100%; display: block; }
 .nav { display: flex; gap: 20px; align-items: center; color: #405157; font-size: .95rem; }
 .nav a:hover { color: var(--blue); }
 .header-actions { display: flex; gap: 12px; align-items: center; }
-.language { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 9px 12px; color: var(--ink); }
+.language-picker { position: relative; display: inline-flex; }
+.language { border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 9px 12px; color: var(--ink); display: inline-flex; align-items: center; gap: 7px; min-width: 76px; justify-content: center; cursor: pointer; font-weight: 800; }
+.language-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 35; min-width: 98px; padding: 6px; display: grid; gap: 4px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); }
+.language-option { border: 0; border-radius: 6px; background: transparent; padding: 8px 10px; display: flex; align-items: center; gap: 8px; color: var(--ink); cursor: pointer; font-weight: 800; text-align: left; }
+.language-option:hover, .language-option:focus-visible, .language-option[aria-selected="true"] { background: var(--sand-soft); }
+.language-footer-link { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; }
+.flag { position: relative; width: 22px; height: 15px; flex: 0 0 22px; display: inline-block; overflow: hidden; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(36,50,56,.18); background: #eee; }
+.flag-es { background: linear-gradient(to bottom, #c60b1e 0 25%, #ffc400 25% 75%, #c60b1e 75% 100%); }
+.flag-fi { background: linear-gradient(to right, transparent 0 28%, #002f6c 28% 45%, transparent 45% 100%), linear-gradient(to bottom, #fff 0 36%, #002f6c 36% 58%, #fff 58% 100%); }
+.flag-sv { background: linear-gradient(to right, transparent 0 30%, #fecc00 30% 44%, transparent 44% 100%), linear-gradient(to bottom, #006aa7 0 38%, #fecc00 38% 54%, #006aa7 54% 100%); }
+.flag-no { background: linear-gradient(to right, transparent 0 27%, #fff 27% 48%, transparent 48% 100%), linear-gradient(to bottom, #ba0c2f 0 32%, #fff 32% 62%, #ba0c2f 62% 100%); }
+.flag-no::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, transparent 0 32%, #00205b 32% 43%, transparent 43% 100%), linear-gradient(to bottom, transparent 0 40%, #00205b 40% 54%, transparent 54% 100%); }
+.flag-en { background: #012169; }
+.flag-en::before { content: ""; position: absolute; inset: 0; background: linear-gradient(32deg, transparent 0 42%, #fff 42% 50%, #c8102e 50% 56%, #fff 56% 64%, transparent 64%), linear-gradient(-32deg, transparent 0 42%, #fff 42% 50%, #c8102e 50% 56%, #fff 56% 64%, transparent 64%); }
+.flag-en::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, transparent 0 39%, #fff 39% 61%, transparent 61%), linear-gradient(to bottom, transparent 0 34%, #fff 34% 66%, transparent 66%), linear-gradient(to right, transparent 0 44%, #c8102e 44% 56%, transparent 56%), linear-gradient(to bottom, transparent 0 41%, #c8102e 41% 59%, transparent 59%); }
 .hamburger { display: none; border: 1px solid var(--line); border-radius: 999px; background: #fff; padding: 10px; }
 
 .hero { min-height: calc(100vh - 76px); display: grid; align-items: end; position: relative; isolation: isolate; color: #fff; }
@@ -325,12 +340,14 @@ img { max-width: 100%; display: block; }
 .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 22px; }
 .footer nav { display: grid; gap: 8px; }
 .small { color: var(--muted); font-size: .9rem; }
+.booking-float { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 25; display: none; align-items: center; justify-content: center; gap: 9px; width: min(420px, calc(100% - 32px)); min-height: 48px; padding: 12px 18px; border-radius: 999px; border: 1px solid var(--blue); background: var(--blue); color: #fff; font-weight: 800; box-shadow: 0 14px 32px rgba(9,107,134,.24); transform: translateX(-50%); text-align: center; }
 .whatsapp-float { position: fixed; right: 18px; bottom: 92px; z-index: 24; width: 48px; height: 48px; border-radius: 999px; background: #fff; color: var(--blue); border: 1px solid var(--line); box-shadow: var(--shadow); display: inline-grid; place-items: center; overflow: hidden; white-space: nowrap; font-size: 0; }
 .whatsapp-float svg { width: 22px; height: 22px; }
 .cookie { position: fixed; z-index: 60; left: 18px; right: 18px; bottom: 18px; margin: auto; max-width: 620px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 18px; }
 .cookie-actions { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 
 @media (max-width: 900px) {
+  .shell { padding-bottom: 84px; }
   .nav { display: none; }
   .hamburger { display: inline-grid; }
   .mobile-nav { position: fixed; top: 70px; left: 0; right: 0; background: #fffaf0; border-bottom: 1px solid var(--line); padding: 16px; display: grid; gap: 12px; }
@@ -340,8 +357,9 @@ img { max-width: 100%; display: block; }
   .gallery-button:first-child { grid-column: span 2; min-height: 320px; }
   .leaflet-map { min-height: 300px; height: 300px; }
   .arrival-grid { grid-template-columns: 1fr; }
-  .whatsapp-float { bottom: 18px; }
-  .cookie { bottom: 88px; }
+  .booking-float { display: inline-flex; }
+  .whatsapp-float { bottom: calc(78px + env(safe-area-inset-bottom)); }
+  .cookie { bottom: calc(136px + env(safe-area-inset-bottom)); }
   .section { padding: 62px 0; }
 }
 
@@ -351,7 +369,8 @@ img { max-width: 100%; display: block; }
   .brand { font-size: 1.08rem; }
   .brand-stack small { font-size: .62rem; }
   .header-actions { gap: 8px; }
-  .language { max-width: 88px; padding: 7px 9px; }
+  .language { min-width: 72px; padding: 7px 9px; }
+  .language-menu { right: -8px; }
   .hamburger { padding: 8px; }
   .mobile-nav { top: 62px; }
   .hero { min-height: 720px; }

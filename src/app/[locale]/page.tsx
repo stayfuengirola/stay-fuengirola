@@ -512,8 +512,15 @@ function LanguageSelectFooter({ locale, label }: { locale: Locale; label: string
       <span className="small">{label}</span>
       <div style={{ marginTop: 8 }}>
         {locales.map((item) => (
-          <a key={item} href={localizedPath(item)} style={{ marginRight: 10, fontWeight: item === locale ? 800 : 500 }}>
-            {localeLabels[item].flag} {localeLabels[item].code}
+          <a
+            key={item}
+            href={localizedPath(item)}
+            className="language-footer-link"
+            aria-label={localeLabels[item].name}
+            style={{ fontWeight: item === locale ? 800 : 500 }}
+          >
+            <span className={`flag flag-${item}`} aria-hidden="true" />
+            {localeLabels[item].code}
           </a>
         ))}
       </div>
