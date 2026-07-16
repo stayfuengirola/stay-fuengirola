@@ -128,15 +128,18 @@ img { max-width: 100%; display: block; }
 .area-card { padding: 20px; min-height: 190px; }
 .area-card svg { color: var(--blue); margin-bottom: 14px; }
 .area-card h3, .review h3 { margin: 0 0 8px; }
-.location-section { position: relative; overflow: hidden; isolation: isolate; contain: paint; }
-.location-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: stretch; overflow: hidden; isolation: isolate; contain: paint; }
-.distances { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
-.distance { position: relative; z-index: 3; padding: 16px; }
+.location-section { position: relative; overflow: clip; isolation: isolate; }
+@supports not (overflow: clip) {
+  .location-section { overflow: hidden; }
+}
+.location-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: stretch; isolation: isolate; }
+.distances { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; transform: none; filter: none; perspective: none; }
+.distance { position: relative; z-index: 1; padding: 16px; overflow: hidden; isolation: isolate; background: #fff; transform: none; filter: none; backface-visibility: hidden; }
 .distance svg { color: var(--blue); margin-bottom: 8px; }
 .distance strong { color: var(--blue-deep); }
 .location-note { margin-top: 14px; font-weight: 700; color: var(--blue-deep); }
-.map-panel { position: relative; z-index: 1; max-width: 100%; margin-bottom: 22px; overflow: hidden; isolation: isolate; contain: paint; }
-.leaflet-map-frame { position: relative; z-index: 0; width: 100%; max-width: 100%; height: 360px; overflow: hidden; isolation: isolate; contain: layout paint; border: 1px solid var(--line); border-radius: 8px; background: #eef7f4; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
+.map-panel { position: relative; z-index: 1; max-width: 100%; margin-bottom: 22px; isolation: isolate; }
+.leaflet-map-frame { position: relative; z-index: 0; width: 100%; max-width: 100%; height: 360px; overflow: hidden; isolation: isolate; contain: layout paint; clip-path: inset(0 round 8px); border: 1px solid var(--line); border-radius: 8px; background: #eef7f4; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
 .leaflet-map { position: relative; z-index: 0; display: block; width: 100%; max-width: 100%; height: 100%; min-height: 360px; overflow: hidden; contain: layout paint; background: #eef7f4; }
 .leaflet-container { font: inherit; width: 100%; max-width: 100%; height: 100%; overflow: hidden; isolation: isolate; contain: layout paint; background: #eef7f4; }
 .leaflet-map .leaflet-pane,

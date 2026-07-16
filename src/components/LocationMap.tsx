@@ -22,6 +22,7 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
     if (!mapElement.current || mapInstance.current) return;
     let active = true;
     let resizeFrame = 0;
+    let initTimer = 0;
 
     function invalidateMapSize() {
       window.cancelAnimationFrame(resizeFrame);
@@ -31,6 +32,16 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
     }
 
     async function initMap() {
+      if (!active || !mapElement.current || mapInstance.current) return;
+
+      const bounds = mapElement.current.getBoundingClientRect();
+      if (bounds.width === 0 || bounds.height === 0) {
+        initTimer = window.setTimeout(() => {
+          void initMap();
+        }, 120);
+        return;
+      }
+
       const L = await import("leaflet");
 
       if (!active || !mapElement.current || mapInstance.current) return;
@@ -57,6 +68,7 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
         .openPopup();
 
       mapInstance.current = map;
+      map.whenReady(invalidateMapSize);
       window.setTimeout(invalidateMapSize, 0);
       window.setTimeout(invalidateMapSize, 250);
     }
@@ -67,6 +79,7 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
 
     return () => {
       active = false;
+      window.clearTimeout(initTimer);
       window.cancelAnimationFrame(resizeFrame);
       window.removeEventListener("resize", invalidateMapSize);
       window.removeEventListener("orientationchange", invalidateMapSize);
