@@ -48,11 +48,18 @@ export function BeachGuideMap({ ariaLabel, apartmentLabel, apartmentPopup }: Pro
       const map = L.map(mapElement.current, {
         center: [36.5335, -4.6252],
         zoom: 14,
-        scrollWheelZoom: false
+        scrollWheelZoom: false,
+        fadeAnimation: false,
+        markerZoomAnimation: false,
+        zoomAnimation: false,
+        inertia: false
       });
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        updateWhenIdle: true,
+        updateWhenZooming: false,
+        keepBuffer: 1
       }).addTo(map);
 
       L.circle(apartmentLocation, {
