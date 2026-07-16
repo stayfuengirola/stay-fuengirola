@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title,
       description,
-      images: isBeachGuide ? ["/images/fuengirola-beach.webp"] : undefined
+      images: isBeachGuide ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"] : undefined
     }
   };
 }
@@ -168,7 +168,7 @@ function BeachGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary:
     headline: content.h1,
     description: content.metaDescription,
     mainEntityOfPage: articleUrl,
-    image: [`${siteUrl}/images/fuengirola-beach.webp`],
+    image: [`${siteUrl}/images/guide/playas/01-playa-fuengirola-sombrillas.webp`],
     author: { "@type": "Organization", name: property.brandName },
     publisher: { "@type": "Organization", name: property.brandName },
     about: content.schemaAbout,
