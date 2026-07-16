@@ -21,6 +21,14 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
   useEffect(() => {
     if (!mapElement.current || mapInstance.current) return;
     let active = true;
+    let resizeFrame = 0;
+
+    function invalidateMapSize() {
+      window.cancelAnimationFrame(resizeFrame);
+      resizeFrame = window.requestAnimationFrame(() => {
+        mapInstance.current?.invalidateSize();
+      });
+    }
 
     async function initMap() {
       const L = await import("leaflet");
@@ -49,13 +57,19 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
         .openPopup();
 
       mapInstance.current = map;
-      window.setTimeout(() => map.invalidateSize(), 0);
+      window.setTimeout(invalidateMapSize, 0);
+      window.setTimeout(invalidateMapSize, 250);
     }
 
     void initMap();
+    window.addEventListener("resize", invalidateMapSize);
+    window.addEventListener("orientationchange", invalidateMapSize);
 
     return () => {
       active = false;
+      window.cancelAnimationFrame(resizeFrame);
+      window.removeEventListener("resize", invalidateMapSize);
+      window.removeEventListener("orientationchange", invalidateMapSize);
       mapInstance.current?.remove();
       mapInstance.current = null;
     };
@@ -63,7 +77,9 @@ export function LocationMap({ ariaLabel, openLabel, note }: Props) {
 
   return (
     <div className="map-panel">
-      <div ref={mapElement} className="leaflet-map" aria-label={ariaLabel} />
+      <div className="leaflet-map-frame">
+        <div ref={mapElement} className="leaflet-map" aria-label={ariaLabel} />
+      </div>
       <a href={openStreetMapUrl} target="_blank" rel="noopener noreferrer" className="map-link">
         {openLabel}
       </a>

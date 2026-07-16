@@ -230,7 +230,7 @@ export default async function LocalePage({ params }: Props) {
           </div>
         </section>
 
-        <section className="section" id="location">
+        <section className="section location-section" id="location">
           <div className="container location-grid">
             <div>
               <h2 className="section-title">{t.location.title}</h2>
