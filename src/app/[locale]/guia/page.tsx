@@ -3,11 +3,11 @@ import Link from "next/link";
 import { MapPinned } from "lucide-react";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
-import { guideCategories } from "@/config/guides";
+import { getGuideCategoryPath, getGuidePath, guideCategories, guideIndexAlternates } from "@/config/guides";
 import { property } from "@/config/property";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
-import { alternateLanguages, localizedPath, siteUrl } from "@/lib/urls";
+import { siteUrl } from "@/lib/urls";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -21,12 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!isLocale(rawLocale)) return {};
   const locale = rawLocale;
   const t = getDictionary(locale);
-  const url = `${siteUrl}${localizedPath(locale, "/guia")}`;
+  const url = `${siteUrl}${getGuidePath(locale)}`;
 
   return {
     title: t.guide.metaTitle,
     description: t.guide.metaDescription,
-    alternates: { canonical: url, languages: alternateLanguages("/guia") },
+    alternates: { canonical: url, languages: guideIndexAlternates() },
     openGraph: {
       title: t.guide.metaTitle,
       description: t.guide.metaDescription,
@@ -60,11 +60,11 @@ export default async function GuidePage({ params }: Props) {
           <p className="lead">{t.guide.intro}</p>
           <div className="guide-grid">
             {guideCategories.map((category) => (
-              <Link className="guide-card" href={`/${locale}/guia/${category.slug}`} key={category.key}>
+              <Link className="guide-card" href={getGuideCategoryPath(locale, category.key)} key={category.key}>
                 <MapPinned aria-hidden="true" size={24} />
                 <h2>{t.guide[category.key]}</h2>
                 <p>{t.guide[`${category.key}Text`]}</p>
-                <strong>{t.guide.comingSoon}</strong>
+                <strong>{category.status === "published" ? t.guide.readGuide : t.guide.comingSoon}</strong>
               </Link>
             ))}
           </div>

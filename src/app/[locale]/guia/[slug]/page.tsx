@@ -18,78 +18,46 @@ import {
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { getGuideCategory, guideCategories } from "@/config/guides";
+import { airportGuideContent } from "@/config/guideArticles";
+import {
+  getGuideCategoryBySlug,
+  getGuideCategoryPath,
+  getGuidePath,
+  guideArticleAlternates,
+  guideCategories
+} from "@/config/guides";
 import { property } from "@/config/property";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
-import { alternateLanguages, localizedPath, siteUrl } from "@/lib/urls";
-import { notFound } from "next/navigation";
+import { siteUrl } from "@/lib/urls";
+import { notFound, redirect } from "next/navigation";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-const airportGuideSlug = "como-llegar-desde-el-aeropuerto";
-const airportGuideTitle = "Cómo llegar del Aeropuerto de Málaga a Fuengirola | Tren, Taxi, Uber y Coche";
-const airportGuideDescription =
-  "Descubre todas las formas de llegar desde el Aeropuerto de Málaga a Fuengirola: tren Cercanías, taxi, Uber, Bolt o coche de alquiler. Precios, tiempos y nuestra recomendación.";
-
-const airportOptions = [
-  { title: "Tren", time: "35-40 min", price: "Desde 2,70 €", note: "Recomendado", icon: TrainFront, recommended: true },
-  { title: "Taxi", time: "20-30 min", price: "35-45 €", note: "Directo y cómodo", icon: CarTaxiFront },
-  { title: "Uber / Bolt", time: "20-30 min", price: "Precio variable", note: "Buena alternativa", icon: Car },
-  { title: "Coche alquiler", time: "Flexible", price: "Según compañía", note: "Ideal para recorrer la Costa del Sol", icon: Luggage }
-];
-
-const relatedGuides = [
-  { title: "Playas", slug: "playas", text: "Playas y paseos junto al mar cerca del apartamento." },
-  { title: "Supermercados", slug: "supermercados", text: "Compras prácticas para estancias cortas o largas." },
-  { title: "Restaurantes", slug: "restaurantes", text: "Recomendaciones gastronómicas en preparación." },
-  { title: "Transporte", slug: "transporte", text: "Cómo moverte por Fuengirola y la Costa del Sol." }
-];
-
-const faqItems = [
-  {
-    question: "¿Cuál es la forma más económica de llegar a Fuengirola desde el aeropuerto?",
-    answer:
-      "El tren Cercanías C1 suele ser la opción más económica. Sale desde la terminal del aeropuerto y conecta directamente con Fuengirola."
-  },
-  {
-    question: "¿Cuánto tarda un taxi desde el Aeropuerto de Málaga?",
-    answer:
-      "Normalmente tarda entre 20 y 30 minutos, dependiendo del tráfico y de la hora de llegada."
-  },
-  {
-    question: "¿Uber y Bolt funcionan en el aeropuerto?",
-    answer:
-      "Sí, suelen estar disponibles en el Aeropuerto de Málaga. El precio puede cambiar según la demanda, la hora y el tipo de vehículo."
-  },
-  {
-    question: "¿Merece la pena alquilar coche?",
-    answer:
-      "Puede ser una buena idea si quieres visitar Marbella, Mijas Pueblo, Málaga, Ronda o distintos puntos de la Costa del Sol durante tu estancia."
-  }
-];
+const optionIcons = [TrainFront, CarTaxiFront, Car, Luggage] as const;
+const relatedKeys = ["beaches", "supermarkets", "restaurants", "transport"] as const;
 
 export function generateStaticParams() {
-  return locales.flatMap((locale) => guideCategories.map((category) => ({ locale, slug: category.slug })));
+  return locales.flatMap((locale) => guideCategories.map((category) => ({ locale, slug: category.slugs[locale] })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale: rawLocale, slug } = await params;
   if (!isLocale(rawLocale)) return {};
-  const category = getGuideCategory(slug);
-  if (!category) return {};
   const locale = rawLocale;
+  const category = getGuideCategoryBySlug(locale, slug);
+  if (!category) return {};
   const t = getDictionary(locale);
-  const path = `/guia/${category.slug}`;
-  const url = `${siteUrl}${localizedPath(locale, path)}`;
-  const isAirportGuide = category.slug === airportGuideSlug;
-  const title = isAirportGuide ? airportGuideTitle : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
-  const description = isAirportGuide ? airportGuideDescription : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+  const isAirportGuide = category.key === "airport";
+  const content = airportGuideContent[locale];
+  const title = isAirportGuide ? content.metaTitle : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+  const description = isAirportGuide ? content.metaDescription : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+  const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
     title,
     description,
-    alternates: { canonical: url, languages: alternateLanguages(path) },
+    alternates: { canonical: url, languages: guideArticleAlternates(category.key) },
     openGraph: {
       title,
       description,
@@ -109,12 +77,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function GuideCategoryPage({ params }: Props) {
   const { locale: rawLocale, slug } = await params;
   if (!isLocale(rawLocale)) notFound();
-  const category = getGuideCategory(slug);
-  if (!category) notFound();
   const locale: Locale = rawLocale;
+  const category = getGuideCategoryBySlug(locale, slug);
+
+  if (!category) {
+    const oldCategory = guideCategories.find((item) => item.slugs.es === slug);
+    if (oldCategory) redirect(getGuideCategoryPath(locale, oldCategory.key));
+    notFound();
+  }
+
   const t = getDictionary(locale);
 
-  if (category.slug === airportGuideSlug) {
+  if (category.key === "airport") {
     return <AirportGuidePage locale={locale} dictionary={t} />;
   }
 
@@ -123,7 +97,7 @@ export default async function GuideCategoryPage({ params }: Props) {
       <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
       <main className="section guide-page">
         <div className="container guide-detail">
-          <Link className="text-link" href={`/${locale}/guia`}>
+          <Link className="text-link" href={getGuidePath(locale)}>
             <ArrowLeft aria-hidden="true" size={18} />
             {t.guide.back}
           </Link>
@@ -141,27 +115,28 @@ export default async function GuideCategoryPage({ params }: Props) {
 }
 
 function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
-  const articlePath = `/guia/${airportGuideSlug}`;
-  const articleUrl = `${siteUrl}${localizedPath(locale, articlePath)}`;
+  const content = airportGuideContent[locale];
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "airport")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Stay Fuengirola", item: `${siteUrl}/${locale}` },
-      { "@type": "ListItem", position: 2, name: "Guía de Fuengirola", item: `${siteUrl}/${locale}/guia` },
-      { "@type": "ListItem", position: 3, name: "Cómo llegar desde el Aeropuerto de Málaga", item: articleUrl }
+      { "@type": "ListItem", position: 2, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 3, name: content.breadcrumbArticle, item: articleUrl }
     ]
   };
   const articleJsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: "Cómo llegar desde el Aeropuerto de Málaga a Fuengirola",
-    description: airportGuideDescription,
+    headline: content.h1,
+    description: content.metaDescription,
     mainEntityOfPage: articleUrl,
     author: { "@type": "Organization", name: property.brandName },
     publisher: { "@type": "Organization", name: property.brandName },
-    about: ["Aeropuerto de Málaga", "Fuengirola", "Costa del Sol", "transporte público", "alojamiento turístico"],
-    inLanguage: "es",
+    about: content.schemaAbout,
+    inLanguage: locale,
     dateModified: "2026-07-16"
   };
 
@@ -180,7 +155,7 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
         <article className="container guide-article">
-          <Link className="text-link" href={`/${locale}/guia`}>
+          <Link className="text-link" href={getGuidePath(locale)}>
             <ArrowLeft aria-hidden="true" size={18} />
             {t.guide.back}
           </Link>
@@ -189,17 +164,14 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
             <span className="guide-hero-icon">
               <MapPin aria-hidden="true" size={30} />
             </span>
-            <p className="guide-kicker">Guía de Fuengirola · Aeropuerto de Málaga</p>
-            <h1>Cómo llegar desde el Aeropuerto de Málaga a Fuengirola</h1>
-            <p>
-              Llegar a Fuengirola desde el Aeropuerto de Málaga es sencillo. Hay tren directo, taxis, VTC y coches de
-              alquiler, así que puedes elegir entre una llegada económica, rápida o más flexible según el tipo de viaje.
-            </p>
+            <p className="guide-kicker">{content.kicker}</p>
+            <h1>{content.h1}</h1>
+            <p>{content.intro}</p>
           </header>
 
-          <section className="airport-options" aria-label="Comparativa de transporte desde el aeropuerto">
-            {airportOptions.map((option) => {
-              const Icon = option.icon;
+          <section className="airport-options" aria-label={content.optionsAria}>
+            {content.options.map((option, index) => {
+              const Icon = optionIcons[index];
               return (
                 <div className={option.recommended ? "airport-option recommended" : "airport-option"} key={option.title}>
                   <Icon aria-hidden="true" size={28} />
@@ -207,19 +179,19 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
                   <dl>
                     <div>
                       <Clock aria-hidden="true" size={16} />
-                      <dt>Tiempo</dt>
+                      <dt>{content.labels.time}</dt>
                       <dd>{option.time}</dd>
                     </div>
                     <div>
                       <Euro aria-hidden="true" size={16} />
-                      <dt>Precio</dt>
+                      <dt>{content.labels.price}</dt>
                       <dd>{option.price}</dd>
                     </div>
                   </dl>
                   <strong>
                     {option.recommended ? (
                       <>
-                        <span aria-label="Cinco estrellas">★★★★★</span> {option.note}
+                        <span aria-label={content.labels.fiveStars}>★★★★★</span> {option.note}
                       </>
                     ) : (
                       option.note
@@ -230,23 +202,13 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
             })}
           </section>
 
-          <section className="guide-content-section" id="introduccion">
-            <h2>Introducción</h2>
-            <p>
-              El Aeropuerto de Málaga-Costa del Sol está a unos 25 kilómetros de Fuengirola. Para la mayoría de viajeros,
-              el trayecto es cómodo y directo, especialmente si llegas con equipaje ligero o quieres evitar conducir nada
-              más aterrizar.
-            </p>
-            <p>
-              En esta guía resumimos las opciones más útiles para llegar a Fuengirola: tren Cercanías C1, taxi, Uber,
-              Bolt, coche de alquiler y autobús. Los tiempos y precios son aproximados y pueden variar según horarios,
-              tráfico y temporada.
-            </p>
-          </section>
+          {content.sections.slice(0, 1).map((section) => (
+            <ArticleSection section={section} key={section.id} />
+          ))}
 
-          <section className="guide-map-block" aria-label="Mapa de ruta entre el Aeropuerto de Málaga y Fuengirola">
+          <section className="guide-map-block" aria-label={content.mapAria}>
             <iframe
-              title="Ruta en Google Maps desde el Aeropuerto de Málaga a Fuengirola"
+              title={content.mapTitle}
               src="https://www.google.com/maps?q=Aeropuerto%20de%20M%C3%A1laga%20to%20Fuengirola&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -254,93 +216,26 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
             />
           </section>
 
-          <section className="guide-content-section" id="tren-cercanias-c1">
-            <h2>Tren Cercanías C1</h2>
-            <p>
-              El tren Cercanías C1 es normalmente nuestra opción recomendada. La estación está dentro del propio
-              aeropuerto y la línea conecta directamente con Fuengirola, sin necesidad de pasar por el centro de Málaga.
-            </p>
-            <p>
-              El trayecto suele durar unos 35-40 minutos y el precio parte de aproximadamente 2,70 €. Es una opción
-              práctica, económica y cómoda si no viajas con demasiado equipaje.
-            </p>
-          </section>
+          {content.sections.slice(1).map((section) =>
+            section.featured ? (
+              <section className="guide-recommendation" id={section.id} key={section.id}>
+                <Star aria-hidden="true" size={28} />
+                <div>
+                  <h2>{section.title}</h2>
+                  {section.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <ArticleSection section={section} key={section.id} />
+            )
+          )}
 
-          <section className="guide-content-section" id="taxi">
-            <h2>Taxi</h2>
-            <p>
-              El taxi es la forma más directa para llegar al apartamento desde el aeropuerto. Suele tardar entre 20 y 30
-              minutos, dependiendo del tráfico, y evita transbordos o esperas.
-            </p>
-            <p>
-              Como referencia, el coste habitual puede moverse entre 35 € y 45 €, aunque el precio final puede variar por
-              horario, equipaje, suplementos o tráfico.
-            </p>
-          </section>
-
-          <section className="guide-content-section" id="uber-y-bolt">
-            <h2>Uber y Bolt</h2>
-            <p>
-              Uber y Bolt funcionan en el Aeropuerto de Málaga y pueden ser una alternativa cómoda al taxi. La principal
-              diferencia es que el precio es variable y depende de la demanda en ese momento.
-            </p>
-            <p>
-              Para familias, llegadas tarde o viajeros con varias maletas, puede ser una opción interesante si el precio
-              mostrado en la app encaja con tu presupuesto.
-            </p>
-          </section>
-
-          <section className="guide-content-section" id="alquiler-de-coche">
-            <h2>Alquiler de coche</h2>
-            <p>
-              Alquilar coche no es imprescindible para disfrutar de Fuengirola, pero puede ser muy útil si quieres recorrer
-              la Costa del Sol con libertad. Desde Fuengirola es fácil organizar escapadas a Marbella, Mijas Pueblo,
-              Málaga, Ronda o Caminito del Rey.
-            </p>
-            <p>
-              Si eliges esta opción, conviene reservar con antelación y revisar bien las condiciones de seguro, franquicia,
-              combustible y recogida.
-            </p>
-          </section>
-
-          <section className="guide-content-section" id="autobus">
-            <h2>Autobús</h2>
-            <p>
-              El autobús puede ser útil en algunos horarios, pero normalmente es menos directo que el tren para llegar a
-              Fuengirola desde el aeropuerto. Puede requerir más espera o combinar distintas líneas.
-            </p>
-            <p>
-              Por comodidad, para la mayoría de huéspedes recomendamos valorar primero el tren, taxi o VTC.
-            </p>
-          </section>
-
-          <section className="guide-recommendation" id="nuestra-recomendacion">
-            <Star aria-hidden="true" size={28} />
-            <div>
-              <h2>Nuestra recomendación</h2>
-              <p>
-                Si buscas una llegada sencilla y económica, el tren Cercanías C1 es la mejor primera opción. Si viajas de
-                noche, con niños, con mucho equipaje o prefieres ir puerta a puerta, taxi, Uber o Bolt serán más cómodos.
-              </p>
-            </div>
-          </section>
-
-          <section className="guide-content-section" id="una-vez-llegues-a-fuengirola">
-            <h2>Una vez llegues a Fuengirola</h2>
-            <p>
-              La estación de tren de Fuengirola queda cerca de la zona del apartamento. Desde allí puedes continuar con un
-              breve trayecto en taxi, VTC o caminando si viajas ligero y te apetece orientarte por el centro.
-            </p>
-            <p>
-              La ubicación es práctica para moverse a pie durante la estancia: playa, paseo marítimo, supermercados,
-              restaurantes y el Centro Comercial Miramar quedan a pocos minutos.
-            </p>
-          </section>
-
-          <section className="guide-content-section" id="preguntas-frecuentes">
-            <h2>Preguntas frecuentes</h2>
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
             <div className="guide-faq-list">
-              {faqItems.map((item) => (
+              {content.faqs.map((item) => (
                 <details className="guide-faq-item" key={item.question}>
                   <summary>
                     <CircleHelp aria-hidden="true" size={18} />
@@ -352,50 +247,54 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
             </div>
           </section>
 
-          <section className="guide-content-section" id="nuestra-recomendacion-personal">
-            <h2>Nuestra recomendación personal</h2>
+          <section className="guide-content-section" id="personal-recommendation">
+            <h2>{content.personalTitle}</h2>
             <ul className="guide-check-list">
-              <li>
-                <CheckCircle2 aria-hidden="true" size={18} />
-                Elige tren si quieres ahorrar y llegar sin preocuparte por el tráfico.
-              </li>
-              <li>
-                <CheckCircle2 aria-hidden="true" size={18} />
-                Elige taxi o VTC si llegas tarde, viajas en familia o llevas mucho equipaje.
-              </li>
-              <li>
-                <CheckCircle2 aria-hidden="true" size={18} />
-                Elige coche de alquiler si quieres descubrir Marbella, Mijas Pueblo, Málaga y otros puntos de la Costa del
-                Sol.
-              </li>
+              {content.personalTips.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
             </ul>
           </section>
 
           <section className="guide-related" aria-labelledby="related-title">
-            <h2 id="related-title">También puede interesarte</h2>
+            <h2 id="related-title">{content.relatedTitle}</h2>
             <div className="guide-related-grid">
-              {relatedGuides.map((guide) => (
-                <Link className="guide-related-card" href={`/${locale}/guia/${guide.slug}`} key={guide.slug}>
-                  <MapPinned aria-hidden="true" size={22} />
-                  <strong>{guide.title}</strong>
-                  <span>{guide.text}</span>
-                </Link>
-              ))}
+              {relatedKeys.map((key) => {
+                const related = content.related[key];
+                return (
+                  <Link className="guide-related-card" href={getGuideCategoryPath(locale, key)} key={key}>
+                    <MapPinned aria-hidden="true" size={22} />
+                    <strong>{related.title}</strong>
+                    <span>{related.text}</span>
+                  </Link>
+                );
+              })}
             </div>
           </section>
 
           <section className="guide-cta">
             <Plane aria-hidden="true" size={30} />
-            <h2>¿Tienes alguna duda antes de viajar?</h2>
-            <p>
-              Escríbenos antes de reservar y te ayudamos con la llegada, el transporte o cualquier detalle práctico de tu
-              estancia en Fuengirola.
-            </p>
-            <WhatsAppButton locale={locale} label="Escribir por WhatsApp" />
+            <h2>{content.ctaTitle}</h2>
+            <p>{content.ctaText}</p>
+            <WhatsAppButton locale={locale} label={content.ctaButton} />
           </section>
         </article>
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
     </div>
+  );
+}
+
+function ArticleSection({ section }: { section: { id: string; title: string; paragraphs: string[] } }) {
+  return (
+    <section className="guide-content-section" id={section.id}>
+      <h2>{section.title}</h2>
+      {section.paragraphs.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+    </section>
   );
 }

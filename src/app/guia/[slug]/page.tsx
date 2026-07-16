@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
+import { getGuideCategoryByAnySlug, getGuideCategoryPath } from "@/config/guides";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export default async function GuideCategoryRedirectPage({ params }: Props) {
   const { slug } = await params;
-  redirect(`/es/guia/${slug}`);
+  const category = getGuideCategoryByAnySlug(slug);
+  redirect(category ? getGuideCategoryPath("es", category.key) : `/es/guia/${slug}`);
 }

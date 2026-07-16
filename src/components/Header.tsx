@@ -3,6 +3,7 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { LanguageSelect } from "@/components/LanguageSelect";
+import { getGuidePath } from "@/config/guides";
 import { property } from "@/config/property";
 import { Locale } from "@/i18n/locales";
 
@@ -20,7 +21,7 @@ export function Header({ locale, nav, menuLabel }: Props) {
     [`/${locale}#location`, nav.location],
     [`/${locale}#reviews`, nav.reviews],
     [`/${locale}#faq`, nav.faq],
-    [`/${locale}/guia`, nav.guide]
+    [getGuidePath(locale), nav.guide]
   ];
 
   return (

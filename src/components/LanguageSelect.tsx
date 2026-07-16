@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { getGuideCategoryByAnySlug, getGuideCategoryBySlug, getGuideCategoryPath, getGuidePath, isGuideBaseSegment } from "@/config/guides";
 import { Locale, localeLabels, locales } from "@/i18n/locales";
 
 export function LanguageSelect({ locale }: { locale: Locale }) {
@@ -9,7 +10,23 @@ export function LanguageSelect({ locale }: { locale: Locale }) {
 
   function changeLocale(nextLocale: Locale) {
     const parts = pathname.split("/");
-    if (locales.includes(parts[1] as Locale)) {
+    const currentLocale = parts[1] as Locale;
+    const guideSegment = parts[2];
+    const slug = parts[3];
+
+    if (locales.includes(currentLocale) && guideSegment && isGuideBaseSegment(currentLocale, guideSegment)) {
+      if (slug) {
+        const category = getGuideCategoryBySlug(currentLocale, slug) ?? getGuideCategoryByAnySlug(slug);
+        if (category) {
+          router.push(getGuideCategoryPath(nextLocale, category.key));
+          return;
+        }
+      }
+      router.push(getGuidePath(nextLocale));
+      return;
+    }
+
+    if (locales.includes(currentLocale)) {
       parts[1] = nextLocale;
       router.push(parts.join("/") || `/${nextLocale}`);
     } else {
