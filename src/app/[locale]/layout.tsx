@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { FloatingBookingButton } from "@/components/FloatingBookingButton";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, locales } from "@/i18n/locales";
 
@@ -23,6 +24,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
       <body>
         {children}
+        <WhatsAppButton locale={locale} label={t.common.whatsapp} className="whatsapp-float" />
         <FloatingBookingButton label={t.common.booking} />
         <GoogleAnalytics />
       </body>

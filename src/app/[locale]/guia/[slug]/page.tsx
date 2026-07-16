@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { airportGuideContent } from "@/config/guideArticles";
 import {
   getGuideCategoryBySlug,
@@ -279,7 +278,6 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
             <Plane aria-hidden="true" size={30} />
             <h2>{content.ctaTitle}</h2>
             <p>{content.ctaText}</p>
-            <WhatsAppButton locale={locale} label={content.ctaButton} />
           </section>
         </article>
       </main>

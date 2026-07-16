@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Briefcase, Car, Castle, CircleCheck, Coffee, Home, MapPinned, Palmtree, Plane, ShoppingBag, Smile, Snowflake, Sun, Train, Utensils, WashingMachine, Waves, Wifi, type LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Gallery } from "@/components/Gallery";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { CookieConsent } from "@/components/CookieConsent";
@@ -130,9 +129,6 @@ export default async function LocalePage({ params }: Props) {
             <span className="eyebrow">{t.hero.eyebrow}</span>
             <h1>{t.hero.title}</h1>
             <p>{t.hero.text}</p>
-            <div className="cta-row">
-              <WhatsAppButton locale={locale} label={t.common.whatsapp} />
-            </div>
             <div className="trust">{t.common.trust}</div>
           </div>
         </section>
@@ -346,7 +342,6 @@ export default async function LocalePage({ params }: Props) {
               <h2 className="section-title">{t.longStay.title}</h2>
               <p className="lead">{t.longStay.text}</p>
               <p>{t.longStay.text2}</p>
-              <WhatsAppButton locale={locale} label={t.longStay.cta} />
             </div>
             <div className="long-stay-card">
               <Briefcase aria-hidden="true" size={36} />
@@ -415,9 +410,6 @@ export default async function LocalePage({ params }: Props) {
               <p className="lead">{t.host.text}</p>
               <p>{t.host.text2}</p>
               <p className="small">{t.host.languages}</p>
-              <div className="cta-row">
-                <WhatsAppButton locale={locale} label={t.common.whatsappHost} />
-              </div>
             </div>
             <div className="host-card info-card host-profile-card">
               <Smile aria-hidden="true" size={34} />
@@ -445,7 +437,6 @@ export default async function LocalePage({ params }: Props) {
               {["checkin", "checkout", "rules", "pool", "parking", "damages", "cancellation"].map((key) => (
                 <div className="rule-card" key={key}>
                   <p>{t.rules[key]}</p>
-                  {key === "parking" ? <WhatsAppButton locale={locale} label={t.common.whatsapp} className="text-link" /> : null}
                 </div>
               ))}
             </div>
@@ -464,9 +455,6 @@ export default async function LocalePage({ params }: Props) {
           <div className="container">
             <h2 className="section-title">{t.closing.title}</h2>
             <p>{t.closing.text}</p>
-            <div className="cta-row">
-              <WhatsAppButton locale={locale} label={t.common.whatsapp} />
-            </div>
             <div className="trust">{t.common.trust}</div>
           </div>
         </section>
@@ -495,7 +483,6 @@ export default async function LocalePage({ params }: Props) {
           </div>
         </div>
       </footer>
-      <WhatsAppButton locale={locale} label={t.common.whatsapp} className="whatsapp-float" />
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>

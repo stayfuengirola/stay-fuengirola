@@ -20,14 +20,14 @@ export function WhatsAppButton({
       href={getWhatsappUrl(locale)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={isFloating ? "Contactar por WhatsApp" : label}
+      aria-label={label}
     >
       {isFloating ? (
         <Image
           src="/images/icons/whatsapp.png"
           alt=""
-          width={33}
-          height={33}
+          width={34}
+          height={34}
           className="whatsapp-logo"
           aria-hidden="true"
         />
