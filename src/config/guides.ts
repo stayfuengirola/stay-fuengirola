@@ -52,6 +52,11 @@ export const guideCategories = [
     slugs: { es: "excursiones", en: "excursions", fi: "retket", sv: "utflykter", no: "utflukter" }
   },
   {
+    key: "thingsToDo",
+    status: "published",
+    slugs: { es: "que-hacer", en: "things-to-do", fi: "mita-tehda", sv: "saker-att-gora", no: "ting-a-gjore" }
+  },
+  {
     key: "rain",
     status: "draft",
     slugs: {
