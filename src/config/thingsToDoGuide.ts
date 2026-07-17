@@ -19,9 +19,9 @@ export type ThingsToDoGuideContent = {
 
 export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
   es: {
-    metaTitle: "Qué hacer en Fuengirola | Bioparc, parques acuáticos y Marenostrum",
+    metaTitle: "Qué hacer en Fuengirola | Eventos, conciertos y Marenostrum",
     metaDescription:
-      "Ideas para disfrutar Fuengirola cerca del Apartamento Veramar: Bioparc Fuengirola, Costa Water Park, AquaMijas y conciertos de Marenostrum.",
+      "Ideas para disfrutar Fuengirola cerca del Apartamento Veramar: Bioparc, parques acuáticos, Marenostrum, conciertos y eventos durante el año.",
     breadcrumbGuide: "Guía de Fuengirola",
     breadcrumbArticle: "Qué hacer en Fuengirola",
     kicker: "Guía de Fuengirola · Qué hacer",
@@ -55,9 +55,9 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
     schemaAbout: ["Fuengirola", "Bioparc Fuengirola", "Costa Water Park", "AquaMijas", "Marenostrum Fuengirola", "Castillo Sohail"]
   },
   en: {
-    metaTitle: "Things to Do in Fuengirola | Bioparc, Water Parks and Marenostrum",
+    metaTitle: "Things to Do in Fuengirola | Events, Concerts and Marenostrum",
     metaDescription:
-      "Ideas for enjoying Fuengirola near Apartamento Veramar: Bioparc Fuengirola, Costa Water Park, AquaMijas and Marenostrum concerts.",
+      "Ideas for enjoying Fuengirola near Apartamento Veramar: Bioparc, water parks, Marenostrum, concerts and events throughout the year.",
     breadcrumbGuide: "Fuengirola Guide",
     breadcrumbArticle: "Things to do in Fuengirola",
     kicker: "Fuengirola Guide · Things to do",
@@ -91,9 +91,9 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
     schemaAbout: ["Fuengirola", "Bioparc Fuengirola", "Costa Water Park", "AquaMijas", "Marenostrum Fuengirola", "Sohail Castle"]
   },
   fi: {
-    metaTitle: "Mitä tehdä Fuengirolassa | Bioparc, vesipuistot ja Marenostrum",
+    metaTitle: "Mitä tehdä Fuengirolassa | Tapahtumat, konsertit ja Marenostrum",
     metaDescription:
-      "Ideoita Fuengirolaan Apartamento Veramarin lähellä: Bioparc Fuengirola, Costa Water Park, AquaMijas ja Marenostrumin konsertit.",
+      "Ideoita Fuengirolaan Apartamento Veramarin lähellä: Bioparc, vesipuistot, Marenostrum, konsertit ja tapahtumat ympäri vuoden.",
     breadcrumbGuide: "Fuengirola-opas",
     breadcrumbArticle: "Mitä tehdä Fuengirolassa",
     kicker: "Fuengirola-opas · Tekemistä",
@@ -127,9 +127,9 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
     schemaAbout: ["Fuengirola", "Bioparc Fuengirola", "Costa Water Park", "AquaMijas", "Marenostrum Fuengirola", "Sohailin linna"]
   },
   sv: {
-    metaTitle: "Saker att göra i Fuengirola | Bioparc, vattenparker och Marenostrum",
+    metaTitle: "Saker att göra i Fuengirola | Evenemang, konserter och Marenostrum",
     metaDescription:
-      "Tips för Fuengirola nära Apartamento Veramar: Bioparc Fuengirola, Costa Water Park, AquaMijas och Marenostrum-konserterna.",
+      "Tips för Fuengirola nära Apartamento Veramar: Bioparc, vattenparker, Marenostrum, konserter och evenemang under året.",
     breadcrumbGuide: "Fuengirola-guide",
     breadcrumbArticle: "Saker att göra i Fuengirola",
     kicker: "Fuengirola-guide · Saker att göra",
@@ -163,9 +163,9 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
     schemaAbout: ["Fuengirola", "Bioparc Fuengirola", "Costa Water Park", "AquaMijas", "Marenostrum Fuengirola", "Sohail-slottet"]
   },
   no: {
-    metaTitle: "Ting å gjøre i Fuengirola | Bioparc, vannparker og Marenostrum",
+    metaTitle: "Ting å gjøre i Fuengirola | Arrangementer, konserter og Marenostrum",
     metaDescription:
-      "Tips til Fuengirola nær Apartamento Veramar: Bioparc Fuengirola, Costa Water Park, AquaMijas og Marenostrum-konsertene.",
+      "Tips til Fuengirola nær Apartamento Veramar: Bioparc, vannparker, Marenostrum, konserter og arrangementer gjennom året.",
     breadcrumbGuide: "Fuengirola-guide",
     breadcrumbArticle: "Ting å gjøre i Fuengirola",
     kicker: "Fuengirola-guide · Ting å gjøre",

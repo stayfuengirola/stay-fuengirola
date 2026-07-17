@@ -390,6 +390,82 @@ img { max-width: 100%; display: block; }
 .beach-gallery-item { position: relative; min-height: 260px; overflow: hidden; border-radius: 8px; border: 1px solid var(--line); box-shadow: 0 10px 25px rgba(18,57,70,.05); background: #eef7f4; }
 .beach-gallery-item:first-child { grid-column: 1 / -1; min-height: 390px; }
 .beach-related-grid { grid-template-columns: repeat(5, 1fr); }
+.events-guide-section { overflow: hidden; isolation: isolate; }
+.events-section-head { display: grid; grid-template-columns: 68px 1fr; gap: 18px; align-items: start; margin-bottom: 30px; }
+.events-section-head .guide-hero-icon { margin-bottom: 0; }
+.events-section-head h2 { margin-bottom: 10px; }
+.events-block { margin-top: 32px; }
+.events-block h3,
+.event-highlight-card h3,
+.event-tips-card h3 {
+  margin: 0 0 16px;
+  color: var(--blue-deep);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  line-height: 1.16;
+}
+.concert-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.concert-card {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: 140px 1fr;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(18,57,70,.05);
+}
+.concert-card.featured { border-color: rgba(120,155,130,.55); background: #fbfefb; }
+.concert-image { position: relative; display: grid; place-items: center; overflow: hidden; background: #eef7f4; color: var(--blue); }
+.concert-card-body { padding: 18px; display: grid; align-content: start; gap: 10px; }
+.concert-card-body > span { color: var(--green); font-size: .82rem; font-weight: 900; text-transform: uppercase; letter-spacing: .06em; }
+.concert-card-body h4 { margin: 0; color: var(--blue-deep); font-family: Georgia, "Times New Roman", serif; font-size: 1.28rem; line-height: 1.16; }
+.concert-card-body p { display: flex; align-items: center; gap: 8px; margin: 0; color: #405157; font-size: .94rem; }
+.concert-card-body p svg { color: var(--blue); flex: 0 0 auto; }
+.concert-card-body a,
+.event-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  color: var(--blue);
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.event-highlight-card { background: #fffaf0; }
+.event-highlight-card p { margin-bottom: 14px; }
+.annual-events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.annual-event-card {
+  min-height: 176px;
+  padding: 20px;
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(18,57,70,.05);
+}
+.annual-event-card svg { color: var(--blue); }
+.annual-event-card strong { color: var(--blue-deep); font-family: Georgia, "Times New Roman", serif; font-size: 1.14rem; line-height: 1.18; }
+.annual-event-card span { color: var(--green); font-weight: 900; font-size: .9rem; }
+.annual-event-card p { margin: 0; color: var(--muted); font-size: .94rem; }
+.event-timeline { display: grid; gap: 10px; border-left: 2px solid rgba(15,127,155,.18); padding-left: 18px; }
+.event-timeline-item { position: relative; display: grid; grid-template-columns: 118px 1fr; gap: 16px; padding: 16px 18px; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
+.event-timeline-item::before { content: ""; position: absolute; left: -25px; top: 24px; width: 12px; height: 12px; border-radius: 999px; background: var(--blue); border: 3px solid #fffaf0; }
+.event-timeline-item strong { color: var(--blue); font-weight: 900; text-transform: uppercase; letter-spacing: .06em; font-size: .86rem; }
+.event-timeline-item p { margin: 0; color: #405157; }
+.event-tips-card .guide-check-list { margin-top: 0; }
+.event-map-block { position: relative; z-index: 0; overflow: hidden; isolation: isolate; }
+.event-guide-map { height: 420px; margin-top: 16px; contain: none; clip-path: none; transform: none; will-change: auto; }
+.event-guide-map .leaflet-map,
+.event-guide-map .leaflet-container { contain: none; transform: none; will-change: auto; }
+.event-guide-map .leaflet-tile,
+.event-guide-map .leaflet-pane,
+.event-guide-map .leaflet-map-pane,
+.event-guide-map .leaflet-tile-pane { will-change: auto !important; }
+.event-map-marker { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 999px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px rgba(18,57,70,.14); color: var(--blue); font-weight: 900; font-size: 18px; }
 .long-stay-section { background: #eef7f4; }
 .long-stay-card { min-height: 280px; display: grid; place-items: center; align-content: center; gap: 16px; padding: 24px; text-align: center; }
 .long-stay-card strong { color: var(--blue-deep); font-size: clamp(1.25rem, 2vw, 1.65rem); }
@@ -423,16 +499,20 @@ img { max-width: 100%; display: block; }
   .nav { display: none; }
   .hamburger { display: inline-grid; }
   .mobile-nav { position: fixed; top: 70px; left: 0; right: 0; background: #fffaf0; border-bottom: 1px solid var(--line); padding: 16px; display: grid; gap: 12px; }
-  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid, .airport-options, .guide-related-grid, .beach-quick-grid, .beach-feature-grid, .beach-section-grid, .beach-detail-grid { grid-template-columns: 1fr; }
+  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid, .airport-options, .guide-related-grid, .beach-quick-grid, .beach-feature-grid, .beach-section-grid, .beach-detail-grid, .concert-card-grid, .annual-events-grid { grid-template-columns: 1fr; }
   .quick { transform: none; padding-top: 18px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .gallery-button:first-child { grid-column: span 2; min-height: 320px; }
   .leaflet-map-frame { height: 300px; }
   .beach-guide-map { height: 330px; }
+  .event-guide-map { height: 330px; }
   .leaflet-map { min-height: 300px; height: 100%; }
   .beach-map-section { z-index: 0; margin-bottom: 10px; }
   .beach-quick-card { z-index: 5; margin-top: 0; -webkit-transform: translateZ(0); transform: translateZ(0); }
   .beach-quick-item { -webkit-transform: translateZ(0); transform: translateZ(0); }
+  .events-section-head { grid-template-columns: 1fr; gap: 14px; }
+  .concert-card { grid-template-rows: 120px 1fr; }
+  .event-timeline-item { grid-template-columns: 1fr; gap: 8px; }
   .arrival-grid { grid-template-columns: 1fr; }
   .whatsapp-float { width: 58px; height: 58px; bottom: calc(78px + env(safe-area-inset-bottom)); }
   .whatsapp-logo { width: 52px; height: 52px; }
@@ -462,6 +542,10 @@ img { max-width: 100%; display: block; }
   .guide-map-block iframe { height: 320px; }
   .guide-recommendation { grid-template-columns: 1fr; padding: 22px; }
   .guide-faq-item p { padding-left: 18px; }
+  .events-block { margin-top: 26px; }
+  .annual-event-card { min-height: auto; }
+  .event-timeline { padding-left: 14px; }
+  .event-timeline-item::before { left: -21px; }
   .airport-option { padding: 20px; }
   .beach-image, .beach-gallery-item:first-child { min-height: 300px; }
   .beach-gallery { grid-template-columns: 1fr; }

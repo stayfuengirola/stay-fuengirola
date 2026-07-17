@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Accessibility,
+  CalendarDays,
   Car,
   CarTaxiFront,
   Castle,
@@ -12,15 +13,23 @@ import {
   Clock,
   Dog,
   Euro,
+  ExternalLink,
   Footprints,
+  Gift,
+  Globe2,
   Luggage,
   MapPin,
   MapPinned,
+  Mic2,
+  Music,
   Plane,
+  Sparkles,
   ShowerHead,
   ShoppingBag,
   Star,
   Sun,
+  Ticket,
+  Trophy,
   TrainFront,
   Umbrella,
   Users,
@@ -28,13 +37,16 @@ import {
   Waves
 } from "lucide-react";
 import { BeachGuideMap } from "@/components/BeachGuideMap";
+import { EventsGuideMap } from "@/components/EventsGuideMap";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
+import { annualFuengirolaEvents, fuengirolaAgenda, guideConcerts, marenostrumOfficialUrl } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
 import { beachGuideContent } from "@/config/beachGuide";
 import { restaurantGuideContent } from "@/config/restaurantGuide";
 import { shoppingGuideContent } from "@/config/shoppingGuide";
 import { thingsToDoGuideContent } from "@/config/thingsToDoGuide";
+import { thingsToDoEventsContent } from "@/config/thingsToDoEvents";
 import {
   getGuideCategoryBySlug,
   getGuideCategoryPath,
@@ -62,6 +74,15 @@ const beachFeatureIcons = {
   dogs: Dog,
   toilets: CircleHelp,
   accessible: Accessibility
+} as const;
+const annualEventIcons = {
+  fair: Ticket,
+  world: Globe2,
+  christmas: Gift,
+  fire: Sun,
+  music: Music,
+  culture: Sparkles,
+  sport: Trophy
 } as const;
 
 export function generateStaticParams() {
@@ -253,6 +274,7 @@ function ShoppingGuidePage({ locale, dictionary: t }: { locale: Locale; dictiona
 
 function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
   const content = thingsToDoGuideContent[locale];
+  const eventsContent = thingsToDoEventsContent[locale];
   const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "thingsToDo")}`;
   const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
   const breadcrumbJsonLd = {
@@ -272,25 +294,32 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
     mainEntityOfPage: articleUrl,
     author: { "@type": "Organization", name: property.brandName },
     publisher: { "@type": "Organization", name: property.brandName },
-    about: content.schemaAbout,
+    about: [...content.schemaAbout, "Marenostrum Fuengirola", "eventos en Fuengirola", "conciertos en Fuengirola"],
     inLanguage: locale,
     dateModified: "2026-07-17"
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: eventsContent.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
   };
 
   return (
     <div className="shell">
       <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
       <main className="section guide-page">
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-        />
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
         <article className="container guide-article">
           <Link className="text-link" href={getGuidePath(locale)}>
             <ArrowLeft aria-hidden="true" size={18} />
@@ -309,6 +338,132 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
           {content.activities.map((activity) => (
             <ArticleSection section={activity} key={activity.id} />
           ))}
+
+          <section className="guide-content-section events-guide-section" id="eventos-conciertos">
+            <div className="events-section-head">
+              <span className="guide-hero-icon">
+                <Music aria-hidden="true" size={30} />
+              </span>
+              <div>
+                <h2>{eventsContent.title}</h2>
+                <p>{eventsContent.intro}</p>
+              </div>
+            </div>
+
+            <div className="events-block">
+              <h3>{eventsContent.concertsTitle}</h3>
+              <div className="concert-card-grid">
+                {guideConcerts.map((concert) => (
+                  <article className={concert.featured ? "concert-card featured" : "concert-card"} key={concert.id}>
+                    <div className="concert-image" aria-label={eventsContent.noImageLabel}>
+                      {concert.image ? (
+                        <Image src={concert.image} alt={concert.artist} fill sizes="(max-width: 960px) 100vw, 280px" loading="lazy" className="image-cover" />
+                      ) : (
+                        <Mic2 aria-hidden="true" size={28} />
+                      )}
+                    </div>
+                    <div className="concert-card-body">
+                      <span>{concert.category[locale]}</span>
+                      <h4>{concert.title?.[locale] ?? concert.artist}</h4>
+                      <p>
+                        <CalendarDays aria-hidden="true" size={16} />
+                        {concert.dateLabel[locale]}
+                      </p>
+                      <p>
+                        <MapPin aria-hidden="true" size={16} />
+                        {concert.venue[locale]}
+                      </p>
+                      <a href={concert.url} target="_blank" rel="noopener noreferrer">
+                        <Ticket aria-hidden="true" size={16} />
+                        {concert.ctaLabel[locale]}
+                        <ExternalLink aria-hidden="true" size={14} />
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <section className="guide-recommendation event-highlight-card" aria-labelledby="marenostrum-title">
+              <Music aria-hidden="true" size={28} />
+              <div>
+                <h3 id="marenostrum-title">{eventsContent.marenostrumTitle}</h3>
+                <p>{eventsContent.marenostrumText}</p>
+                <a href={marenostrumOfficialUrl} target="_blank" rel="noopener noreferrer" className="event-inline-link">
+                  {eventsContent.marenostrumCta}
+                  <ExternalLink aria-hidden="true" size={15} />
+                </a>
+              </div>
+            </section>
+
+            <div className="events-block">
+              <h3>{eventsContent.annualTitle}</h3>
+              <div className="annual-events-grid">
+                {annualFuengirolaEvents.map((event) => {
+                  const Icon = annualEventIcons[event.icon];
+                  return (
+                    <article className="annual-event-card" key={event.id}>
+                      <Icon aria-hidden="true" size={24} />
+                      <strong>{event.title[locale]}</strong>
+                      <span>{event.season[locale]}</span>
+                      <p>{event.description[locale]}</p>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="events-block">
+              <h3>{eventsContent.agendaTitle}</h3>
+              <div className="event-timeline">
+                {fuengirolaAgenda.map((month) => (
+                  <div className="event-timeline-item" key={month.id}>
+                    <strong>{month.month[locale]}</strong>
+                    <div>
+                      {month.events.map((event) => (
+                        <p key={event[locale]}>{event[locale]}</p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <section className="guide-recommendation event-tips-card" aria-labelledby="event-tips-title">
+              <CheckCircle2 aria-hidden="true" size={28} />
+              <div>
+                <h3 id="event-tips-title">{eventsContent.tipsTitle}</h3>
+                <ul className="guide-check-list">
+                  {eventsContent.tips.map((tip) => (
+                    <li key={tip}>
+                      <CheckCircle2 aria-hidden="true" size={18} />
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            <div className="events-block event-map-block">
+              <h3>{eventsContent.mapTitle}</h3>
+              <EventsGuideMap ariaLabel={eventsContent.mapAria} apartmentLabel={eventsContent.mapApartment} />
+            </div>
+
+            <div className="events-block" id="eventos-faq">
+              <h3>{eventsContent.faqTitle}</h3>
+              <div className="guide-faq-list">
+                {eventsContent.faqs.map((item) => (
+                  <details className="guide-faq-item" key={item.question}>
+                    <summary>
+                      <CircleHelp aria-hidden="true" size={18} />
+                      {item.question}
+                    </summary>
+                    <p>{item.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
         </article>
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
