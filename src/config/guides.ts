@@ -38,7 +38,7 @@ export const guideCategories = [
   },
   {
     key: "shopping",
-    status: "draft",
+    status: "published",
     slugs: { es: "compras", en: "shopping", fi: "ostokset", sv: "shopping", no: "shopping" }
   },
   {
