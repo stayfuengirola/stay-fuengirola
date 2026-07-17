@@ -33,7 +33,7 @@ export const guideCategories = [
   },
   {
     key: "restaurants",
-    status: "draft",
+    status: "published",
     slugs: { es: "restaurantes", en: "restaurants", fi: "ravintolat", sv: "restauranger", no: "restauranter" }
   },
   {

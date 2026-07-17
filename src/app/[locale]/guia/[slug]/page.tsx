@@ -32,6 +32,7 @@ import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
 import { airportGuideContent } from "@/config/guideArticles";
 import { beachGuideContent } from "@/config/beachGuide";
+import { restaurantGuideContent } from "@/config/restaurantGuide";
 import {
   getGuideCategoryBySlug,
   getGuideCategoryPath,
@@ -74,10 +75,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = getDictionary(locale);
   const isAirportGuide = category.key === "airport";
   const isBeachGuide = category.key === "beaches";
+  const isRestaurantGuide = category.key === "restaurants";
   const airportContent = airportGuideContent[locale];
   const beachContent = beachGuideContent[locale];
-  const title = isAirportGuide ? airportContent.metaTitle : isBeachGuide ? beachContent.metaTitle : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
-  const description = isAirportGuide ? airportContent.metaDescription : isBeachGuide ? beachContent.metaDescription : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+  const restaurantContent = restaurantGuideContent[locale];
+  const title = isAirportGuide ? airportContent.metaTitle : isBeachGuide ? beachContent.metaTitle : isRestaurantGuide ? restaurantContent.metaTitle : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+  const description = isAirportGuide ? airportContent.metaDescription : isBeachGuide ? beachContent.metaDescription : isRestaurantGuide ? restaurantContent.metaDescription : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
   const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
@@ -123,6 +126,10 @@ export default async function GuideCategoryPage({ params }: Props) {
     return <BeachGuidePage locale={locale} dictionary={t} />;
   }
 
+  if (category.key === "restaurants") {
+    return <RestaurantGuidePage locale={locale} dictionary={t} />;
+  }
+
   return (
     <div className="shell">
       <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
@@ -139,6 +146,95 @@ export default async function GuideCategoryPage({ params }: Props) {
             <strong>{t.guide.comingSoon}</strong>
           </div>
         </div>
+      </main>
+      <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
+    </div>
+  );
+}
+
+function RestaurantGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
+  const content = restaurantGuideContent[locale];
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "restaurants")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Stay Fuengirola", item: `${siteUrl}/${locale}` },
+      { "@type": "ListItem", position: 2, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 3, name: content.breadcrumbArticle, item: articleUrl }
+    ]
+  };
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.h1,
+    description: content.metaDescription,
+    mainEntityOfPage: articleUrl,
+    author: { "@type": "Organization", name: property.brandName },
+    publisher: { "@type": "Organization", name: property.brandName },
+    about: content.schemaAbout,
+    inLanguage: locale,
+    dateModified: "2026-07-17"
+  };
+
+  return (
+    <div className="shell">
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
+      <main className="section guide-page">
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
+        <article className="container guide-article">
+          <Link className="text-link" href={getGuidePath(locale)}>
+            <ArrowLeft aria-hidden="true" size={18} />
+            {content.backLabel}
+          </Link>
+
+          <header className="guide-hero-card">
+            <span className="guide-hero-icon">
+              <Utensils aria-hidden="true" size={30} />
+            </span>
+            <p className="guide-kicker">{content.kicker}</p>
+            <h1>{content.h1}</h1>
+            <p>{content.intro}</p>
+          </header>
+
+          {content.restaurants.map((restaurant) => (
+            <section className="guide-content-section" id={restaurant.id} key={restaurant.id}>
+              <h2>{restaurant.name}</h2>
+              <p className="guide-kicker">{restaurant.subtitle}</p>
+              <p>{restaurant.description}</p>
+              <ul className="guide-check-list">
+                <li>
+                  <MapPin aria-hidden="true" size={18} />
+                  {restaurant.address}
+                </li>
+                <li>
+                  <Clock aria-hidden="true" size={18} />
+                  {restaurant.hours}
+                </li>
+              </ul>
+              <p>
+                <strong>{restaurant.tip}</strong>
+              </p>
+            </section>
+          ))}
+
+          <section className="guide-recommendation">
+            <Utensils aria-hidden="true" size={28} />
+            <div>
+              <p>{content.closing}</p>
+            </div>
+          </section>
+        </article>
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
     </div>
