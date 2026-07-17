@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   ArrowLeft,
   Accessibility,
-  CalendarDays,
   Car,
   CarTaxiFront,
   Castle,
@@ -13,23 +12,15 @@ import {
   Clock,
   Dog,
   Euro,
-  ExternalLink,
   Footprints,
-  Gift,
-  Globe2,
   Luggage,
   MapPin,
   MapPinned,
-  Mic2,
-  Music,
   Plane,
-  Sparkles,
   ShowerHead,
   ShoppingBag,
   Star,
   Sun,
-  Ticket,
-  Trophy,
   TrainFront,
   Umbrella,
   Users,
@@ -37,10 +28,10 @@ import {
   Waves
 } from "lucide-react";
 import { BeachGuideMap } from "@/components/BeachGuideMap";
-import { EventsGuideMap } from "@/components/EventsGuideMap";
+import { EventsSection } from "@/components/EventsSection";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
-import { annualFuengirolaEvents, fuengirolaAgenda, guideConcerts, marenostrumOfficialUrl } from "@/config/events";
+import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
 import { beachGuideContent } from "@/config/beachGuide";
 import { restaurantGuideContent } from "@/config/restaurantGuide";
@@ -74,15 +65,6 @@ const beachFeatureIcons = {
   dogs: Dog,
   toilets: CircleHelp,
   accessible: Accessibility
-} as const;
-const annualEventIcons = {
-  fair: Ticket,
-  world: Globe2,
-  christmas: Gift,
-  fire: Sun,
-  music: Music,
-  culture: Sparkles,
-  sport: Trophy
 } as const;
 
 export function generateStaticParams() {
@@ -307,12 +289,35 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
       acceptedAnswer: { "@type": "Answer", text: item.answer }
     }))
   };
+  const eventStatusMap = {
+    scheduled: "https://schema.org/EventScheduled",
+    cancelled: "https://schema.org/EventCancelled",
+    postponed: "https://schema.org/EventPostponed",
+    rescheduled: "https://schema.org/EventRescheduled"
+  } as const;
+  const eventJsonLd = getPublishedEvents(fuengirolaEvents).map((event) => ({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title[locale],
+    startDate: event.startTime ? `${event.startDate}T${event.startTime}:00` : event.startDate,
+    endDate: event.endDate,
+    eventStatus: eventStatusMap[event.status ?? "scheduled"],
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    location: {
+      "@type": "Place",
+      name: event.venue[locale],
+      address: event.location?.[locale] ?? "Fuengirola, Málaga, España"
+    },
+    image: event.image ? [`${siteUrl}${event.image}`] : undefined,
+    description: event.description[locale],
+    url: event.officialUrl
+  }));
 
   return (
     <div className="shell">
       <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
       <main className="section guide-page">
-        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd, ...eventJsonLd].map((jsonLd, index) => (
           <script
             key={index}
             type="application/ld+json"
@@ -342,7 +347,7 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
           <section className="guide-content-section events-guide-section" id="eventos-conciertos">
             <div className="events-section-head">
               <span className="guide-hero-icon">
-                <Music aria-hidden="true" size={30} />
+                <Star aria-hidden="true" size={30} />
               </span>
               <div>
                 <h2>{eventsContent.title}</h2>
@@ -350,119 +355,7 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
               </div>
             </div>
 
-            <div className="events-block">
-              <h3>{eventsContent.concertsTitle}</h3>
-              <div className="concert-card-grid">
-                {guideConcerts.map((concert) => (
-                  <article className={concert.featured ? "concert-card featured" : "concert-card"} key={concert.id}>
-                    <div className="concert-image" aria-label={eventsContent.noImageLabel}>
-                      {concert.image ? (
-                        <Image src={concert.image} alt={concert.artist} fill sizes="(max-width: 960px) 100vw, 280px" loading="lazy" className="image-cover" />
-                      ) : (
-                        <Mic2 aria-hidden="true" size={28} />
-                      )}
-                    </div>
-                    <div className="concert-card-body">
-                      <span>{concert.category[locale]}</span>
-                      <h4>{concert.title?.[locale] ?? concert.artist}</h4>
-                      <p>
-                        <CalendarDays aria-hidden="true" size={16} />
-                        {concert.dateLabel[locale]}
-                      </p>
-                      <p>
-                        <MapPin aria-hidden="true" size={16} />
-                        {concert.venue[locale]}
-                      </p>
-                      <a href={concert.url} target="_blank" rel="noopener noreferrer">
-                        <Ticket aria-hidden="true" size={16} />
-                        {concert.ctaLabel[locale]}
-                        <ExternalLink aria-hidden="true" size={14} />
-                      </a>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <section className="guide-recommendation event-highlight-card" aria-labelledby="marenostrum-title">
-              <Music aria-hidden="true" size={28} />
-              <div>
-                <h3 id="marenostrum-title">{eventsContent.marenostrumTitle}</h3>
-                <p>{eventsContent.marenostrumText}</p>
-                <a href={marenostrumOfficialUrl} target="_blank" rel="noopener noreferrer" className="event-inline-link">
-                  {eventsContent.marenostrumCta}
-                  <ExternalLink aria-hidden="true" size={15} />
-                </a>
-              </div>
-            </section>
-
-            <div className="events-block">
-              <h3>{eventsContent.annualTitle}</h3>
-              <div className="annual-events-grid">
-                {annualFuengirolaEvents.map((event) => {
-                  const Icon = annualEventIcons[event.icon];
-                  return (
-                    <article className="annual-event-card" key={event.id}>
-                      <Icon aria-hidden="true" size={24} />
-                      <strong>{event.title[locale]}</strong>
-                      <span>{event.season[locale]}</span>
-                      <p>{event.description[locale]}</p>
-                    </article>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="events-block">
-              <h3>{eventsContent.agendaTitle}</h3>
-              <div className="event-timeline">
-                {fuengirolaAgenda.map((month) => (
-                  <div className="event-timeline-item" key={month.id}>
-                    <strong>{month.month[locale]}</strong>
-                    <div>
-                      {month.events.map((event) => (
-                        <p key={event[locale]}>{event[locale]}</p>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <section className="guide-recommendation event-tips-card" aria-labelledby="event-tips-title">
-              <CheckCircle2 aria-hidden="true" size={28} />
-              <div>
-                <h3 id="event-tips-title">{eventsContent.tipsTitle}</h3>
-                <ul className="guide-check-list">
-                  {eventsContent.tips.map((tip) => (
-                    <li key={tip}>
-                      <CheckCircle2 aria-hidden="true" size={18} />
-                      {tip}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </section>
-
-            <div className="events-block event-map-block">
-              <h3>{eventsContent.mapTitle}</h3>
-              <EventsGuideMap ariaLabel={eventsContent.mapAria} apartmentLabel={eventsContent.mapApartment} />
-            </div>
-
-            <div className="events-block" id="eventos-faq">
-              <h3>{eventsContent.faqTitle}</h3>
-              <div className="guide-faq-list">
-                {eventsContent.faqs.map((item) => (
-                  <details className="guide-faq-item" key={item.question}>
-                    <summary>
-                      <CircleHelp aria-hidden="true" size={18} />
-                      {item.question}
-                    </summary>
-                    <p>{item.answer}</p>
-                  </details>
-                ))}
-              </div>
-            </div>
+            <EventsSection content={eventsContent} events={fuengirolaEvents} locale={locale} permanentActivities={permanentActivities} />
           </section>
         </article>
       </main>

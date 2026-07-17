@@ -1,19 +1,37 @@
 import { Locale } from "@/i18n/locales";
 
 export type LocalizedText = Record<Locale, string>;
+export type EventCategory = "concert" | "festival" | "fair" | "family" | "culture" | "sport" | "market" | "other";
+export type EventLifecycleStatus = "upcoming" | "today" | "ongoing" | "past";
+export type EventScheduleStatus = "scheduled" | "cancelled" | "postponed" | "rescheduled";
 
-export type GuideConcert = {
+export interface FuengirolaEvent {
   id: string;
-  artist: string;
-  title?: LocalizedText;
-  date: string;
-  dateLabel: LocalizedText;
+  slug: string;
+  title: LocalizedText;
+  subtitle?: LocalizedText;
+  description: LocalizedText;
+  startDate: string;
+  endDate?: string;
+  startTime?: string;
   venue: LocalizedText;
-  category: LocalizedText;
+  location?: LocalizedText;
+  category: EventCategory;
   image?: string;
-  url: string;
-  ctaLabel: LocalizedText;
+  officialUrl?: string;
+  ticketUrl?: string;
   featured?: boolean;
+  free?: boolean;
+  recurring?: boolean;
+  published?: boolean;
+  status?: EventScheduleStatus;
+}
+
+export type PermanentActivity = {
+  id: string;
+  title: LocalizedText;
+  description: LocalizedText;
+  tag: LocalizedText;
 };
 
 export type AnnualEvent = {
@@ -31,13 +49,36 @@ export type AgendaMonth = {
 };
 
 export const marenostrumOfficialUrl = "https://marenostrumfuengirola.com/";
+export const fuengirolaOfficialAgendaUrl = "https://turismo.fuengirola.es/";
 
-export const guideConcerts: GuideConcert[] = [
+// Añadir aquí únicamente eventos confirmados mediante fuentes oficiales.
+export const fuengirolaEvents: FuengirolaEvent[] = [
   {
     id: "pablo-alboran-2026",
-    artist: "Pablo Alborán",
-    date: "2026-06-06",
-    dateLabel: { es: "6 junio 2026", en: "6 June 2026", fi: "6. kesäkuuta 2026", sv: "6 juni 2026", no: "6. juni 2026" },
+    slug: "pablo-alboran-marenostrum-2026",
+    title: {
+      es: "Pablo Alborán",
+      en: "Pablo Alborán",
+      fi: "Pablo Alborán",
+      sv: "Pablo Alborán",
+      no: "Pablo Alborán"
+    },
+    subtitle: {
+      es: "Concierto en Marenostrum",
+      en: "Concert at Marenostrum",
+      fi: "Konsertti Marenostrumissa",
+      sv: "Konsert på Marenostrum",
+      no: "Konsert på Marenostrum"
+    },
+    description: {
+      es: "Una noche de música en el recinto junto al Castillo Sohail.",
+      en: "An evening of music at the venue next to Sohail Castle.",
+      fi: "Musiikki-ilta Sohailin linnan vieressä sijaitsevalla alueella.",
+      sv: "En musikkväll på området intill Sohail-slottet.",
+      no: "En musikkaften på arenaen ved siden av Sohail-slottet."
+    },
+    startDate: "2026-06-06",
+    startTime: "22:00",
     venue: {
       es: "Marenostrum Fuengirola",
       en: "Marenostrum Fuengirola",
@@ -45,16 +86,38 @@ export const guideConcerts: GuideConcert[] = [
       sv: "Marenostrum Fuengirola",
       no: "Marenostrum Fuengirola"
     },
-    category: { es: "Concierto", en: "Concert", fi: "Konsertti", sv: "Konsert", no: "Konsert" },
-    url: "https://marenostrumfuengirola.com/eventos/pablo-alboran/",
-    ctaLabel: { es: "Ver entradas", en: "View tickets", fi: "Katso liput", sv: "Se biljetter", no: "Se billetter" },
+    location: {
+      es: "Junto al Castillo Sohail",
+      en: "Next to Sohail Castle",
+      fi: "Sohailin linnan vieressä",
+      sv: "Intill Sohail-slottet",
+      no: "Ved siden av Sohail-slottet"
+    },
+    category: "concert",
+    officialUrl: "https://marenostrumfuengirola.com/eventos/pablo-alboran/",
+    ticketUrl: "https://marenostrumfuengirola.com/eventos/pablo-alboran/",
     featured: true
   },
   {
     id: "aitana-2026",
-    artist: "Aitana",
-    date: "2026-06-19",
-    dateLabel: { es: "19 junio 2026", en: "19 June 2026", fi: "19. kesäkuuta 2026", sv: "19 juni 2026", no: "19. juni 2026" },
+    slug: "aitana-marenostrum-2026",
+    title: { es: "Aitana", en: "Aitana", fi: "Aitana", sv: "Aitana", no: "Aitana" },
+    subtitle: {
+      es: "Concierto en Marenostrum",
+      en: "Concert at Marenostrum",
+      fi: "Konsertti Marenostrumissa",
+      sv: "Konsert på Marenostrum",
+      no: "Konsert på Marenostrum"
+    },
+    description: {
+      es: "Concierto de verano dentro de la programación de Marenostrum Fuengirola.",
+      en: "A summer concert within the Marenostrum Fuengirola programme.",
+      fi: "Kesäkonsertti osana Marenostrum Fuengirolan ohjelmaa.",
+      sv: "Sommarkonsert inom programmet för Marenostrum Fuengirola.",
+      no: "Sommerkonsert som del av programmet til Marenostrum Fuengirola."
+    },
+    startDate: "2026-06-19",
+    startTime: "22:00",
     venue: {
       es: "Marenostrum Fuengirola",
       en: "Marenostrum Fuengirola",
@@ -62,32 +125,38 @@ export const guideConcerts: GuideConcert[] = [
       sv: "Marenostrum Fuengirola",
       no: "Marenostrum Fuengirola"
     },
-    category: { es: "Concierto", en: "Concert", fi: "Konsertti", sv: "Konsert", no: "Konsert" },
-    url: "https://marenostrumfuengirola.com/eventos/aitana/",
-    ctaLabel: { es: "Ver entradas", en: "View tickets", fi: "Katso liput", sv: "Se biljetter", no: "Se billetter" },
+    location: {
+      es: "Junto al Castillo Sohail",
+      en: "Next to Sohail Castle",
+      fi: "Sohailin linnan vieressä",
+      sv: "Intill Sohail-slottet",
+      no: "Ved siden av Sohail-slottet"
+    },
+    category: "concert",
+    officialUrl: "https://marenostrumfuengirola.com/eventos/aitana/",
+    ticketUrl: "https://marenostrumfuengirola.com/eventos/aitana/",
     featured: true
   },
   {
-    id: "la-oreja-de-van-gogh-2026",
-    artist: "La Oreja de Van Gogh",
-    date: "2026-06-27",
-    dateLabel: { es: "27 junio 2026", en: "27 June 2026", fi: "27. kesäkuuta 2026", sv: "27 juni 2026", no: "27. juni 2026" },
-    venue: {
-      es: "Marenostrum Fuengirola",
-      en: "Marenostrum Fuengirola",
-      fi: "Marenostrum Fuengirola",
-      sv: "Marenostrum Fuengirola",
-      no: "Marenostrum Fuengirola"
-    },
-    category: { es: "Concierto", en: "Concert", fi: "Konsertti", sv: "Konsert", no: "Konsert" },
-    url: "https://marenostrumfuengirola.com/eventos/la-oreja-de-van-gogh-tantas-cosas-que-contar-tour-2026/",
-    ctaLabel: { es: "Ver información", en: "View info", fi: "Katso tiedot", sv: "Se information", no: "Se informasjon" }
-  },
-  {
     id: "sting-2026",
-    artist: "Sting",
-    date: "2026-07-13",
-    dateLabel: { es: "13 julio 2026", en: "13 July 2026", fi: "13. heinäkuuta 2026", sv: "13 juli 2026", no: "13. juli 2026" },
+    slug: "sting-marenostrum-2026",
+    title: { es: "Sting", en: "Sting", fi: "Sting", sv: "Sting", no: "Sting" },
+    subtitle: {
+      es: "Concierto en Marenostrum",
+      en: "Concert at Marenostrum",
+      fi: "Konsertti Marenostrumissa",
+      sv: "Konsert på Marenostrum",
+      no: "Konsert på Marenostrum"
+    },
+    description: {
+      es: "Actuación internacional en el ciclo de conciertos de Marenostrum.",
+      en: "An international performance in the Marenostrum concert series.",
+      fi: "Kansainvälinen esiintyminen Marenostrumin konserttisarjassa.",
+      sv: "Internationellt framträdande i Marenostrums konsertserie.",
+      no: "Internasjonal opptreden i Marenostrums konsertserie."
+    },
+    startDate: "2026-07-13",
+    startTime: "22:00",
     venue: {
       es: "Marenostrum Fuengirola",
       en: "Marenostrum Fuengirola",
@@ -95,15 +164,43 @@ export const guideConcerts: GuideConcert[] = [
       sv: "Marenostrum Fuengirola",
       no: "Marenostrum Fuengirola"
     },
-    category: { es: "Concierto", en: "Concert", fi: "Konsertti", sv: "Konsert", no: "Konsert" },
-    url: "https://marenostrumfuengirola.com/eventos/sting/",
-    ctaLabel: { es: "Ver información", en: "View info", fi: "Katso tiedot", sv: "Se information", no: "Se informasjon" }
+    location: {
+      es: "Junto al Castillo Sohail",
+      en: "Next to Sohail Castle",
+      fi: "Sohailin linnan vieressä",
+      sv: "Intill Sohail-slottet",
+      no: "Ved siden av Sohail-slottet"
+    },
+    category: "concert",
+    officialUrl: "https://marenostrumfuengirola.com/eventos/sting/",
+    ticketUrl: "https://marenostrumfuengirola.com/eventos/sting/"
   },
   {
     id: "alejandro-sanz-2026",
-    artist: "Alejandro Sanz",
-    date: "2026-07-24",
-    dateLabel: { es: "24 julio 2026", en: "24 July 2026", fi: "24. heinäkuuta 2026", sv: "24 juli 2026", no: "24. juli 2026" },
+    slug: "alejandro-sanz-marenostrum-2026",
+    title: {
+      es: "Alejandro Sanz",
+      en: "Alejandro Sanz",
+      fi: "Alejandro Sanz",
+      sv: "Alejandro Sanz",
+      no: "Alejandro Sanz"
+    },
+    subtitle: {
+      es: "Concierto en Marenostrum",
+      en: "Concert at Marenostrum",
+      fi: "Konsertti Marenostrumissa",
+      sv: "Konsert på Marenostrum",
+      no: "Konsert på Marenostrum"
+    },
+    description: {
+      es: "Concierto dentro de la programación de verano de Marenostrum Fuengirola.",
+      en: "A concert within the summer programme at Marenostrum Fuengirola.",
+      fi: "Konsertti Marenostrum Fuengirolan kesäohjelmassa.",
+      sv: "Konsert inom sommarprogrammet på Marenostrum Fuengirola.",
+      no: "Konsert i sommerprogrammet til Marenostrum Fuengirola."
+    },
+    startDate: "2026-07-24",
+    startTime: "22:00",
     venue: {
       es: "Marenostrum Fuengirola",
       en: "Marenostrum Fuengirola",
@@ -111,16 +208,38 @@ export const guideConcerts: GuideConcert[] = [
       sv: "Marenostrum Fuengirola",
       no: "Marenostrum Fuengirola"
     },
-    category: { es: "Concierto", en: "Concert", fi: "Konsertti", sv: "Konsert", no: "Konsert" },
-    url: "https://marenostrumfuengirola.com/",
-    ctaLabel: { es: "Ver entradas", en: "View tickets", fi: "Katso liput", sv: "Se biljetter", no: "Se billetter" },
+    location: {
+      es: "Junto al Castillo Sohail",
+      en: "Next to Sohail Castle",
+      fi: "Sohailin linnan vieressä",
+      sv: "Intill Sohail-slottet",
+      no: "Ved siden av Sohail-slottet"
+    },
+    category: "concert",
+    officialUrl: marenostrumOfficialUrl,
+    ticketUrl: marenostrumOfficialUrl,
     featured: true
   },
   {
     id: "lola-indigo-2026",
-    artist: "Lola Indigo",
-    date: "2026-08-14",
-    dateLabel: { es: "14 agosto 2026", en: "14 August 2026", fi: "14. elokuuta 2026", sv: "14 augusti 2026", no: "14. august 2026" },
+    slug: "lola-indigo-marenostrum-2026",
+    title: { es: "Lola Indigo", en: "Lola Indigo", fi: "Lola Indigo", sv: "Lola Indigo", no: "Lola Indigo" },
+    subtitle: {
+      es: "Concierto en Marenostrum",
+      en: "Concert at Marenostrum",
+      fi: "Konsertti Marenostrumissa",
+      sv: "Konsert på Marenostrum",
+      no: "Konsert på Marenostrum"
+    },
+    description: {
+      es: "Concierto de verano junto al mar en Fuengirola.",
+      en: "A summer concert by the sea in Fuengirola.",
+      fi: "Kesäkonsertti meren äärellä Fuengirolassa.",
+      sv: "Sommarkonsert vid havet i Fuengirola.",
+      no: "Sommerkonsert ved sjøen i Fuengirola."
+    },
+    startDate: "2026-08-14",
+    startTime: "22:00",
     venue: {
       es: "Marenostrum Fuengirola",
       en: "Marenostrum Fuengirola",
@@ -128,9 +247,139 @@ export const guideConcerts: GuideConcert[] = [
       sv: "Marenostrum Fuengirola",
       no: "Marenostrum Fuengirola"
     },
-    category: { es: "Concierto", en: "Concert", fi: "Konsertti", sv: "Konsert", no: "Konsert" },
-    url: "https://marenostrumfuengirola.com/",
-    ctaLabel: { es: "Ver programación", en: "View programme", fi: "Katso ohjelma", sv: "Se program", no: "Se program" }
+    location: {
+      es: "Junto al Castillo Sohail",
+      en: "Next to Sohail Castle",
+      fi: "Sohailin linnan vieressä",
+      sv: "Intill Sohail-slottet",
+      no: "Ved siden av Sohail-slottet"
+    },
+    category: "concert",
+    officialUrl: marenostrumOfficialUrl,
+    ticketUrl: marenostrumOfficialUrl
+  }
+];
+
+export const permanentActivities: PermanentActivity[] = [
+  {
+    id: "bioparc",
+    title: { es: "Bioparc Fuengirola", en: "Bioparc Fuengirola", fi: "Bioparc Fuengirola", sv: "Bioparc Fuengirola", no: "Bioparc Fuengirola" },
+    tag: { es: "Familias", en: "Families", fi: "Perheet", sv: "Familjer", no: "Familier" },
+    description: {
+      es: "Un plan cómodo para descubrir naturaleza y animales cerca del centro.",
+      en: "An easy plan for discovering nature and animals close to the town center.",
+      fi: "Helppo tapa tutustua luontoon ja eläimiin lähellä keskustaa.",
+      sv: "Ett smidigt sätt att upptäcka natur och djur nära centrum.",
+      no: "En enkel måte å oppleve natur og dyr nær sentrum."
+    }
+  },
+  {
+    id: "castillo-sohail",
+    title: { es: "Castillo Sohail", en: "Sohail Castle", fi: "Sohailin linna", sv: "Sohail-slottet", no: "Sohail-slottet" },
+    tag: { es: "Paseo", en: "Walk", fi: "Kävely", sv: "Promenad", no: "Tur" },
+    description: {
+      es: "Un lugar perfecto para pasear, ver el mar y conectar con la historia de Fuengirola.",
+      en: "A perfect place to walk, see the sea, and connect with Fuengirola's history.",
+      fi: "Täydellinen paikka kävellä, nähdä meri ja tutustua Fuengirolan historiaan.",
+      sv: "En perfekt plats för promenad, havsutsikt och Fuengirolas historia.",
+      no: "Et perfekt sted for en tur, havutsikt og Fuengirolas historie."
+    }
+  },
+  {
+    id: "parque-fluvial",
+    title: { es: "Parque fluvial", en: "Riverside park", fi: "Jokipuisto", sv: "Flodparken", no: "Elveparken" },
+    tag: { es: "Aire libre", en: "Outdoors", fi: "Ulkona", sv: "Utomhus", no: "Utendørs" },
+    description: {
+      es: "Zona tranquila para caminar, correr o ir hacia el entorno del castillo.",
+      en: "A quiet area for walking, running, or heading towards the castle area.",
+      fi: "Rauhallinen alue kävelyyn, juoksuun tai linnan suuntaan kulkemiseen.",
+      sv: "Ett lugnt område för promenader, löpning eller vägen mot slottet.",
+      no: "Et rolig område for turer, løping eller veien mot slottet."
+    }
+  },
+  {
+    id: "paseo-maritimo",
+    title: { es: "Paseo marítimo", en: "Seafront promenade", fi: "Rantapromenadi", sv: "Strandpromenaden", no: "Strandpromenaden" },
+    tag: { es: "Todo el año", en: "All year", fi: "Ympäri vuoden", sv: "Hela året", no: "Hele året" },
+    description: {
+      es: "Ideal para caminar junto al mar, tomar algo o ver el atardecer.",
+      en: "Ideal for walking by the sea, having a drink, or watching the sunset.",
+      fi: "Ihanteellinen kävelyyn meren äärellä, juomalle tai auringonlaskun katseluun.",
+      sv: "Perfekt för promenader vid havet, en drink eller solnedgången.",
+      no: "Ideell for turer ved sjøen, noe å drikke eller solnedgangen."
+    }
+  },
+  {
+    id: "playas",
+    title: { es: "Playas", en: "Beaches", fi: "Rannat", sv: "Stränder", no: "Strender" },
+    tag: { es: "Costa del Sol", en: "Costa del Sol", fi: "Costa del Sol", sv: "Costa del Sol", no: "Costa del Sol" },
+    description: {
+      es: "Playas amplias para familias, paseos, baño tranquilo o deportes acuáticos.",
+      en: "Wide beaches for families, walks, calm swimming, or water sports.",
+      fi: "Leveitä rantoja perheille, kävelyyn, rauhalliseen uintiin tai vesiurheiluun.",
+      sv: "Breda stränder för familjer, promenader, lugna bad eller vattensport.",
+      no: "Brede strender for familier, turer, rolige bad eller vannsport."
+    }
+  },
+  {
+    id: "puerto-deportivo",
+    title: { es: "Puerto deportivo", en: "Marina", fi: "Venesatama", sv: "Småbåtshamnen", no: "Småbåthavnen" },
+    tag: { es: "Mar", en: "Sea", fi: "Meri", sv: "Hav", no: "Sjø" },
+    description: {
+      es: "Un paseo agradable para ver barcos, terrazas y ambiente costero.",
+      en: "A pleasant walk for boats, terraces, and a coastal atmosphere.",
+      fi: "Mukava kävely veneiden, terassien ja rannikkotunnelman äärellä.",
+      sv: "En trevlig promenad med båtar, uteserveringar och kustkänsla.",
+      no: "En hyggelig tur med båter, terrasser og kyststemning."
+    }
+  },
+  {
+    id: "barco",
+    title: { es: "Excursiones en barco", en: "Boat trips", fi: "Veneretket", sv: "Båtutflykter", no: "Båtturer" },
+    tag: { es: "Temporada", en: "Seasonal", fi: "Kausiluonteinen", sv: "Säsong", no: "Sesong" },
+    description: {
+      es: "Una forma relajada de ver la costa desde el mar cuando hay salidas disponibles.",
+      en: "A relaxed way to see the coast from the sea when departures are available.",
+      fi: "Rento tapa nähdä rannikko mereltä, kun lähtöjä on saatavilla.",
+      sv: "Ett avkopplande sätt att se kusten från havet när avgångar finns.",
+      no: "En rolig måte å se kysten fra sjøen når turer er tilgjengelige."
+    }
+  },
+  {
+    id: "acuaticas",
+    title: { es: "Actividades acuáticas", en: "Water activities", fi: "Vesiaktiviteetit", sv: "Vattenaktiviteter", no: "Vannaktiviteter" },
+    tag: { es: "Verano", en: "Summer", fi: "Kesä", sv: "Sommar", no: "Sommer" },
+    description: {
+      es: "Paddle surf, juegos en el mar y opciones de temporada para días de playa.",
+      en: "Paddleboarding, sea activities, and seasonal options for beach days.",
+      fi: "Suppailua, merileikkejä ja kausivaihtoehtoja rantapäiviin.",
+      sv: "Paddelsurf, aktiviteter i havet och säsongsalternativ för stranddagar.",
+      no: "Paddleboard, sjøaktiviteter og sesongtilbud for stranddager."
+    }
+  },
+  {
+    id: "centro-historico",
+    title: { es: "Centro histórico", en: "Historic center", fi: "Historiallinen keskusta", sv: "Historiska centrum", no: "Historisk sentrum" },
+    tag: { es: "Local", en: "Local", fi: "Paikallinen", sv: "Lokalt", no: "Lokalt" },
+    description: {
+      es: "Calles peatonales, tiendas, heladerías y terrazas para un paseo tranquilo.",
+      en: "Pedestrian streets, shops, ice cream parlors, and terraces for a relaxed stroll.",
+      fi: "Kävelykatuja, kauppoja, jäätelöbaareja ja terasseja rauhalliseen kävelyyn.",
+      sv: "Gågator, butiker, glassbarer och uteserveringar för en lugn promenad.",
+      no: "Gågater, butikker, iskrembarer og terrasser for en rolig spasertur."
+    }
+  },
+  {
+    id: "lluvia",
+    title: { es: "Qué hacer cuando llueve", en: "What to do when it rains", fi: "Mitä tehdä sateella", sv: "Vad man kan göra när det regnar", no: "Hva du kan gjøre når det regner" },
+    tag: { es: "Plan alternativo", en: "Backup plan", fi: "Vaihtoehtoinen suunnitelma", sv: "Reservplan", no: "Reserveplan" },
+    description: {
+      es: "Miramar, cine, compras, cafeterías y planes tranquilos para días menos soleados.",
+      en: "Miramar, cinema, shopping, cafes, and quieter plans for less sunny days.",
+      fi: "Miramar, elokuvateatteri, ostokset, kahvilat ja rauhalliset suunnitelmat pilvisempiin päiviin.",
+      sv: "Miramar, bio, shopping, kaféer och lugnare planer för mindre soliga dagar.",
+      no: "Miramar, kino, shopping, kaféer og rolige planer for mindre solfylte dager."
+    }
   }
 ];
 
@@ -196,13 +445,7 @@ export const annualFuengirolaEvents: AnnualEvent[] = [
   {
     id: "marenostrum",
     icon: "music",
-    title: {
-      es: "Marenostrum",
-      en: "Marenostrum",
-      fi: "Marenostrum",
-      sv: "Marenostrum",
-      no: "Marenostrum"
-    },
+    title: { es: "Marenostrum", en: "Marenostrum", fi: "Marenostrum", sv: "Marenostrum", no: "Marenostrum" },
     season: { es: "Primavera y verano", en: "Spring and summer", fi: "Kevät ja kesä", sv: "Vår och sommar", no: "Vår og sommer" },
     description: {
       es: "Conciertos y festivales frente al mar, junto al Castillo Sohail.",
@@ -320,3 +563,71 @@ export const fuengirolaAgenda: AgendaMonth[] = [
     ]
   }
 ];
+
+function parseLocalDate(isoDate: string) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function startOfLocalDay(date: Date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+function eventEndDate(event: FuengirolaEvent) {
+  return parseLocalDate(event.endDate ?? event.startDate);
+}
+
+export function getPublishedEvents(events: FuengirolaEvent[] = fuengirolaEvents) {
+  return events.filter((event) => event.published !== false);
+}
+
+export function getEventLifecycleStatus(event: FuengirolaEvent, today = new Date()): EventLifecycleStatus {
+  const currentDay = startOfLocalDay(today).getTime();
+  const startDay = parseLocalDate(event.startDate).getTime();
+  const endDay = eventEndDate(event).getTime();
+
+  if (currentDay < startDay) return "upcoming";
+  if (currentDay === startDay) return event.endDate && endDay > startDay ? "ongoing" : "today";
+  if (currentDay > startDay && currentDay <= endDay) return "ongoing";
+  return "past";
+}
+
+export function isUpcomingEvent(event: FuengirolaEvent, today = new Date()) {
+  return getEventLifecycleStatus(event, today) === "upcoming";
+}
+
+export function isOngoingEvent(event: FuengirolaEvent, today = new Date()) {
+  return getEventLifecycleStatus(event, today) === "ongoing";
+}
+
+export function isPastEvent(event: FuengirolaEvent, today = new Date()) {
+  return getEventLifecycleStatus(event, today) === "past";
+}
+
+export function sortEventsByDate(events: FuengirolaEvent[]) {
+  return [...events].sort((a, b) => {
+    const dateCompare = parseLocalDate(a.startDate).getTime() - parseLocalDate(b.startDate).getTime();
+    if (dateCompare !== 0) return dateCompare;
+    const timeCompare = (a.startTime ?? "").localeCompare(b.startTime ?? "");
+    if (timeCompare !== 0) return timeCompare;
+    return a.title.en.localeCompare(b.title.en);
+  });
+}
+
+export function getVisibleUpcomingEvents(events: FuengirolaEvent[], today = new Date()) {
+  const lifecycleOrder: Record<EventLifecycleStatus, number> = { ongoing: 0, today: 1, upcoming: 2, past: 3 };
+  return sortEventsByDate(
+    events.filter((event) => {
+      const status = getEventLifecycleStatus(event, today);
+      return status !== "past" && event.status !== "cancelled";
+    })
+  ).sort((a, b) => lifecycleOrder[getEventLifecycleStatus(a, today)] - lifecycleOrder[getEventLifecycleStatus(b, today)]);
+}
+
+export function getPastEvents(events: FuengirolaEvent[], today = new Date()) {
+  return sortEventsByDate(events.filter((event) => getEventLifecycleStatus(event, today) === "past")).reverse();
+}
+
+export function isFeatureableEvent(event: FuengirolaEvent, today = new Date()) {
+  return Boolean(event.featured && event.status !== "cancelled" && getEventLifecycleStatus(event, today) !== "past");
+}

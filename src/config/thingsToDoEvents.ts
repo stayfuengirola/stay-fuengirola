@@ -4,17 +4,34 @@ export type ThingsToDoEventsContent = {
   title: string;
   intro: string;
   concertsTitle: string;
+  concertsIntro: string;
   noImageLabel: string;
+  filtersLabel: string;
+  filterLabels: Record<"all" | "concert" | "festival" | "fair" | "family" | "culture" | "sport", string>;
+  categoryLabels: Record<"concert" | "festival" | "fair" | "family" | "culture" | "sport" | "market" | "other", string>;
+  statusLabels: Record<"upcoming" | "today" | "ongoing" | "past" | "cancelled" | "postponed" | "rescheduled", string>;
+  freeLabel: string;
+  officialInfoLabel: string;
+  ticketLabel: string;
+  emptyTitle: string;
+  emptyText: string;
+  officialAgendaCta: string;
   marenostrumTitle: string;
   marenostrumText: string;
   marenostrumCta: string;
   annualTitle: string;
   agendaTitle: string;
+  permanentTitle: string;
+  permanentIntro: string;
   tipsTitle: string;
   tips: string[];
   mapTitle: string;
   mapAria: string;
   mapApartment: string;
+  pastTitle: string;
+  pastIntro: string;
+  showPast: string;
+  hidePast: string;
   faqTitle: string;
   faqs: Array<{ question: string; answer: string }>;
 };
@@ -24,14 +41,28 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     title: "Eventos y conciertos en Fuengirola",
     intro:
       "Fuengirola ofrece actividades durante todo el año. Además de sus playas, la ciudad acoge conciertos internacionales, festivales, ferias, mercados y eventos culturales para toda la familia.",
-    concertsTitle: "Próximos conciertos",
+    concertsTitle: "Próximos eventos y conciertos en Fuengirola",
+    concertsIntro:
+      "Consulta los próximos conciertos, festivales, ferias y actividades que se celebran en Fuengirola durante tu estancia.",
     noImageLabel: "Concierto en Fuengirola",
+    filtersLabel: "Filtrar eventos",
+    filterLabels: { all: "Todos", concert: "Conciertos", festival: "Festivales", fair: "Ferias", family: "Familia", culture: "Cultura", sport: "Deportes" },
+    categoryLabels: { concert: "Concierto", festival: "Festival", fair: "Feria", family: "Familia", culture: "Cultura", sport: "Deporte", market: "Mercado", other: "Evento" },
+    statusLabels: { upcoming: "Próximamente", today: "Hoy", ongoing: "En curso", past: "Finalizado", cancelled: "Cancelado", postponed: "Aplazado", rescheduled: "Reprogramado" },
+    freeLabel: "Entrada gratuita",
+    officialInfoLabel: "Ver información",
+    ticketLabel: "Comprar entradas",
+    emptyTitle: "Ahora mismo no tenemos nuevos eventos publicados.",
+    emptyText: "Consulta próximamente la agenda oficial de Fuengirola.",
+    officialAgendaCta: "Ver agenda oficial",
     marenostrumTitle: "Marenostrum Fuengirola",
     marenostrumText:
-      "Marenostrum es un recinto frente al mar, junto al Castillo Sohail, y uno de los ciclos de conciertos más importantes de España. Cada verano reúne programación nacional e internacional en un entorno muy especial de la Costa del Sol.",
+      "Marenostrum es un recinto frente al mar, junto al Castillo Sohail, con una programación de verano muy reconocible en la Costa del Sol. Cada temporada reúne conciertos, festivales y artistas nacionales e internacionales en un entorno muy especial.",
     marenostrumCta: "Ver programación oficial",
     annualTitle: "Eventos destacados en Fuengirola",
     agendaTitle: "Agenda",
+    permanentTitle: "Actividades para hacer durante todo el año",
+    permanentIntro: "Planes sencillos y cercanos que no dependen de una fecha concreta.",
     tipsTitle: "Consejos Stay Fuengirola",
     tips: [
       "Compra entradas con antelación.",
@@ -42,6 +73,10 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     mapTitle: "Mapa de eventos",
     mapAria: "Mapa con la zona del apartamento, Marenostrum, Castillo Sohail, recinto ferial y centro histórico",
     mapApartment: "Zona aproximada del apartamento",
+    pastTitle: "Eventos anteriores",
+    pastIntro: "Los eventos pasados se conservan como referencia y aparecen en segundo plano.",
+    showPast: "Ver eventos anteriores",
+    hidePast: "Ocultar eventos anteriores",
     faqTitle: "Preguntas frecuentes sobre eventos en Fuengirola",
     faqs: [
       {
@@ -70,14 +105,28 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     title: "Events and concerts in Fuengirola",
     intro:
       "Fuengirola offers activities throughout the year. Beyond its beaches, the town hosts international concerts, festivals, fairs, markets, and cultural events for the whole family.",
-    concertsTitle: "Upcoming concerts",
+    concertsTitle: "Upcoming events and concerts in Fuengirola",
+    concertsIntro:
+      "Check upcoming concerts, festivals, fairs, and activities taking place in Fuengirola during your stay.",
     noImageLabel: "Concert in Fuengirola",
+    filtersLabel: "Filter events",
+    filterLabels: { all: "All", concert: "Concerts", festival: "Festivals", fair: "Fairs", family: "Family", culture: "Culture", sport: "Sports" },
+    categoryLabels: { concert: "Concert", festival: "Festival", fair: "Fair", family: "Family", culture: "Culture", sport: "Sport", market: "Market", other: "Event" },
+    statusLabels: { upcoming: "Upcoming", today: "Today", ongoing: "Ongoing", past: "Finished", cancelled: "Cancelled", postponed: "Postponed", rescheduled: "Rescheduled" },
+    freeLabel: "Free entry",
+    officialInfoLabel: "View info",
+    ticketLabel: "Buy tickets",
+    emptyTitle: "We do not have new events published right now.",
+    emptyText: "Check Fuengirola's official agenda soon.",
+    officialAgendaCta: "View official agenda",
     marenostrumTitle: "Marenostrum Fuengirola",
     marenostrumText:
-      "Marenostrum is a seafront venue next to Sohail Castle and one of Spain's most important concert series. Every summer it brings national and international artists to a very special setting on the Costa del Sol.",
+      "Marenostrum is a seafront venue next to Sohail Castle, with a well-known summer programme on the Costa del Sol. Each season it brings concerts, festivals, and national and international artists to a very special setting.",
     marenostrumCta: "View official programme",
     annualTitle: "Highlighted events in Fuengirola",
     agendaTitle: "Agenda",
+    permanentTitle: "Things to do all year round",
+    permanentIntro: "Simple nearby plans that do not depend on a specific date.",
     tipsTitle: "Stay Fuengirola tips",
     tips: [
       "Buy tickets in advance.",
@@ -88,6 +137,10 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     mapTitle: "Events map",
     mapAria: "Map showing the apartment area, Marenostrum, Sohail Castle, fairground and historic center",
     mapApartment: "Approximate apartment area",
+    pastTitle: "Previous events",
+    pastIntro: "Past events are kept as a reference and shown with quieter styling.",
+    showPast: "View previous events",
+    hidePast: "Hide previous events",
     faqTitle: "Frequently asked questions about events in Fuengirola",
     faqs: [
       {
@@ -116,14 +169,28 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     title: "Tapahtumat ja konsertit Fuengirolassa",
     intro:
       "Fuengirolassa on tapahtumia ympäri vuoden. Rantojen lisäksi kaupungissa järjestetään kansainvälisiä konsertteja, festivaaleja, feria-juhlia, markkinoita ja kulttuuritapahtumia koko perheelle.",
-    concertsTitle: "Tulevat konsertit",
+    concertsTitle: "Tulevat tapahtumat ja konsertit Fuengirolassa",
+    concertsIntro:
+      "Katso tulevat konsertit, festivaalit, juhlat ja aktiviteetit, joita Fuengirolassa järjestetään oleskelusi aikana.",
     noImageLabel: "Konsertti Fuengirolassa",
+    filtersLabel: "Suodata tapahtumia",
+    filterLabels: { all: "Kaikki", concert: "Konsertit", festival: "Festivaalit", fair: "Feriat", family: "Perhe", culture: "Kulttuuri", sport: "Urheilu" },
+    categoryLabels: { concert: "Konsertti", festival: "Festivaali", fair: "Feria", family: "Perhe", culture: "Kulttuuri", sport: "Urheilu", market: "Markkinat", other: "Tapahtuma" },
+    statusLabels: { upcoming: "Tulossa", today: "Tänään", ongoing: "Käynnissä", past: "Päättynyt", cancelled: "Peruttu", postponed: "Siirretty", rescheduled: "Uusi ajankohta" },
+    freeLabel: "Vapaa pääsy",
+    officialInfoLabel: "Katso tiedot",
+    ticketLabel: "Osta liput",
+    emptyTitle: "Meillä ei juuri nyt ole uusia tapahtumia julkaistuna.",
+    emptyText: "Tarkista Fuengirolan virallinen tapahtumakalenteri myöhemmin.",
+    officialAgendaCta: "Katso virallinen agenda",
     marenostrumTitle: "Marenostrum Fuengirola",
     marenostrumText:
-      "Marenostrum on meren äärellä, Sohailin linnan vieressä sijaitseva konserttialue ja yksi Espanjan tärkeimmistä kesäisistä konserttisarjoista. Joka kesä siellä nähdään espanjalaisia ja kansainvälisiä artisteja Costa del Solin erityisessä ympäristössä.",
+      "Marenostrum on meren äärellä, Sohailin linnan vieressä sijaitseva konserttialue, jolla on tunnettu kesäohjelma Costa del Solilla. Joka kausi siellä järjestetään konsertteja ja festivaaleja sekä espanjalaisten että kansainvälisten artistien kanssa.",
     marenostrumCta: "Katso virallinen ohjelma",
     annualTitle: "Fuengirolan tärkeimmät tapahtumat",
     agendaTitle: "Tapahtumakalenteri",
+    permanentTitle: "Tekemistä ympäri vuoden",
+    permanentIntro: "Helppoja lähellä olevia suunnitelmia, jotka eivät riipu tietystä päivämäärästä.",
     tipsTitle: "Stay Fuengirolan vinkit",
     tips: [
       "Osta liput ajoissa.",
@@ -134,6 +201,10 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     mapTitle: "Tapahtumakartta",
     mapAria: "Kartta, jossa näkyvät asunnon likimääräinen alue, Marenostrum, Sohailin linna, feria-alue ja historiallinen keskusta",
     mapApartment: "Asunnon likimääräinen alue",
+    pastTitle: "Aiemmat tapahtumat",
+    pastIntro: "Menneet tapahtumat säilytetään viitteenä ja näytetään rauhallisemmalla tyylillä.",
+    showPast: "Näytä aiemmat tapahtumat",
+    hidePast: "Piilota aiemmat tapahtumat",
     faqTitle: "Usein kysytyt kysymykset Fuengirolan tapahtumista",
     faqs: [
       {
@@ -162,14 +233,28 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     title: "Evenemang och konserter i Fuengirola",
     intro:
       "Fuengirola erbjuder aktiviteter året runt. Förutom stränderna har staden internationella konserter, festivaler, ferior, marknader och kulturevenemang för hela familjen.",
-    concertsTitle: "Kommande konserter",
+    concertsTitle: "Kommande evenemang och konserter i Fuengirola",
+    concertsIntro:
+      "Se kommande konserter, festivaler, ferior och aktiviteter som äger rum i Fuengirola under din vistelse.",
     noImageLabel: "Konsert i Fuengirola",
+    filtersLabel: "Filtrera evenemang",
+    filterLabels: { all: "Alla", concert: "Konserter", festival: "Festivaler", fair: "Ferior", family: "Familj", culture: "Kultur", sport: "Sport" },
+    categoryLabels: { concert: "Konsert", festival: "Festival", fair: "Feria", family: "Familj", culture: "Kultur", sport: "Sport", market: "Marknad", other: "Evenemang" },
+    statusLabels: { upcoming: "Kommande", today: "Idag", ongoing: "Pågår", past: "Avslutat", cancelled: "Inställt", postponed: "Uppskjutet", rescheduled: "Nytt datum" },
+    freeLabel: "Fri entré",
+    officialInfoLabel: "Se information",
+    ticketLabel: "Köp biljetter",
+    emptyTitle: "Just nu har vi inga nya evenemang publicerade.",
+    emptyText: "Kontrollera Fuengirolas officiella agenda snart.",
+    officialAgendaCta: "Se officiell agenda",
     marenostrumTitle: "Marenostrum Fuengirola",
     marenostrumText:
-      "Marenostrum är en konsertplats vid havet, intill Sohail-slottet, och en av Spaniens viktigaste konsertserier. Varje sommar samlar den spanska och internationella artister i en mycket speciell miljö på Costa del Sol.",
+      "Marenostrum är en konsertplats vid havet, intill Sohail-slottet, med ett välkänt sommarprogram på Costa del Sol. Varje säsong samlar den konserter, festivaler och både spanska och internationella artister i en mycket speciell miljö.",
     marenostrumCta: "Se officiellt program",
     annualTitle: "Utvalda evenemang i Fuengirola",
     agendaTitle: "Agenda",
+    permanentTitle: "Saker att göra året runt",
+    permanentIntro: "Enkla närliggande planer som inte beror på ett specifikt datum.",
     tipsTitle: "Tips från Stay Fuengirola",
     tips: [
       "Köp biljetter i god tid.",
@@ -180,6 +265,10 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     mapTitle: "Evenemangskarta",
     mapAria: "Karta med lägenhetens ungefärliga område, Marenostrum, Sohail-slottet, feriaområdet och historiska centrum",
     mapApartment: "Lägenhetens ungefärliga område",
+    pastTitle: "Tidigare evenemang",
+    pastIntro: "Tidigare evenemang sparas som referens och visas med lugnare stil.",
+    showPast: "Visa tidigare evenemang",
+    hidePast: "Dölj tidigare evenemang",
     faqTitle: "Vanliga frågor om evenemang i Fuengirola",
     faqs: [
       {
@@ -208,14 +297,28 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     title: "Arrangementer og konserter i Fuengirola",
     intro:
       "Fuengirola tilbyr aktiviteter hele året. I tillegg til strendene arrangerer byen internasjonale konserter, festivaler, ferier, markeder og kulturarrangementer for hele familien.",
-    concertsTitle: "Kommende konserter",
+    concertsTitle: "Kommende arrangementer og konserter i Fuengirola",
+    concertsIntro:
+      "Se kommende konserter, festivaler, ferier og aktiviteter som finner sted i Fuengirola under oppholdet ditt.",
     noImageLabel: "Konsert i Fuengirola",
+    filtersLabel: "Filtrer arrangementer",
+    filterLabels: { all: "Alle", concert: "Konserter", festival: "Festivaler", fair: "Ferier", family: "Familie", culture: "Kultur", sport: "Sport" },
+    categoryLabels: { concert: "Konsert", festival: "Festival", fair: "Feria", family: "Familie", culture: "Kultur", sport: "Sport", market: "Marked", other: "Arrangement" },
+    statusLabels: { upcoming: "Kommende", today: "I dag", ongoing: "Pågår", past: "Avsluttet", cancelled: "Avlyst", postponed: "Utsatt", rescheduled: "Ny dato" },
+    freeLabel: "Gratis inngang",
+    officialInfoLabel: "Se informasjon",
+    ticketLabel: "Kjøp billetter",
+    emptyTitle: "Akkurat nå har vi ingen nye arrangementer publisert.",
+    emptyText: "Sjekk Fuengirolas offisielle agenda snart.",
+    officialAgendaCta: "Se offisiell agenda",
     marenostrumTitle: "Marenostrum Fuengirola",
     marenostrumText:
-      "Marenostrum er en konsertarena ved sjøen, ved siden av Sohail-slottet, og en av Spanias viktigste konsertserier. Hver sommer samler den spanske og internasjonale artister i en helt spesiell ramme på Costa del Sol.",
+      "Marenostrum er en konsertarena ved sjøen, ved siden av Sohail-slottet, med et kjent sommerprogram på Costa del Sol. Hver sesong samler den konserter, festivaler og både spanske og internasjonale artister i en helt spesiell ramme.",
     marenostrumCta: "Se offisielt program",
     annualTitle: "Utvalgte arrangementer i Fuengirola",
     agendaTitle: "Agenda",
+    permanentTitle: "Ting å gjøre hele året",
+    permanentIntro: "Enkle planer i nærheten som ikke er avhengige av en bestemt dato.",
     tipsTitle: "Tips fra Stay Fuengirola",
     tips: [
       "Kjøp billetter i god tid.",
@@ -226,6 +329,10 @@ export const thingsToDoEventsContent: Record<Locale, ThingsToDoEventsContent> = 
     mapTitle: "Arrangementskart",
     mapAria: "Kart med omtrentlig leilighetsområde, Marenostrum, Sohail-slottet, messeområdet og historisk sentrum",
     mapApartment: "Omtrentlig leilighetsområde",
+    pastTitle: "Tidligere arrangementer",
+    pastIntro: "Tidligere arrangementer beholdes som referanse og vises med roligere stil.",
+    showPast: "Vis tidligere arrangementer",
+    hidePast: "Skjul tidligere arrangementer",
     faqTitle: "Vanlige spørsmål om arrangementer i Fuengirola",
     faqs: [
       {
