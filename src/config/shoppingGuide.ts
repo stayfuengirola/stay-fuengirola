@@ -464,3 +464,185 @@ shoppingGuideContent.no = {
   editorialNote: "Butikkutvalget kan endre seg. Sjekk den offisielle katalogen før du drar hvis du leter etter en bestemt butikk.",
   relatedTitle: "Du vil kanskje også like"
 };
+
+Object.assign(shoppingGuideContent.en, {
+  quickLinks: shoppingGuideContent.en.quickLinks.map((item, index) => ({
+    ...item,
+    text: ["Centro Comercial Miramar", "MediaMarkt and phone shops", "Decathlon and sports shops", "Leroy Merlin, JYSK and Zara Home", "Carrefour", "Old town", "Town centre and seafront promenade", "Fairground and Santa Amalia area"][index]
+  })),
+  idealItems: ["Forgotten clothes", "Beach items", "Cosmetics", "Technology", "Long-stay shopping"],
+  categorySections: [
+    { id: "moda", title: "Fashion and major brands", intro: "Miramar is the easiest place for clothes, shoes and accessories during your stay.", categories: ["fashion"] as ShoppingCategory[] },
+    { id: "calzado", title: "Shoes, bags and accessories", intro: "Useful options for sandals, comfortable shoes and a smarter evening pair.", categories: ["shoes", "jewellery"] as ShoppingCategory[] },
+    { id: "belleza", title: "Beauty and personal care", intro: "Practical for sun protection, cosmetics, gifts and everyday care products.", categories: ["beauty"] as ShoppingCategory[] },
+    { id: "deporte", title: "Sport, pool and beach", intro: "Useful for beach days, water activities, walking and training.", categories: ["sport"] as ShoppingCategory[] },
+    { id: "tecnologia", title: "Technology, phones and accessories", intro: "For chargers, adapters, headphones and mobile service needs.", categories: ["technology", "services"] as ShoppingCategory[] },
+    { id: "hogar", title: "Home and decoration", intro: "Useful during longer stays or for small home, car or beach solutions.", categories: ["home"] as ShoppingCategory[] },
+    { id: "supermercado", title: "Carrefour and daily shopping", intro: "For first groceries, water, hygiene, beach items, children and longer stays.", categories: ["supermarket", "pets"] as ShoppingCategory[] }
+  ],
+  beachForgotTitle: "Forgot something for the beach?",
+  beachForgotItems: ["Parasol", "Water shoes", "Snorkel", "Armbands", "Dry bag", "Flip-flops", "Towel", "Sun protection"],
+  retailText: "Next to the shopping centre, the retail park brings together larger stores such as MediaMarkt, Leroy Merlin, Decathlon, Kiwoko, Kiabi and JYSK, according to the official Miramar directory.",
+  retailComparison: [{ title: "Centro Comercial Miramar", text: "Best for fashion, cosmetics, leisure, restaurants and varied shopping." }, { title: "Parque Comercial Miramar", text: "Best for technology, sport, home, DIY and specific purchases." }],
+  historicParagraphs: ["Fuengirola old town has a more local feel, with pedestrian streets, squares and small shops.", "It is better to think in categories than invent names of small businesses: independent boutiques, shoe shops, jewellery, gifts, local fashion, traditional shops and gourmet products."],
+  historicIdeasTitle: "Good to combine shopping with",
+  historicIdeas: ["Coffee on a terrace", "A walk through the centre", "Lunch", "Ice cream", "Seafront promenade"],
+  marketsIntro: "Fuengirola has traditional markets and a second-hand market. Check the municipal calendar because events may be suspended.",
+  markets: [{ title: "Tuesday market", when: "Fairground", text: "Large market for clothing, accessories, shoes, home items, food and varied products." }, { title: "Saturday second-hand market", when: "Fairground", text: "More focused on second-hand items, collectibles, antiques and curious finds." }, { title: "Sunday market", when: "Santa Amalia area", text: "Market with crafts, jewellery, bags, ceramics, gifts and textiles according to municipal tourism information." }],
+  municipalMarketsText: "A supermarket is best for a quick broad shop; a traditional market focuses on fresh products; an outdoor market is more informal and depends on the day.",
+  comparison: [{ zone: "Centro Comercial Miramar", bestFor: "Fashion, beauty, leisure", fromApartment: "On foot", type: "Major brands" }, { zone: "Parque Comercial Miramar", bestFor: "Sport, technology, home", fromApartment: "On foot", type: "Large stores" }, { zone: "Old town", bestFor: "Boutiques and gifts", fromApartment: "Walk or taxi", type: "Local shops" }, { zone: "Markets", bestFor: "Finds and second hand", fromApartment: "Short transfer", type: "Informal shopping" }],
+  travellerTitle: "Recommendations by traveller",
+  travellers: [{ title: "For families", text: "Primark, H&M, C&A, Kiabi, Decathlon and Carrefour." }, { title: "For fashion", text: "Zara, Mango, Massimo Dutti, Stradivarius, Bershka and Pull&Bear." }, { title: "For forgotten items", text: "Carrefour, Primark, MediaMarkt and Decathlon." }, { title: "For gifts", text: "Rituals, perfumeries, jewellery shops and old town stores." }, { title: "For a rainy day", text: "Miramar, cinema, shopping and restaurants under the same roof." }],
+  tips: ["Check opening times on Sundays and public holidays.", "Keep receipts for exchanges.", "Remember luggage limits if you fly.", "Walk to Miramar if shopping is not bulky.", "Use a car or taxi for large purchases.", "Avoid peak times in high season.", "Combine the old town with food or a walk."],
+  mapPoints: { miramar: "Centro Comercial Miramar", retailPark: "Parque Comercial Miramar", historicCentre: "Old town", fairground: "Fairground", municipalMarket: "Municipal market" },
+  faqs: [{ question: "Which shopping centre is closest to the apartment?", answer: "Centro Comercial Miramar and the retail park are the most practical options close to the apartment." }, { question: "Can you walk to Miramar?", answer: "Yes, if you are not buying bulky or heavy items." }, { question: "What shops are in Centro Comercial Miramar?", answer: "There is fashion, beauty, technology, sport, food, leisure and services. Check the official directory for the full list." }, { question: "Where can I buy beach items?", answer: "Decathlon, Carrefour and Primark are practical options depending on availability." }, { question: "Where can I buy a charger or phone accessories?", answer: "MediaMarkt, Rossellimac, Movistar and Orange can be useful." }, { question: "Where can I buy affordable clothes?", answer: "Primark, Kiabi, C&A, H&M and Deichmann are budget or mid-range options." }, { question: "Where can I buy pet products?", answer: "Kiwoko is the main pet store highlighted in this guide." }, { question: "When are the Fuengirola markets?", answer: "Municipal tourism information lists markets on Tuesdays and Sundays and a second-hand market on Saturdays. Check the calendar." }, { question: "Where can I buy gifts?", answer: "The old town, seafront promenade, Rituals, Natura, Flying Tiger Copenhagen and jewellery shops are good options." }],
+  officialLinks: [{ title: "Official Miramar directory", href: miramarStoresDirectoryUrl }, { title: "Miramar opening times", href: miramarHoursUrl }, { title: "Parque Comercial Miramar", href: miramarRetailParkUrl }, { title: "Fuengirola markets", href: fuengirolaMarketsUrl }, { title: "Municipal calendar 2026", href: fuengirolaMarketsCalendarUrl }],
+  related: [{ key: "restaurants", title: "Restaurants", text: "Where to eat after shopping." }, { key: "beaches", title: "Beaches", text: "Plans by the sea near the apartment." }, { key: "thingsToDo", title: "Things to do", text: "More ideas for your stay." }, { key: "airport", title: "From the airport", text: "Transport from Malaga." }]
+});
+
+const shoppingLocaleOverrides: Record<string, any> = {
+  fi: {
+    quickLinks: [
+      { title: "Muoti ja suuret merkit", text: "Centro Comercial Miramar" },
+      { title: "Teknologia ja elektroniikka", text: "MediaMarkt ja puhelinliikkeet" },
+      { title: "Urheilu ja ranta", text: "Decathlon ja urheiluliikkeet" },
+      { title: "Koti ja pienet korjaukset", text: "Leroy Merlin, JYSK ja Zara Home" },
+      { title: "Viikon ostokset", text: "Carrefour" },
+      { title: "Putiikit ja paikalliset liikkeet", text: "Vanha keskusta" },
+      { title: "Lahjat ja muistot", text: "Keskusta ja rantakatu" },
+      { title: "Markkinat", text: "Recinto Ferial ja Santa Amalia" }
+    ],
+    idealItems: ["Unohtuneet vaatteet", "Rantatarvikkeet", "Kosmetiikka", "Teknologia", "Pitkän oleskelun ostokset"],
+    categorySections: [
+      { id: "moda", title: "Muoti ja suuret merkit", intro: "Miramar on helpoin paikka vaatteille, kengille ja asusteille loman aikana.", categories: ["fashion"] as ShoppingCategory[] },
+      { id: "calzado", title: "Kengät, laukut ja asusteet", intro: "Käytännöllisiä vaihtoehtoja sandaaleihin, mukaviin kenkiin ja iltamenoihin.", categories: ["shoes", "jewellery"] as ShoppingCategory[] },
+      { id: "belleza", title: "Kauneus ja ihonhoito", intro: "Hyvä osasto aurinkosuojalle, kosmetiikalle, lahjoille ja päivittäisille tuotteille.", categories: ["beauty"] as ShoppingCategory[] },
+      { id: "deporte", title: "Urheilu, uima-allas ja ranta", intro: "Käytännöllinen rannalle, vesiliikuntaan, kävelyyn ja treeniin.", categories: ["sport"] as ShoppingCategory[] },
+      { id: "tecnologia", title: "Teknologia, puhelimet ja tarvikkeet", intro: "Latureihin, adaptereihin, kuulokkeisiin ja puhelinasioihin.", categories: ["technology", "services"] as ShoppingCategory[] },
+      { id: "hogar", title: "Koti ja sisustus", intro: "Hyödyllinen pitkällä oleskelulla tai kodin pieniin tarpeisiin.", categories: ["home"] as ShoppingCategory[] },
+      { id: "supermercado", title: "Carrefour ja arjen ostokset", intro: "Ensimmäiseen ruokakauppaan, veteen, hygieniaan, rantatarvikkeisiin ja pitkiin oleskeluihin.", categories: ["supermarket", "pets"] as ShoppingCategory[] }
+    ],
+    beachForgotTitle: "Unohtuiko jotain rannalle?",
+    beachForgotItems: ["Aurinkovarjo", "Rantakengät", "Snorkkeli", "Kellukkeet", "Vesitiivis pussi", "Sandaalit", "Pyyhe", "Aurinkosuoja"],
+    retailText: "Miramarin kauppapuistossa on suuria liikkeitä kuten MediaMarkt, Leroy Merlin, Decathlon, Kiwoko, Kiabi ja JYSK virallisen hakemiston mukaan.",
+    retailComparison: [{ title: "Centro Comercial Miramar", text: "Paras muodille, kosmetiikalle, vapaa-ajalle, ravintoloille ja vaihteleville ostoksille." }, { title: "Parque Comercial Miramar", text: "Paras teknologialle, urheilulle, kodille, korjauksille ja täsmäostoksille." }],
+    historicParagraphs: ["Vanha keskusta tarjoaa paikallisemman tunnelman kävelykaduilla, aukioilla ja pienissä liikkeissä.", "Tässä on parempi puhua kategorioista kuin keksiä yksittäisiä nimiä: putiikit, kenkäkaupat, lahjat, paikallinen muoti, perinteiset liikkeet ja pienet gourmet-tuotteet."],
+    historicIdeasTitle: "Hyvä yhdistää ostoksiin",
+    historicIdeas: ["Kahvi terassilla", "Kävely keskustassa", "Lounas", "Jäätelö", "Rantakatu"],
+    marketsIntro: "Fuengirolassa on perinteisiä markkinoita ja kirpputorityyppinen tapahtuma. Tarkista kunnan kalenteri, koska tapahtumia voidaan perua.",
+    markets: [{ title: "Tiistain markkinat", when: "Recinto Ferial", text: "Laaja markkina vaatteille, asusteille, kengille, kotiin ja moniin arjen tuotteisiin." }, { title: "Lauantain kirpputori", when: "Recinto Ferial", text: "Painottuu käytettyihin tuotteisiin, keräilyyn ja erikoisempiin löytöihin." }, { title: "Sunnuntain markkinat", when: "Santa Amalian alue", text: "Markkina käsityölle, lahjoille, laukuille, koruille ja tekstiileille kunnan matkailutiedon mukaan." }],
+    municipalMarketsText: "Supermarket sopii nopeaan ja laajaan ostokseen; perinteinen markkina keskittyy tuoreisiin tuotteisiin; ulkomarkkina riippuu päivästä ja säästä.",
+    comparison: [{ zone: "Centro Comercial Miramar", bestFor: "Muoti, kauneus, vapaa-aika", fromApartment: "Kävellen", type: "Suuret merkit" }, { zone: "Parque Comercial Miramar", bestFor: "Urheilu, teknologia, koti", fromApartment: "Kävellen", type: "Suuret liikkeet" }, { zone: "Vanha keskusta", bestFor: "Putiikit ja lahjat", fromApartment: "Kävely tai taksi", type: "Paikalliset liikkeet" }, { zone: "Markkinat", bestFor: "Löydöt ja käytetyt tavarat", fromApartment: "Lyhyt kulku", type: "Rento ostos" }],
+    travellerTitle: "Suositukset matkailijan mukaan",
+    travellers: [{ title: "Perheille", text: "Primark, H&M, C&A, Kiabi, Decathlon ja Carrefour." }, { title: "Muotiin", text: "Zara, Mango, Massimo Dutti, Stradivarius, Bershka ja Pull&Bear." }, { title: "Unohtuneisiin tavaroihin", text: "Carrefour, Primark, MediaMarkt ja Decathlon." }, { title: "Lahjoihin", text: "Rituals, kosmetiikkaliikkeet, koruliikkeet ja vanha keskusta." }, { title: "Sadepäivään", text: "Miramar, elokuvat, ostokset ja ravintolat saman katon alla." }],
+    tips: ["Tarkista sunnuntain ja pyhäpäivien aukioloajat.", "Säilytä kuitit vaihtoja varten.", "Muista matkatavaroiden rajat lennolla.", "Kävele Miramariin, jos ostokset eivät ole suuria.", "Käytä autoa tai taksia isoihin ostoksiin.", "Vältä ruuhkaisimpia aikoja sesongissa.", "Yhdistä keskusta ruokaan tai kävelyyn."],
+    mapPoints: { miramar: "Centro Comercial Miramar", retailPark: "Parque Comercial Miramar", historicCentre: "Vanha keskusta", fairground: "Recinto Ferial", municipalMarket: "Kunnallinen markkina" },
+    faqs: [{ question: "Mikä ostoskeskus on lähimpänä asuntoa?", answer: "Centro Comercial Miramar ja kauppapuisto ovat käytännöllisimmät vaihtoehdot lähellä asuntoa." }, { question: "Voiko Miramariin kävellä?", answer: "Kyllä, jos et osta suuria tai painavia tavaroita." }, { question: "Mitä kauppoja Miramarissa on?", answer: "Muotia, kauneutta, teknologiaa, urheilua, ruokaa, vapaa-aikaa ja palveluja. Täysi lista kannattaa tarkistaa virallisesta hakemistosta." }, { question: "Mistä ostaa rantatarvikkeita?", answer: "Decathlon, Carrefour ja Primark ovat käytännöllisiä vaihtoehtoja saatavuuden mukaan." }, { question: "Mistä saa laturin tai puhelintarvikkeita?", answer: "MediaMarkt, Rossellimac, Movistar ja Orange voivat olla hyödyllisiä." }, { question: "Mistä löytää edullisia vaatteita?", answer: "Primark, Kiabi, C&A, H&M ja Deichmann ovat edullisia tai keskihintaisia vaihtoehtoja." }, { question: "Mistä ostaa lemmikkitarvikkeita?", answer: "Kiwoko on tämän oppaan tärkein lemmikkiliike Miramarin kauppapuistossa." }, { question: "Milloin Fuengirolassa on markkinoita?", answer: "Kunnan matkailutieto kertoo markkinoista tiistaisin ja sunnuntaisin sekä kirpputorista lauantaisin. Tarkista kalenteri." }, { question: "Mistä ostaa lahjoja?", answer: "Vanha keskusta, rantakatu, Rituals, Natura, Flying Tiger Copenhagen ja koruliikkeet ovat hyviä vaihtoehtoja." }],
+    officialLinks: [{ title: "Miramarin virallinen hakemisto", href: miramarStoresDirectoryUrl }, { title: "Miramarin aukioloajat", href: miramarHoursUrl }, { title: "Parque Comercial Miramar", href: miramarRetailParkUrl }, { title: "Fuengirolan markkinat", href: fuengirolaMarketsUrl }, { title: "Kunnan kalenteri 2026", href: fuengirolaMarketsCalendarUrl }],
+    related: [{ key: "restaurants", title: "Ravintolat", text: "Missä syödä ostosten jälkeen." }, { key: "beaches", title: "Rannat", text: "Suunnitelmia meren äärellä." }, { key: "thingsToDo", title: "Mitä tehdä", text: "Lisää ideoita oleskeluun." }, { key: "airport", title: "Saapuminen lentoasemalta", text: "Kulku Malagasta." }]
+  }
+};
+
+shoppingLocaleOverrides.sv = {
+  ...shoppingLocaleOverrides.fi,
+  quickLinks: shoppingLocaleOverrides.fi.quickLinks.map((item: { title: string; text: string }) => ({ ...item, title: item.title.replace("Muoti ja suuret merkit", "Mode och stora märken").replace("Teknologia ja elektroniikka", "Teknik och elektronik").replace("Urheilu ja ranta", "Sport och strand").replace("Koti ja pienet korjaukset", "Hem och små behov").replace("Viikon ostokset", "Veckans inköp").replace("Putiikit ja paikalliset liikkeet", "Boutiquer och lokala butiker").replace("Lahjat ja muistot", "Presenter och minnen").replace("Markkinat", "Marknader"), text: item.text.replace("Vanha keskusta", "Gamla stan").replace("Keskusta ja rantakatu", "Centrum och strandpromenaden") })),
+  idealItems: ["Glömda kläder", "Strandartiklar", "Kosmetik", "Teknik", "Inköp för längre vistelser"],
+  beachForgotTitle: "Har du glömt något till stranden?",
+  travellerTitle: "Rekommendationer efter resenär",
+  historicIdeasTitle: "Bra att kombinera shopping med",
+  marketsIntro: "Fuengirola har traditionella marknader och en loppmarknad. Kontrollera kommunens kalender eftersom evenemang kan ställas in.",
+  municipalMarketsText: "Supermarket passar snabba och breda inköp; traditionell marknad fokuserar mer på färska produkter; utomhusmarknad beror på dag och väder.",
+  officialLinks: [{ title: "Miramar officiell katalog", href: miramarStoresDirectoryUrl }, { title: "Miramar öppettider", href: miramarHoursUrl }, { title: "Parque Comercial Miramar", href: miramarRetailParkUrl }, { title: "Fuengirola marknader", href: fuengirolaMarketsUrl }, { title: "Kommunal kalender 2026", href: fuengirolaMarketsCalendarUrl }]
+};
+
+shoppingLocaleOverrides.no = {
+  ...shoppingLocaleOverrides.sv,
+  quickLinks: shoppingLocaleOverrides.sv.quickLinks.map((item: { title: string; text: string }) => ({ ...item, title: item.title.replace("Mode och stora märken", "Mote og store merker").replace("Teknik och elektronik", "Teknologi og elektronikk").replace("Sport och strand", "Sport og strand").replace("Hem och små behov", "Hjem og små behov").replace("Veckans inköp", "Ukens innkjøp").replace("Boutiquer och lokala butiker", "Boutiquer og lokale butikker").replace("Presenter och minnen", "Gaver og minner").replace("Marknader", "Markeder"), text: item.text.replace("Gamla stan", "Gamlebyen").replace("Centrum och strandpromenaden", "Sentrum og strandpromenaden") })),
+  idealItems: ["Glemte klær", "Strandartikler", "Kosmetikk", "Teknologi", "Innkjøp for lengre opphold"],
+  beachForgotTitle: "Har du glemt noe til stranden?",
+  travellerTitle: "Anbefalinger etter reisende",
+  historicIdeasTitle: "Bra å kombinere shopping med",
+  marketsIntro: "Fuengirola har tradisjonelle markeder og et bruktmarked. Sjekk kommunens kalender fordi arrangementer kan avlyses.",
+  municipalMarketsText: "Supermarked passer raske og brede innkjøp; tradisjonelt marked fokuserer mer på ferske varer; utendørsmarked avhenger av dag og vær.",
+  officialLinks: [{ title: "Miramar offisiell katalog", href: miramarStoresDirectoryUrl }, { title: "Miramar åpningstider", href: miramarHoursUrl }, { title: "Parque Comercial Miramar", href: miramarRetailParkUrl }, { title: "Fuengirola markeder", href: fuengirolaMarketsUrl }, { title: "Kommunal kalender 2026", href: fuengirolaMarketsCalendarUrl }]
+};
+
+function applyShoppingLocale(locale: "fi" | "sv" | "no") {
+  const target = shoppingGuideContent[locale];
+  const overrides = shoppingLocaleOverrides[locale]!;
+  Object.assign(target, {
+    quickLinks: overrides.quickLinks.map((item: { title: string; text: string }, index: number) => ({ ...item, target: shoppingGuideContent.es.quickLinks[index].target })),
+    idealItems: overrides.idealItems,
+    categorySections: overrides.categorySections,
+    beachForgotTitle: overrides.beachForgotTitle,
+    beachForgotItems: overrides.beachForgotItems,
+    retailText: overrides.retailText,
+    retailComparison: overrides.retailComparison,
+    historicParagraphs: overrides.historicParagraphs,
+    historicIdeasTitle: overrides.historicIdeasTitle,
+    historicIdeas: overrides.historicIdeas,
+    marketsIntro: overrides.marketsIntro,
+    markets: overrides.markets,
+    municipalMarketsText: overrides.municipalMarketsText,
+    comparison: overrides.comparison,
+    travellerTitle: overrides.travellerTitle,
+    travellers: overrides.travellers,
+    tips: overrides.tips,
+    mapPoints: overrides.mapPoints,
+    faqs: overrides.faqs,
+    officialLinks: overrides.officialLinks,
+    related: overrides.related
+  });
+}
+
+applyShoppingLocale("fi");
+applyShoppingLocale("sv");
+applyShoppingLocale("no");
+
+Object.assign(shoppingGuideContent.sv, {
+  categorySections: [
+    { id: "moda", title: "Mode och stora märken", intro: "Miramar är den enklaste platsen för kläder, skor och accessoarer under vistelsen.", categories: ["fashion"] as ShoppingCategory[] },
+    { id: "calzado", title: "Skor, väskor och accessoarer", intro: "Praktiskt för sandaler, bekväma skor och ett par för kvällen.", categories: ["shoes", "jewellery"] as ShoppingCategory[] },
+    { id: "belleza", title: "Skönhet och personlig vård", intro: "Bra för solskydd, kosmetik, presenter och vardagsprodukter.", categories: ["beauty"] as ShoppingCategory[] },
+    { id: "deporte", title: "Sport, pool och strand", intro: "Användbart för stranddagar, vattenaktiviteter, promenader och träning.", categories: ["sport"] as ShoppingCategory[] },
+    { id: "tecnologia", title: "Teknik, telefoner och tillbehör", intro: "För laddare, adaptrar, hörlurar och mobilrelaterade behov.", categories: ["technology", "services"] as ShoppingCategory[] },
+    { id: "hogar", title: "Hem och inredning", intro: "Praktiskt vid längre vistelser eller för små behov i hemmet.", categories: ["home"] as ShoppingCategory[] },
+    { id: "supermercado", title: "Carrefour och vardagsinköp", intro: "För första matinköpet, vatten, hygien, strandartiklar och längre vistelser.", categories: ["supermarket", "pets"] as ShoppingCategory[] }
+  ],
+  beachForgotItems: ["Parasoll", "Badskor", "Snorkel", "Armpuffar", "Vattentät påse", "Flip-flops", "Handduk", "Solskydd"],
+  retailText: "I Miramars handelsområde finns större butiker som MediaMarkt, Leroy Merlin, Decathlon, Kiwoko, Kiabi och JYSK enligt den officiella katalogen.",
+  retailComparison: [{ title: "Centro Comercial Miramar", text: "Bäst för mode, kosmetik, fritid, restauranger och varierad shopping." }, { title: "Parque Comercial Miramar", text: "Bäst för teknik, sport, hem, gör-det-själv och mer specifika inköp." }],
+  historicParagraphs: ["Fuengirolas gamla stad har en mer lokal känsla med gågator, torg och små butiker.", "Här är det bättre att tänka i kategorier än att hitta på enskilda butiksnamn: boutiquer, skobutiker, smycken, presenter, lokalt mode, traditionella butiker och små gourmetprodukter."],
+  historicIdeas: ["Kaffe på en terrass", "Promenad genom centrum", "Lunch", "Glass", "Strandpromenaden"],
+  markets: [{ title: "Tisdagsmarknaden", when: "Recinto Ferial", text: "Stor marknad för kläder, accessoarer, skor, hemartiklar, mat och varierade produkter." }, { title: "Loppmarknad på lördagar", when: "Recinto Ferial", text: "Mer inriktad på begagnade varor, samlarobjekt, antikviteter och oväntade fynd." }, { title: "Söndagsmarknaden", when: "Santa Amalia-området", text: "Marknad med hantverk, smycken, väskor, keramik, presenter och textilier enligt kommunens turistinformation." }],
+  comparison: [{ zone: "Centro Comercial Miramar", bestFor: "Mode, skönhet, fritid", fromApartment: "Till fots", type: "Stora märken" }, { zone: "Parque Comercial Miramar", bestFor: "Sport, teknik, hem", fromApartment: "Till fots", type: "Större butiker" }, { zone: "Gamla stan", bestFor: "Boutiquer och presenter", fromApartment: "Promenad eller taxi", type: "Lokala butiker" }, { zone: "Marknader", bestFor: "Fynd och begagnat", fromApartment: "Kort transport", type: "Informell shopping" }],
+  travellers: [{ title: "För familjer", text: "Primark, H&M, C&A, Kiabi, Decathlon och Carrefour." }, { title: "För mode", text: "Zara, Mango, Massimo Dutti, Stradivarius, Bershka och Pull&Bear." }, { title: "För glömda saker", text: "Carrefour, Primark, MediaMarkt och Decathlon." }, { title: "För presenter", text: "Rituals, parfymbutiker, smyckesbutiker och gamla stan." }, { title: "För en regnig dag", text: "Miramar, bio, shopping och restauranger under samma tak." }],
+  tips: ["Kontrollera öppettider på söndagar och helgdagar.", "Spara kvitton för byten.", "Tänk på bagageregler om du flyger.", "Gå till Miramar om inköpen inte är skrymmande.", "Använd bil eller taxi för större inköp.", "Undvik de mest hektiska tiderna under högsäsong.", "Kombinera centrum med mat eller en promenad."],
+  mapPoints: { miramar: "Centro Comercial Miramar", retailPark: "Parque Comercial Miramar", historicCentre: "Gamla stan", fairground: "Recinto Ferial", municipalMarket: "Kommunal marknad" },
+  faqs: [{ question: "Vilket köpcentrum ligger närmast lägenheten?", answer: "Centro Comercial Miramar och handelsområdet bredvid är de mest praktiska alternativen nära lägenheten." }, { question: "Kan man gå till Miramar?", answer: "Ja, om du inte köper stora eller tunga saker." }, { question: "Vilka butiker finns i Centro Comercial Miramar?", answer: "Det finns mode, skönhet, teknik, sport, mat, fritid och tjänster. Kontrollera den officiella katalogen för hela listan." }, { question: "Var kan jag köpa strandartiklar?", answer: "Decathlon, Carrefour och Primark är praktiska alternativ beroende på tillgänglighet." }, { question: "Var kan jag köpa laddare eller telefontillbehör?", answer: "MediaMarkt, Rossellimac, Movistar och Orange kan vara användbara." }, { question: "Var hittar jag prisvärda kläder?", answer: "Primark, Kiabi, C&A, H&M och Deichmann är prisvärda eller mellanklassalternativ." }, { question: "Var kan jag köpa saker till husdjur?", answer: "Kiwoko är den viktigaste djurbutiken i den här guiden." }, { question: "När är det marknader i Fuengirola?", answer: "Kommunens turistinformation listar marknader på tisdagar och söndagar samt loppmarknad på lördagar. Kontrollera kalendern." }, { question: "Var kan jag köpa presenter?", answer: "Gamla stan, strandpromenaden, Rituals, Natura, Flying Tiger Copenhagen och smyckesbutiker är bra alternativ." }],
+  related: [{ key: "restaurants", title: "Restauranger", text: "Var du kan äta efter shopping." }, { key: "beaches", title: "Stränder", text: "Planer vid havet nära lägenheten." }, { key: "thingsToDo", title: "Saker att göra", text: "Fler idéer för vistelsen." }, { key: "airport", title: "Från flygplatsen", text: "Transport från Málaga." }]
+});
+
+Object.assign(shoppingGuideContent.no, {
+  categorySections: [
+    { id: "moda", title: "Mote og store merker", intro: "Miramar er det enkleste stedet for klær, sko og tilbehør under oppholdet.", categories: ["fashion"] as ShoppingCategory[] },
+    { id: "calzado", title: "Sko, vesker og tilbehør", intro: "Praktisk for sandaler, komfortable sko og et penere par til kvelden.", categories: ["shoes", "jewellery"] as ShoppingCategory[] },
+    { id: "belleza", title: "Skjønnhet og personlig pleie", intro: "Nyttig for solbeskyttelse, kosmetikk, gaver og hverdagsprodukter.", categories: ["beauty"] as ShoppingCategory[] },
+    { id: "deporte", title: "Sport, basseng og strand", intro: "Nyttig for stranddager, vannaktiviteter, gåturer og trening.", categories: ["sport"] as ShoppingCategory[] },
+    { id: "tecnologia", title: "Teknologi, telefoner og tilbehør", intro: "For ladere, adaptere, hodetelefoner og mobilrelaterte behov.", categories: ["technology", "services"] as ShoppingCategory[] },
+    { id: "hogar", title: "Hjem og interiør", intro: "Praktisk ved lengre opphold eller små behov i hjemmet.", categories: ["home"] as ShoppingCategory[] },
+    { id: "supermercado", title: "Carrefour og daglige innkjøp", intro: "For første matinnkjøp, vann, hygiene, strandartikler og lengre opphold.", categories: ["supermarket", "pets"] as ShoppingCategory[] }
+  ],
+  beachForgotItems: ["Parasoll", "Badesko", "Snorkel", "Armringer", "Vanntett pose", "Flip-flops", "Håndkle", "Solbeskyttelse"],
+  retailText: "I Miramars handelsområde finnes større butikker som MediaMarkt, Leroy Merlin, Decathlon, Kiwoko, Kiabi og JYSK ifølge den offisielle katalogen.",
+  retailComparison: [{ title: "Centro Comercial Miramar", text: "Best for mote, kosmetikk, fritid, restauranter og variert shopping." }, { title: "Parque Comercial Miramar", text: "Best for teknologi, sport, hjem, gjør-det-selv og mer spesifikke innkjøp." }],
+  historicParagraphs: ["Fuengirolas gamleby har en mer lokal følelse med gågater, torg og små butikker.", "Her er det bedre å tenke i kategorier enn å finne opp enkeltbutikker: boutiquer, skobutikker, smykker, gaver, lokal mote, tradisjonelle butikker og små gourmetprodukter."],
+  historicIdeas: ["Kaffe på en terrasse", "Gåtur gjennom sentrum", "Lunsj", "Iskrem", "Strandpromenaden"],
+  markets: [{ title: "Tirsdagsmarkedet", when: "Recinto Ferial", text: "Stort marked for klær, tilbehør, sko, ting til hjemmet, mat og varierte produkter." }, { title: "Bruktmarked på lørdager", when: "Recinto Ferial", text: "Mer rettet mot brukte varer, samleobjekter, antikviteter og uventede funn." }, { title: "Søndagsmarkedet", when: "Santa Amalia-området", text: "Marked med håndverk, smykker, vesker, keramikk, gaver og tekstiler ifølge kommunal turistinformasjon." }],
+  comparison: [{ zone: "Centro Comercial Miramar", bestFor: "Mote, skjønnhet, fritid", fromApartment: "Til fots", type: "Store merker" }, { zone: "Parque Comercial Miramar", bestFor: "Sport, teknologi, hjem", fromApartment: "Til fots", type: "Større butikker" }, { zone: "Gamlebyen", bestFor: "Boutiquer og gaver", fromApartment: "Gåtur eller taxi", type: "Lokale butikker" }, { zone: "Markeder", bestFor: "Funn og brukt", fromApartment: "Kort transport", type: "Uformell shopping" }],
+  travellers: [{ title: "For familier", text: "Primark, H&M, C&A, Kiabi, Decathlon og Carrefour." }, { title: "For mote", text: "Zara, Mango, Massimo Dutti, Stradivarius, Bershka og Pull&Bear." }, { title: "For glemte ting", text: "Carrefour, Primark, MediaMarkt og Decathlon." }, { title: "For gaver", text: "Rituals, parfymerier, smykkebutikker og gamlebyen." }, { title: "For en regnværsdag", text: "Miramar, kino, shopping og restauranter under samme tak." }],
+  tips: ["Sjekk åpningstider på søndager og helligdager.", "Ta vare på kvitteringer for bytte.", "Husk bagasjebegrensninger hvis du flyr.", "Gå til Miramar hvis innkjøpene ikke er store.", "Bruk bil eller taxi for store innkjøp.", "Unngå de travleste tidene i høysesongen.", "Kombiner sentrum med mat eller en gåtur."],
+  mapPoints: { miramar: "Centro Comercial Miramar", retailPark: "Parque Comercial Miramar", historicCentre: "Gamlebyen", fairground: "Recinto Ferial", municipalMarket: "Kommunalt marked" },
+  faqs: [{ question: "Hvilket kjøpesenter ligger nærmest leiligheten?", answer: "Centro Comercial Miramar og handelsområdet ved siden av er de mest praktiske alternativene nær leiligheten." }, { question: "Kan man gå til Miramar?", answer: "Ja, hvis du ikke kjøper store eller tunge ting." }, { question: "Hvilke butikker finnes i Centro Comercial Miramar?", answer: "Det finnes mote, skjønnhet, teknologi, sport, mat, fritid og tjenester. Sjekk den offisielle katalogen for full liste." }, { question: "Hvor kan jeg kjøpe strandartikler?", answer: "Decathlon, Carrefour og Primark er praktiske alternativer avhengig av tilgjengelighet." }, { question: "Hvor kan jeg kjøpe lader eller telefontilbehør?", answer: "MediaMarkt, Rossellimac, Movistar og Orange kan være nyttige." }, { question: "Hvor finner jeg rimelige klær?", answer: "Primark, Kiabi, C&A, H&M og Deichmann er rimelige eller mellomklassealternativer." }, { question: "Hvor kan jeg kjøpe produkter til kjæledyr?", answer: "Kiwoko er den viktigste dyrebutikken i denne guiden." }, { question: "Når er det markeder i Fuengirola?", answer: "Kommunal turistinformasjon viser markeder på tirsdager og søndager samt bruktmarked på lørdager. Sjekk kalenderen." }, { question: "Hvor kan jeg kjøpe gaver?", answer: "Gamlebyen, strandpromenaden, Rituals, Natura, Flying Tiger Copenhagen og smykkebutikker er gode alternativer." }],
+  related: [{ key: "restaurants", title: "Restauranter", text: "Hvor du kan spise etter shopping." }, { key: "beaches", title: "Strender", text: "Planer ved sjøen nær leiligheten." }, { key: "thingsToDo", title: "Ting å gjøre", text: "Flere ideer for oppholdet." }, { key: "airport", title: "Fra flyplassen", text: "Transport fra Málaga." }]
+});
