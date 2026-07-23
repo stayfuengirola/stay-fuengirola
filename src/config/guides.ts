@@ -48,8 +48,14 @@ export const guideCategories = [
   },
   {
     key: "excursions",
-    status: "draft",
-    slugs: { es: "excursiones", en: "excursions", fi: "retket", sv: "utflykter", no: "utflukter" }
+    status: "published",
+    slugs: {
+      es: "excursiones-desde-fuengirola",
+      en: "day-trips-from-fuengirola",
+      fi: "paivaretket-fuengirolasta",
+      sv: "dagsutflykter-fran-fuengirola",
+      no: "dagsturer-fra-fuengirola"
+    }
   },
   {
     key: "thingsToDo",

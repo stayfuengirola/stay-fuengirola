@@ -42,6 +42,8 @@ Los eventos se envian desde `src/lib/analytics.ts`.
 | `guide_internal_click` | `source_guide`, `destination`, `page_path`, `language` |
 | `attraction_official_click` | `attraction`, `destination`, `page_path`, `language` |
 | `shopping_store_click` | `store`, `category`, `area`, `page_path`, `language` |
+| `excursion_official_click` | `excursion`, `destination`, `page_path`, `language` |
+| `excursion_filter_use` | `filter`, `page_path`, `language` |
 
 ## Eventos clave en GA4
 

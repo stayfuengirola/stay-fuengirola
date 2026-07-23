@@ -32,7 +32,10 @@ import {
 import { AttractionOfficialLink } from "@/components/AttractionOfficialLink";
 import { BeachGuideMap } from "@/components/BeachGuideMap";
 import { BioparcGuideMap } from "@/components/BioparcGuideMap";
+import { BookingButton } from "@/components/BookingButton";
 import { EventsSection } from "@/components/EventsSection";
+import { ExcursionOfficialLink, ExcursionPlanner } from "@/components/ExcursionPlanner";
+import { ExcursionsGuideMap } from "@/components/ExcursionsGuideMap";
 import { GuideInternalLink } from "@/components/GuideInternalLink";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
@@ -42,6 +45,7 @@ import { bioparcGuideContent, bioparcOfficialLinks } from "@/config/bioparcGuide
 import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
 import { beachGuideContent } from "@/config/beachGuide";
+import { excursionsGuideContent } from "@/config/excursionsGuide";
 import { restaurantGuideContent } from "@/config/restaurantGuide";
 import { shoppingGuideContent } from "@/config/shoppingGuide";
 import { thingsToDoGuideContent } from "@/config/thingsToDoGuide";
@@ -55,6 +59,7 @@ import {
 } from "@/config/guides";
 import { property } from "@/config/property";
 import { miramarStoresDirectoryUrl, shoppingStores } from "@/data/shoppingStores";
+import { excursions, secondaryExcursionIdeas } from "@/data/excursions";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
 import { siteUrl } from "@/lib/urls";
@@ -107,12 +112,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isBeachGuide = category.key === "beaches";
   const isRestaurantGuide = category.key === "restaurants";
   const isShoppingGuide = category.key === "shopping";
+  const isExcursionsGuide = category.key === "excursions";
   const isThingsToDoGuide = category.key === "thingsToDo";
   const isBioparcGuide = category.key === "bioparc";
   const airportContent = airportGuideContent[locale];
   const beachContent = beachGuideContent[locale];
   const restaurantContent = restaurantGuideContent[locale];
   const shoppingContent = shoppingGuideContent[locale];
+  const excursionsContent = excursionsGuideContent[locale];
   const thingsToDoContent = thingsToDoGuideContent[locale];
   const bioparcContent = bioparcGuideContent[locale];
   const title = isAirportGuide
@@ -123,11 +130,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? restaurantContent.metaTitle
         : isShoppingGuide
           ? shoppingContent.metaTitle
-          : isThingsToDoGuide
-            ? thingsToDoContent.metaTitle
-            : isBioparcGuide
-              ? bioparcContent.metaTitle
-              : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+          : isExcursionsGuide
+            ? excursionsContent.metaTitle
+            : isThingsToDoGuide
+              ? thingsToDoContent.metaTitle
+              : isBioparcGuide
+                ? bioparcContent.metaTitle
+                : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
   const description = isAirportGuide
     ? airportContent.metaDescription
     : isBeachGuide
@@ -136,11 +145,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? restaurantContent.metaDescription
         : isShoppingGuide
           ? shoppingContent.metaDescription
-          : isThingsToDoGuide
-            ? thingsToDoContent.metaDescription
-            : isBioparcGuide
-              ? bioparcContent.metaDescription
-              : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+          : isExcursionsGuide
+            ? excursionsContent.metaDescription
+            : isThingsToDoGuide
+              ? thingsToDoContent.metaDescription
+              : isBioparcGuide
+                ? bioparcContent.metaDescription
+                : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
   const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
@@ -158,7 +169,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"]
         : isBioparcGuide
           ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
-          : undefined
+          : isExcursionsGuide
+            ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
+            : undefined
     },
     twitter: {
       card: "summary_large_image",
@@ -168,7 +181,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"]
         : isBioparcGuide
           ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
-          : undefined
+          : isExcursionsGuide
+            ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
+            : undefined
     }
   };
 }
@@ -201,6 +216,10 @@ export default async function GuideCategoryPage({ params }: Props) {
 
   if (category.key === "shopping") {
     return <ShoppingGuidePage locale={locale} dictionary={t} />;
+  }
+
+  if (category.key === "excursions") {
+    return <ExcursionsGuidePage locale={locale} dictionary={t} />;
   }
 
   if (category.key === "thingsToDo") {
@@ -521,6 +540,318 @@ function ShoppingGuidePage({ locale, dictionary: t }: { locale: Locale; dictiona
                 </GuideInternalLink>
               ))}
             </div>
+          </section>
+        </article>
+      </main>
+      <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
+    </div>
+  );
+}
+
+function ExcursionsGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
+  const content = excursionsGuideContent[locale];
+  const activeExcursions = excursions.filter((excursion) => excursion.active);
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "excursions")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Stay Fuengirola", item: `${siteUrl}/${locale}` },
+      { "@type": "ListItem", position: 2, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 3, name: content.breadcrumbArticle, item: articleUrl }
+    ]
+  };
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.h1,
+    description: content.metaDescription,
+    mainEntityOfPage: articleUrl,
+    author: { "@type": "Organization", name: property.brandName },
+    publisher: { "@type": "Organization", name: property.brandName },
+    about: content.schemaAbout,
+    inLanguage: locale,
+    dateModified: "2026-07-23"
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  };
+
+  return (
+    <div className="shell">
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
+      <main className="section guide-page">
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
+        <article className="container guide-article excursions-article">
+          <Link className="text-link" href={getGuidePath(locale)}>
+            <ArrowLeft aria-hidden="true" size={18} />
+            {content.backLabel}
+          </Link>
+
+          <header className="guide-hero-card bioparc-hero excursions-hero">
+            <div className="bioparc-hero-copy">
+              <span className="guide-hero-icon">
+                <MapPinned aria-hidden="true" size={30} />
+              </span>
+              <p className="guide-kicker">{content.kicker}</p>
+              <h1>{content.h1}</h1>
+              <p>{content.intro}</p>
+            </div>
+            <div className="bioparc-hero-image">
+              <Image
+                src="/images/guide/excursions/ronda-puente-nuevo.svg"
+                alt={content.heroImageAlt}
+                width={1200}
+                height={760}
+                priority
+                sizes="(max-width: 960px) calc(100vw - 64px), 420px"
+              />
+            </div>
+          </header>
+
+          <section className="shopping-quick-card" aria-labelledby="excursion-quick-title">
+            <h2 id="excursion-quick-title">{content.quickTitle}</h2>
+            <div className="shopping-quick-grid excursion-quick-grid">
+              {content.quickPicks.map((item) => (
+                <a className="shopping-quick-item" href={`#${item.destinationId}`} key={item.label}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.label}</strong>
+                  <span>{item.reason}</span>
+                </a>
+              ))}
+            </div>
+            <p className="map-note">{content.labels.note}: {content.quickNote}</p>
+          </section>
+
+          <section className="guide-content-section" id="excursion-cards">
+            <h2>{content.navTitle}</h2>
+            <ExcursionPlanner content={content} excursions={activeExcursions} locale={locale} />
+          </section>
+
+          <section className="guide-content-section" id="comparativa">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="shopping-table excursion-comparison" role="table">
+              <div className="shopping-table-row shopping-table-head" role="row">
+                <strong role="columnheader">{content.comparisonHeaders.destination}</strong>
+                <span role="columnheader">{content.comparisonHeaders.duration}</span>
+                <span role="columnheader">{content.comparisonHeaders.transport}</span>
+                <span role="columnheader">{content.comparisonHeaders.ideal}</span>
+                <span role="columnheader">{content.comparisonHeaders.booking}</span>
+              </div>
+              {activeExcursions.map((excursion) => (
+                <div className="shopping-table-row" role="row" key={excursion.id}>
+                  <strong role="cell">{content.texts[excursion.titleKey]}</strong>
+                  <span role="cell">{content.durationLabels[excursion.duration]}</span>
+                  <span role="cell">{excursion.transport.map((transport) => content.transportLabels[transport]).join(" · ")}</span>
+                  <span role="cell">{excursion.categories.map((category) => content.categoryLabels[category]).slice(0, 2).join(" · ")}</span>
+                  <span role="cell">{excursion.advanceBooking ? content.labels.recommended : content.labels.no}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {activeExcursions.map((excursion) => {
+            const editorial = content.editorials[excursion.id];
+            return (
+              <section className="guide-content-section excursion-editorial" id={excursion.slug} key={excursion.id}>
+                <div className="excursion-editorial-image">
+                  <Image
+                    src={excursion.image}
+                    alt={content.texts[excursion.titleKey]}
+                    width={1200}
+                    height={760}
+                    sizes="(max-width: 960px) calc(100vw - 32px), 360px"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="excursion-editorial-copy">
+                  {editorial.badge ? <p className="guide-kicker">{editorial.badge}</p> : null}
+                  <h2>{editorial.title}</h2>
+                  {editorial.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                  <div className="excursion-detail-grid">
+                    <article className="bioparc-info-card">
+                      <CheckCircle2 aria-hidden="true" size={22} />
+                      <strong>{editorial.seeTitle}</strong>
+                      <span>{editorial.see.join(" · ")}</span>
+                    </article>
+                    <article className="bioparc-info-card">
+                      <TrainFront aria-hidden="true" size={22} />
+                      <strong>{editorial.arrivalTitle}</strong>
+                      <span>{editorial.arrival.join(" ")}</span>
+                    </article>
+                    <article className="bioparc-info-card">
+                      <Clock aria-hidden="true" size={22} />
+                      <strong>{editorial.timeTitle}</strong>
+                      <span>{editorial.time}</span>
+                    </article>
+                    <article className="bioparc-info-card">
+                      <Users aria-hidden="true" size={22} />
+                      <strong>{editorial.idealTitle}</strong>
+                      <span>{editorial.ideal.join(" · ")}</span>
+                    </article>
+                  </div>
+                  <div className="guide-recommendation excursion-tip-card">
+                    <CheckCircle2 aria-hidden="true" size={24} />
+                    <div>
+                      <h3>{editorial.tipTitle}</h3>
+                      <p>{editorial.tip}</p>
+                    </div>
+                  </div>
+                  <div className="bioparc-official-grid excursion-official-grid">
+                    {excursion.officialLinks.map((link) => (
+                      <ExcursionOfficialLink
+                        content={content}
+                        destination={link.destination}
+                        excursion={excursion.id}
+                        key={`${excursion.id}-${link.destination}-${link.url}`}
+                        locale={locale}
+                        url={link.url}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </section>
+            );
+          })}
+
+          <section className="guide-content-section" id="sin-coche">
+            <h2>{content.noCarTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.noCarGroups.map((group) => (
+                <article className="bioparc-info-card" key={group.title}>
+                  <TrainFront aria-hidden="true" size={22} />
+                  <strong>{group.title}</strong>
+                  <span>{group.items.join(" · ")}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="con-ninos">
+            <h2>{content.kidsTitle}</h2>
+            <p>{content.kidsText}</p>
+          </section>
+
+          <section className="guide-content-section" id="tiempo-disponible">
+            <h2>{content.timeBlocksTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.timeBlocks.map((block) => (
+                <article className="bioparc-info-card" key={block.title}>
+                  <Clock aria-hidden="true" size={22} />
+                  <strong>{block.title}</strong>
+                  <span>{block.items.join(" · ")}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="epoca">
+            <h2>{content.seasonTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.seasons.map((season) => (
+                <article className="bioparc-info-card" key={season.title}>
+                  <Sun aria-hidden="true" size={22} />
+                  <strong>{season.title}</strong>
+                  <span>{season.text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="mapa">
+            <h2>{content.mapTitle}</h2>
+            <ExcursionsGuideMap content={content} excursions={activeExcursions} />
+          </section>
+
+          <section className="guide-content-section" id="mas-ideas">
+            <h2>{content.secondaryTitle}</h2>
+            <p>{content.secondaryIntro}</p>
+            <div className="shopping-store-grid">
+              {secondaryExcursionIdeas.map((idea) => (
+                <article className="bioparc-info-card" key={idea}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{content.secondaryIdeas[idea].title}</strong>
+                  <span>{content.secondaryIdeas[idea].text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="consejos">
+            <h2>{content.tipsTitle}</h2>
+            <ul className="guide-check-list">
+              {content.tips.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+            <p className="map-note">{content.changingNote}</p>
+          </section>
+
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
+            <div className="guide-faq-list">
+              {content.faqs.map((item) => (
+                <details className="guide-faq-item" key={item.question}>
+                  <summary>
+                    <CircleHelp aria-hidden="true" size={18} />
+                    {item.question}
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="informacion-oficial">
+            <h2>{content.officialTitle}</h2>
+            <p>{content.officialNote}</p>
+            <p className="map-note">{content.changingNote}</p>
+          </section>
+
+          <section className="guide-related" aria-labelledby="excursions-related-title">
+            <h2 id="excursions-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid">
+              {content.related.map((item) => (
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.key}
+                  href={getGuideCategoryPath(locale, item.key)}
+                  key={item.key}
+                  locale={locale}
+                  sourceGuide="excursions"
+                >
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </GuideInternalLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-cta">
+            <MapPinned aria-hidden="true" size={30} />
+            <h2>{content.ctaTitle}</h2>
+            <p>{content.ctaText}</p>
+            <BookingButton className="cta" label={content.ctaButton} locale={locale} placement="guide" />
           </section>
         </article>
       </main>
