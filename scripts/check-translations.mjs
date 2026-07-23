@@ -5,14 +5,16 @@ const root = process.cwd();
 const files = [
   "src/config/excursionsGuide.ts",
   "src/config/shoppingGuide.ts",
+  "src/config/supermarketGuide.ts",
   "src/components/ExcursionPlanner.tsx",
-  "src/components/ShoppingStoreDirectory.tsx"
+  "src/components/ShoppingStoreDirectory.tsx",
+  "src/components/SupermarketGuideTools.tsx"
 ];
 
 const forbidden = [
   { locale: "fi", phrases: ["A good half-day option", "Ideal for combining", "Works as a relaxed", "See details", "Half day", "Full day", "Type of plan", "Children"] },
-  { locale: "sv", phrases: ["A good half-day option", "Ideal for combining", "Works as a relaxed", "See details", "Half day", "Full day", "Type of plan", "Children"] },
-  { locale: "no", phrases: ["A good half-day option", "Ideal for combining", "Works as a relaxed", "See details", "Half day", "Full day", "Type of plan", "Children"] },
+  { locale: "sv", phrases: ["A good half-day option", "Ideal for combining", "Works as a relaxed", "See details", "Half day", "Full day", "Type of plan", "Children", "Peruslista", "Takaisin oppaaseen", "Käytännöllisin", "Mistä ostaa"] },
+  { locale: "no", phrases: ["A good half-day option", "Ideal for combining", "Works as a relaxed", "See details", "Half day", "Full day", "Type of plan", "Children", "Peruslista"] },
   { locale: "es", phrases: ["See details", "Half day", "Full day", "Type of plan", "Children"] },
   { locale: "en", phrases: ["Ver detalles", "Medio día", "Día completo", "Niños", "Compras"] }
 ];
@@ -77,4 +79,3 @@ function fail(message) {
   failed = true;
   console.error(`Missing translation guard: ${message}`);
 }
-

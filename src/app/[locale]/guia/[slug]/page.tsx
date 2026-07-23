@@ -41,6 +41,8 @@ import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ShoppingGuideMap } from "@/components/ShoppingGuideMap";
 import { ShoppingStoreDirectory } from "@/components/ShoppingStoreDirectory";
+import { SupermarketGuideMap } from "@/components/SupermarketGuideMap";
+import { ArrivalChecklist, SupermarketExternalLink, SupermarketFilterGrid } from "@/components/SupermarketGuideTools";
 import { bioparcGuideContent, bioparcOfficialLinks } from "@/config/bioparcGuide";
 import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
@@ -48,6 +50,7 @@ import { beachGuideContent } from "@/config/beachGuide";
 import { excursionsGuideContent } from "@/config/excursionsGuide";
 import { restaurantGuideContent } from "@/config/restaurantGuide";
 import { shoppingGuideContent } from "@/config/shoppingGuide";
+import { supermarketGuideContent } from "@/config/supermarketGuide";
 import { thingsToDoGuideContent } from "@/config/thingsToDoGuide";
 import { thingsToDoEventsContent } from "@/config/thingsToDoEvents";
 import {
@@ -60,6 +63,7 @@ import {
 import { property } from "@/config/property";
 import { miramarStoresDirectoryUrl, shoppingStores } from "@/data/shoppingStores";
 import { excursions, secondaryExcursionIdeas } from "@/data/excursions";
+import { supermarkets } from "@/data/supermarkets";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
 import { siteUrl } from "@/lib/urls";
@@ -110,6 +114,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = getDictionary(locale);
   const isAirportGuide = category.key === "airport";
   const isBeachGuide = category.key === "beaches";
+  const isSupermarketGuide = category.key === "supermarkets";
   const isRestaurantGuide = category.key === "restaurants";
   const isShoppingGuide = category.key === "shopping";
   const isExcursionsGuide = category.key === "excursions";
@@ -117,6 +122,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isBioparcGuide = category.key === "bioparc";
   const airportContent = airportGuideContent[locale];
   const beachContent = beachGuideContent[locale];
+  const supermarketContent = supermarketGuideContent[locale];
   const restaurantContent = restaurantGuideContent[locale];
   const shoppingContent = shoppingGuideContent[locale];
   const excursionsContent = excursionsGuideContent[locale];
@@ -126,32 +132,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ? airportContent.metaTitle
     : isBeachGuide
       ? beachContent.metaTitle
-      : isRestaurantGuide
-        ? restaurantContent.metaTitle
-        : isShoppingGuide
-          ? shoppingContent.metaTitle
-          : isExcursionsGuide
-            ? excursionsContent.metaTitle
-            : isThingsToDoGuide
-              ? thingsToDoContent.metaTitle
-              : isBioparcGuide
-                ? bioparcContent.metaTitle
-                : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+      : isSupermarketGuide
+        ? supermarketContent.metaTitle
+        : isRestaurantGuide
+          ? restaurantContent.metaTitle
+          : isShoppingGuide
+            ? shoppingContent.metaTitle
+            : isExcursionsGuide
+              ? excursionsContent.metaTitle
+              : isThingsToDoGuide
+                ? thingsToDoContent.metaTitle
+                : isBioparcGuide
+                  ? bioparcContent.metaTitle
+                  : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
   const description = isAirportGuide
     ? airportContent.metaDescription
     : isBeachGuide
       ? beachContent.metaDescription
-      : isRestaurantGuide
-        ? restaurantContent.metaDescription
-        : isShoppingGuide
-          ? shoppingContent.metaDescription
-          : isExcursionsGuide
-            ? excursionsContent.metaDescription
-            : isThingsToDoGuide
-              ? thingsToDoContent.metaDescription
-              : isBioparcGuide
-                ? bioparcContent.metaDescription
-                : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+      : isSupermarketGuide
+        ? supermarketContent.metaDescription
+        : isRestaurantGuide
+          ? restaurantContent.metaDescription
+          : isShoppingGuide
+            ? shoppingContent.metaDescription
+            : isExcursionsGuide
+              ? excursionsContent.metaDescription
+              : isThingsToDoGuide
+                ? thingsToDoContent.metaDescription
+                : isBioparcGuide
+                  ? bioparcContent.metaDescription
+                  : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
   const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
@@ -167,11 +177,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "article",
       images: isBeachGuide
         ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"]
-        : isBioparcGuide
-          ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
-          : isExcursionsGuide
-            ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
-            : undefined
+        : isSupermarketGuide
+          ? ["/images/guide/supermarkets-fresh-groceries.svg"]
+          : isBioparcGuide
+            ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
+            : isExcursionsGuide
+              ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
+              : undefined
     },
     twitter: {
       card: "summary_large_image",
@@ -179,11 +191,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       images: isBeachGuide
         ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"]
-        : isBioparcGuide
-          ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
-          : isExcursionsGuide
-            ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
-            : undefined
+        : isSupermarketGuide
+          ? ["/images/guide/supermarkets-fresh-groceries.svg"]
+          : isBioparcGuide
+            ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
+            : isExcursionsGuide
+              ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
+              : undefined
     }
   };
 }
@@ -208,6 +222,10 @@ export default async function GuideCategoryPage({ params }: Props) {
 
   if (category.key === "beaches") {
     return <BeachGuidePage locale={locale} dictionary={t} />;
+  }
+
+  if (category.key === "supermarkets") {
+    return <SupermarketGuidePage locale={locale} dictionary={t} />;
   }
 
   if (category.key === "restaurants") {
@@ -249,6 +267,264 @@ export default async function GuideCategoryPage({ params }: Props) {
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
     </div>
+  );
+}
+
+function SupermarketGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
+  const content = supermarketGuideContent[locale];
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "supermarkets")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 2, name: content.breadcrumbArticle, item: articleUrl }
+    ]
+  };
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.h1,
+    description: content.metaDescription,
+    image: `${siteUrl}/images/guide/supermarkets-fresh-groceries.svg`,
+    mainEntityOfPage: articleUrl,
+    author: { "@type": "Organization", name: "Stay Fuengirola" },
+    publisher: { "@type": "Organization", name: "Stay Fuengirola" },
+    about: content.schemaAbout
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer }
+    }))
+  };
+
+  return (
+    <>
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
+      <main>
+        {[breadcrumbJsonLd, articleJsonLd, faqJsonLd].map((jsonLd) => (
+          <script
+            type="application/ld+json"
+            key={jsonLd["@type"]}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
+        <article className="container guide-article supermarket-article">
+          <Link className="text-link" href={getGuidePath(locale)}>
+            <ArrowLeft aria-hidden="true" size={18} />
+            {content.backLabel}
+          </Link>
+
+          <header className="guide-hero-card bioparc-hero supermarket-hero">
+            <div className="bioparc-hero-copy">
+              <span className="guide-hero-icon">
+                <ShoppingBag aria-hidden="true" size={30} />
+              </span>
+              <p className="guide-kicker">{content.kicker}</p>
+              <h1>{content.h1}</h1>
+              <p>{content.intro}</p>
+            </div>
+            <div className="bioparc-hero-image">
+              <Image
+                src="/images/guide/supermarkets-fresh-groceries.svg"
+                alt={content.heroImageAlt}
+                width={1200}
+                height={760}
+                sizes="(max-width: 960px) calc(100vw - 32px), 420px"
+                priority
+              />
+            </div>
+          </header>
+
+          <section className="shopping-quick-card" aria-labelledby="supermarket-quick-title">
+            <h2 id="supermarket-quick-title">{content.quickTitle}</h2>
+            <div className="shopping-quick-grid excursion-quick-grid">
+              {content.quickLinks.map((item) => (
+                <a className="shopping-quick-item" href={item.target} key={item.title}>
+                  <ShoppingBag aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section bioparc-split-section">
+            <div>
+              <h2>{content.firstShopTitle}</h2>
+              {content.firstShopParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+            <div className="shopping-ideal-card">
+              <ul className="guide-check-list">
+                {content.firstShopItems.map((item) => (
+                  <li key={item}>
+                    <CheckCircle2 aria-hidden="true" size={18} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section className="guide-content-section" aria-labelledby="supermarket-list-title">
+            <h2 id="supermarket-list-title">{content.sectionsTitle}</h2>
+            <p>{content.sectionsIntro}</p>
+            <SupermarketFilterGrid content={content} locale={locale} supermarkets={supermarkets} />
+          </section>
+
+          <section className="guide-content-section" id="comparativa">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="shopping-table supermarket-comparison" role="table">
+              <div className="shopping-table-row shopping-table-head" role="row">
+                <strong role="columnheader">{content.comparisonHeaders.supermarket}</strong>
+                <span role="columnheader">{content.comparisonHeaders.bestFor}</span>
+                <span role="columnheader">{content.comparisonHeaders.type}</span>
+                <span role="columnheader">{content.comparisonHeaders.transport}</span>
+              </div>
+              {content.comparisonRows.map((row) => (
+                <div className="shopping-table-row" role="row" key={row.supermarket}>
+                  <strong role="cell">{row.supermarket}</strong>
+                  <span role="cell">{row.bestFor}</span>
+                  <span role="cell">{row.type}</span>
+                  <span role="cell">{row.transport}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.needsTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.needsCards.map((card) => (
+                <article className="bioparc-info-card" key={card.title}>
+                  <ShoppingBag aria-hidden="true" size={22} />
+                  <strong>{card.title}</strong>
+                  <span>{card.items.join(" · ")}</span>
+                  <small>{card.recommendation}</small>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section bioparc-split-section">
+            <div>
+              <h2>{content.freshTitle}</h2>
+              {content.freshParagraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              <p className="map-note">{content.freshNote}</p>
+            </div>
+            <ArrivalChecklist content={content} locale={locale} />
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.sundayTitle}</h2>
+            {content.sundayParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <div className="bioparc-official-grid">
+              {content.officialLinks.map((link) => (
+                <SupermarketExternalLink
+                  content={content}
+                  destination={link.destination}
+                  href={link.href}
+                  key={`${link.supermarket}-${link.destination}`}
+                  locale={locale}
+                  supermarket={link.supermarket}
+                >
+                  {link.title}
+                </SupermarketExternalLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section shopping-map-section" aria-labelledby="supermarket-map-title">
+            <h2 id="supermarket-map-title">{content.mapTitle}</h2>
+            <SupermarketGuideMap content={content} supermarkets={supermarkets} />
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.tipsTitle}</h2>
+            <ul className="guide-check-list">
+              {content.tips.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="guide-content-section" id="preguntas">
+            <h2>{content.faqTitle}</h2>
+            <div className="faq-list">
+              {content.faqs.map((faq) => (
+                <details key={faq.question}>
+                  <summary>{faq.question}</summary>
+                  <p>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="informacion-oficial">
+            <h2>{content.officialTitle}</h2>
+            <p>{content.editorialNote}</p>
+            <div className="bioparc-official-grid">
+              {content.officialLinks.map((link) => (
+                <SupermarketExternalLink
+                  content={content}
+                  destination={link.destination}
+                  href={link.href}
+                  key={`${link.supermarket}-${link.title}`}
+                  locale={locale}
+                  supermarket={link.supermarket}
+                >
+                  {link.title}
+                </SupermarketExternalLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-recommendation bioparc-tip-card supermarket-cta">
+            <Star aria-hidden="true" size={28} />
+            <div>
+              <h2>{content.ctaTitle}</h2>
+              <p>{content.ctaText}</p>
+              <BookingButton label={content.ctaButton} locale={locale} placement="supermarkets-guide" />
+            </div>
+          </section>
+
+          <section className="guide-related" aria-labelledby="supermarket-related-title">
+            <h2 id="supermarket-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid">
+              {content.related.map((item) => (
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.key}
+                  href={getGuideCategoryPath(locale, item.key)}
+                  key={item.key}
+                  locale={locale}
+                  sourceGuide="supermarkets"
+                >
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </GuideInternalLink>
+              ))}
+            </div>
+          </section>
+        </article>
+      </main>
+      <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
+    </>
   );
 }
 

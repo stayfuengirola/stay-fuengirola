@@ -16,7 +16,10 @@ export type AnalyticsEventName =
   | "attraction_official_click"
   | "shopping_store_click"
   | "excursion_official_click"
-  | "excursion_filter_use";
+  | "excursion_filter_use"
+  | "supermarket_official_click"
+  | "supermarket_filter_use"
+  | "shopping_list_copy";
 
 export function isAnalyticsBuildEnabled() {
   const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV ?? process.env.VERCEL_ENV;

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Fresh groceries for a Fuengirola stay</title>
+  <desc id="desc">Editorial illustration of a calm Mediterranean grocery basket with fruit, bread and reusable bags.</desc>
+  <rect width="1200" height="760" fill="#fbf6ea"/>
+  <rect x="70" y="70" width="1060" height="620" rx="28" fill="#fffaf0" stroke="#e5dac7"/>
+  <circle cx="940" cy="190" r="92" fill="#dceee7"/>
+  <circle cx="1000" cy="250" r="42" fill="#f3d7a2"/>
+  <path d="M300 286c0-52 42-94 94-94h254c52 0 94 42 94 94v254H300V286Z" fill="#e6cda6"/>
+  <path d="M340 286c0-30 24-54 54-54h254c30 0 54 24 54 54v220H340V286Z" fill="#fff" opacity=".34"/>
+  <path d="M424 226c0-54 44-98 98-98s98 44 98 98" fill="none" stroke="#0f6f86" stroke-width="24" stroke-linecap="round"/>
+  <path d="M245 540h552l-32 78H277l-32-78Z" fill="#0f6f86"/>
+  <circle cx="390" cy="394" r="60" fill="#f0b45c"/>
+  <circle cx="428" cy="370" r="14" fill="#fff7dc" opacity=".7"/>
+  <circle cx="520" cy="392" r="66" fill="#7fa36a"/>
+  <path d="M486 384c48 14 80-16 92-44 10 46-12 93-58 108-38 12-74-8-92-34 18 2 38-4 58-30Z" fill="#668c57"/>
+  <path d="M610 420c42-82 122-118 172-70-14 82-88 124-172 70Z" fill="#9abf7a"/>
+  <path d="M640 407c45-15 82-32 112-58" fill="none" stroke="#668c57" stroke-width="9" stroke-linecap="round"/>
+  <path d="M338 492h248" stroke="#0f6f86" stroke-width="20" stroke-linecap="round"/>
+  <path d="M358 452h232" stroke="#f0d8a4" stroke-width="20" stroke-linecap="round"/>
+  <rect x="770" y="362" width="150" height="178" rx="18" fill="#dfeee9" stroke="#b9d6cd"/>
+  <path d="M804 422h82M804 458h70" stroke="#0f6f86" stroke-width="12" stroke-linecap="round"/>
+  <rect x="904" y="408" width="92" height="132" rx="14" fill="#fff" stroke="#e5dac7"/>
+  <path d="M930 448h40M930 482h32" stroke="#c7964c" stroke-width="10" stroke-linecap="round"/>
+  <path d="M155 610c160 30 350 40 520 32 166-8 272-42 368-86" fill="none" stroke="#e5dac7" stroke-width="8" stroke-linecap="round"/>
+</svg>

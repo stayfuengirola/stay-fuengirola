@@ -630,6 +630,19 @@ img { max-width: 100%; display: block; }
 .excursion-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 20px; }
 .excursion-tip-card { margin-top: 18px; }
 .excursion-official-grid { grid-template-columns: repeat(3, 1fr); }
+.supermarket-hero .bioparc-hero-image { background: #fffaf0; }
+.supermarket-store-grid { margin-top: 18px; }
+.supermarket-card.featured { background: #fbfefb; border-color: rgba(15,127,155,.22); }
+.supermarket-link-row { flex-wrap: wrap; gap: 10px 16px; }
+.supermarket-filter-bar { overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+.supermarket-comparison .shopping-table-row { grid-template-columns: 1.1fr 1.25fr .95fr 1fr; }
+.supermarket-checklist { margin: 0; }
+.supermarket-check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 18px 0; }
+.supermarket-check-grid label { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: center; color: #405157; font-weight: 700; }
+.supermarket-check-grid input { accent-color: var(--blue); }
+.supermarket-copy-button { background: transparent; border: 0; cursor: pointer; padding: 0; }
+.supermarket-map-marker span { background: var(--blue); color: #fff; }
+.supermarket-cta { margin: 42px 0; }
 .excursion-guide-map { height: 460px; margin-top: 18px; contain: none; clip-path: none; transform: none; will-change: auto; }
 .excursion-guide-map .leaflet-map,
 .excursion-guide-map .leaflet-container { contain: none; transform: none; will-change: auto; }
@@ -740,6 +753,7 @@ img { max-width: 100%; display: block; }
   .bioparc-comparison .beach-comparison-row { grid-template-columns: 1fr; }
   .shopping-table { border: 0; overflow: visible; background: transparent; box-shadow: none; display: grid; gap: 12px; }
   .shopping-table-row { grid-template-columns: 1fr; gap: 6px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
+  .supermarket-comparison .shopping-table-row, .supermarket-check-grid { grid-template-columns: 1fr; }
   .beach-comparison-row span::before { content: attr(role) " "; display: none; }
 }
 

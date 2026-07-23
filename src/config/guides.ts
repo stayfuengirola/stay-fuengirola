@@ -28,7 +28,7 @@ export const guideCategories = [
   },
   {
     key: "supermarkets",
-    status: "draft",
+    status: "published",
     slugs: { es: "supermercados", en: "supermarkets", fi: "supermarketit", sv: "mataffarer", no: "supermarkeder" }
   },
   {
