@@ -373,6 +373,27 @@ function SupermarketGuidePage({ locale, dictionary: t }: { locale: Locale; dicti
             </div>
           </section>
 
+          <section className="guide-content-section" id="planificador-compra">
+            <h2>{content.plannerTitle}</h2>
+            <p>{content.plannerIntro}</p>
+            <div className="shopping-store-grid supermarket-planner-grid">
+              {content.plannerCards.map((card) => (
+                <article className="bioparc-info-card supermarket-planner-card" key={card.title}>
+                  <span className="supermarket-card-icon" aria-hidden="true">
+                    {card.icon}
+                  </span>
+                  <strong>{card.title}</strong>
+                  <span>{card.items.join(" · ")}</span>
+                  <div className="supermarket-recommendations">
+                    {card.recommendation.map((recommendation) => (
+                      <small key={recommendation}>→ {recommendation}</small>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section className="guide-content-section" aria-labelledby="supermarket-list-title">
             <h2 id="supermarket-list-title">{content.sectionsTitle}</h2>
             <p>{content.sectionsIntro}</p>
@@ -399,6 +420,41 @@ function SupermarketGuidePage({ locale, dictionary: t }: { locale: Locale; dicti
             </div>
           </section>
 
+          <section className="guide-content-section" id="comparativa-orientativa">
+            <h2>{content.visualComparisonTitle}</h2>
+            <p>{content.visualComparisonNote}</p>
+            <div className="shopping-table supermarket-star-comparison" role="table">
+              <div className="shopping-table-row shopping-table-head" role="row">
+                <strong role="columnheader">{content.visualComparisonHeaders.chain}</strong>
+                <span role="columnheader">{content.visualComparisonHeaders.quick}</span>
+                <span role="columnheader">{content.visualComparisonHeaders.large}</span>
+                <span role="columnheader">{content.visualComparisonHeaders.fresh}</span>
+                <span role="columnheader">{content.visualComparisonHeaders.ownBrand}</span>
+                <span role="columnheader">{content.visualComparisonHeaders.international}</span>
+              </div>
+              {content.visualComparisonRows.map((row) => (
+                <div className="shopping-table-row" role="row" key={row.chain}>
+                  <strong role="cell">{row.chain}</strong>
+                  <span role="cell" aria-label={`${content.visualComparisonHeaders.quick}: ${row.quick.length} / 5`}>
+                    {row.quick}
+                  </span>
+                  <span role="cell" aria-label={`${content.visualComparisonHeaders.large}: ${row.large.length} / 5`}>
+                    {row.large}
+                  </span>
+                  <span role="cell" aria-label={`${content.visualComparisonHeaders.fresh}: ${row.fresh.length} / 5`}>
+                    {row.fresh}
+                  </span>
+                  <span role="cell" aria-label={`${content.visualComparisonHeaders.ownBrand}: ${row.ownBrand.length} / 5`}>
+                    {row.ownBrand}
+                  </span>
+                  <span role="cell" aria-label={`${content.visualComparisonHeaders.international}: ${row.international.length} / 5`}>
+                    {row.international}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </section>
+
           <section className="guide-content-section">
             <h2>{content.needsTitle}</h2>
             <div className="shopping-store-grid">
@@ -413,6 +469,19 @@ function SupermarketGuidePage({ locale, dictionary: t }: { locale: Locale; dicti
             </div>
           </section>
 
+          <section className="guide-content-section">
+            <h2>{content.directChoiceTitle}</h2>
+            <div className="shopping-store-grid supermarket-choice-grid">
+              {content.directChoiceItems.map((item) => (
+                <article className="bioparc-info-card" key={item.question}>
+                  <CircleHelp aria-hidden="true" size={22} />
+                  <strong>{item.question}</strong>
+                  <span>→ {item.answer}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section className="guide-content-section bioparc-split-section">
             <div>
               <h2>{content.freshTitle}</h2>
@@ -422,6 +491,20 @@ function SupermarketGuidePage({ locale, dictionary: t }: { locale: Locale; dicti
               <p className="map-note">{content.freshNote}</p>
             </div>
             <ArrivalChecklist content={content} locale={locale} />
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.localProductsTitle}</h2>
+            <p>{content.localProductsIntro}</p>
+            <div className="shopping-store-grid supermarket-product-grid">
+              {content.localProducts.map((product) => (
+                <article className="bioparc-info-card" key={product.name}>
+                  <ShoppingBag aria-hidden="true" size={22} />
+                  <strong>{product.name}</strong>
+                  <span>{product.text}</span>
+                </article>
+              ))}
+            </div>
           </section>
 
           <section className="guide-content-section">

@@ -636,6 +636,19 @@ img { max-width: 100%; display: block; }
 .supermarket-link-row { flex-wrap: wrap; gap: 10px 16px; }
 .supermarket-filter-bar { overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
 .supermarket-comparison .shopping-table-row { grid-template-columns: 1.1fr 1.25fr .95fr 1fr; }
+.supermarket-planner-grid,
+.supermarket-product-grid { align-items: stretch; }
+.supermarket-planner-card { gap: 11px; }
+.supermarket-card-icon { display: block; color: var(--blue); font-size: 1.9rem; line-height: 1; }
+.supermarket-recommendations { display: grid; gap: 6px; margin-top: 2px; color: var(--blue-deep); font-weight: 900; }
+.supermarket-recommendations small { color: var(--blue-deep); font-size: .88rem; line-height: 1.35; }
+.supermarket-star-comparison .shopping-table-row { grid-template-columns: 1fr repeat(5, .82fr); }
+.supermarket-star-comparison .shopping-table-head span { line-height: 1.2; }
+.supermarket-star-comparison .shopping-table-row span { color: var(--blue-deep); font-weight: 900; white-space: nowrap; }
+.supermarket-choice-grid .bioparc-info-card svg,
+.supermarket-product-grid .bioparc-info-card svg { color: var(--blue); }
+.supermarket-choice-grid .bioparc-info-card span { color: var(--blue-deep); font-weight: 900; }
+.supermarket-product-grid .bioparc-info-card { min-height: 150px; }
 .supermarket-checklist { margin: 0; }
 .supermarket-check-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 18px 0; }
 .supermarket-check-grid label { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: center; color: #405157; font-weight: 700; }
@@ -753,7 +766,9 @@ img { max-width: 100%; display: block; }
   .bioparc-comparison .beach-comparison-row { grid-template-columns: 1fr; }
   .shopping-table { border: 0; overflow: visible; background: transparent; box-shadow: none; display: grid; gap: 12px; }
   .shopping-table-row { grid-template-columns: 1fr; gap: 6px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
-  .supermarket-comparison .shopping-table-row, .supermarket-check-grid { grid-template-columns: 1fr; }
+  .supermarket-comparison .shopping-table-row, .supermarket-star-comparison .shopping-table-row, .supermarket-check-grid { grid-template-columns: 1fr; }
+  .supermarket-star-comparison .shopping-table-head { display: none; }
+  .supermarket-star-comparison .shopping-table-row span { white-space: normal; }
   .beach-comparison-row span::before { content: attr(role) " "; display: none; }
 }
 

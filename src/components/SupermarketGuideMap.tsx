@@ -13,7 +13,10 @@ export function SupermarketGuideMap({
   content,
   supermarkets
 }: {
-  content: Pick<SupermarketGuideContent, "mapAria" | "mapApartment" | "mapApartmentPopup" | "mapPopupDistance" | "mapPopupSection" | "labels">;
+  content: Pick<
+    SupermarketGuideContent,
+    "mapAria" | "mapApartment" | "mapApartmentPopup" | "mapPopupDistance" | "mapPopupSection" | "labels" | "categoryLabels"
+  >;
   supermarkets: Supermarket[];
 }) {
   const mapElement = useRef<HTMLDivElement | null>(null);
@@ -82,7 +85,9 @@ export function SupermarketGuideMap({
           })
             .addTo(map)
             .bindPopup(
-              `<strong>${supermarket.name}</strong><br />${content.mapPopupDistance}: ${content.labels.approx} ${supermarket.walkingTimeMinutes ?? "-"} min ${content.labels.walk}<br /><a href="#${supermarket.slug}">${content.mapPopupSection}</a>`
+              `<strong>${supermarket.name}</strong><br />${content.mapPopupDistance}: ${content.labels.approx} ${supermarket.walkingDistanceMeters ?? "-"} m<br />${content.labels.walk}: ${content.labels.approx} ${supermarket.walkingTimeMinutes ?? "-"} min<br />${
+                supermarket.drivingTimeMinutes ? `${content.labels.drive}: ${content.labels.approx} ${supermarket.drivingTimeMinutes} min<br />` : ""
+              }${content.labels.category}: ${content.categoryLabels[supermarket.category]}<br /><a href="#${supermarket.slug}">${content.mapPopupSection}</a>`
             );
         });
 
