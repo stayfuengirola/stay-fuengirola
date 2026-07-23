@@ -43,8 +43,14 @@ export const guideCategories = [
   },
   {
     key: "transport",
-    status: "draft",
-    slugs: { es: "transporte", en: "transport", fi: "liikkuminen", sv: "transport", no: "transport" }
+    status: "published",
+    slugs: {
+      es: "transporte-en-fuengirola",
+      en: "getting-around-fuengirola",
+      fi: "liikkuminen-fuengirolassa",
+      sv: "ta-sig-runt-i-fuengirola",
+      no: "transport-i-fuengirola"
+    }
   },
   {
     key: "excursions",

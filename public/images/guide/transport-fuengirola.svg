@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Fuengirola transport illustration</title>
+  <desc id="desc">Mediterranean street with train, bus, palm trees and sea tones.</desc>
+  <rect width="1200" height="760" fill="#fff8ec"/>
+  <rect y="520" width="1200" height="240" fill="#efe1ca"/>
+  <rect y="390" width="1200" height="92" fill="#cce7e3"/>
+  <path d="M0 423c115-38 211-38 326 0s211 38 326 0 211-38 326 0 107 35 222 0v60H0z" fill="#0f7f9b" opacity=".18"/>
+  <circle cx="1010" cy="132" r="62" fill="#f4c765"/>
+  <g fill="#0b5f75" opacity=".2">
+    <rect x="92" y="224" width="96" height="260" rx="8"/>
+    <rect x="214" y="180" width="112" height="304" rx="8"/>
+    <rect x="360" y="246" width="88" height="238" rx="8"/>
+  </g>
+  <g fill="#fffaf0" opacity=".9">
+    <rect x="112" y="248" width="20" height="28" rx="2"/>
+    <rect x="150" y="248" width="20" height="28" rx="2"/>
+    <rect x="236" y="210" width="22" height="32" rx="2"/>
+    <rect x="282" y="210" width="22" height="32" rx="2"/>
+    <rect x="382" y="274" width="20" height="28" rx="2"/>
+  </g>
+  <g transform="translate(150 555)">
+    <rect width="430" height="118" rx="34" fill="#ffffff" stroke="#d9d1c2" stroke-width="3"/>
+    <rect x="34" y="30" width="96" height="58" rx="12" fill="#0f7f9b"/>
+    <rect x="152" y="30" width="96" height="58" rx="12" fill="#0f7f9b" opacity=".82"/>
+    <rect x="270" y="30" width="96" height="58" rx="12" fill="#0f7f9b" opacity=".64"/>
+    <circle cx="112" cy="118" r="20" fill="#26343a"/>
+    <circle cx="322" cy="118" r="20" fill="#26343a"/>
+    <path d="M24 102h382" stroke="#0b5f75" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(656 500)">
+    <rect width="340" height="148" rx="28" fill="#ffffff" stroke="#d9d1c2" stroke-width="3"/>
+    <path d="M44 114h252" stroke="#0b5f75" stroke-width="8" stroke-linecap="round"/>
+    <rect x="42" y="42" width="70" height="54" rx="10" fill="#0f7f9b"/>
+    <rect x="134" y="42" width="70" height="54" rx="10" fill="#0f7f9b" opacity=".78"/>
+    <rect x="226" y="42" width="70" height="54" rx="10" fill="#0f7f9b" opacity=".6"/>
+    <circle cx="90" cy="146" r="18" fill="#26343a"/>
+    <circle cx="250" cy="146" r="18" fill="#26343a"/>
+  </g>
+  <g stroke="#4f8a76" stroke-width="10" stroke-linecap="round">
+    <path d="M1020 500V270"/>
+    <path d="M1020 292c-52 18-80 48-98 90"/>
+    <path d="M1020 292c56 12 92 44 118 90"/>
+    <path d="M1020 270c-42-8-72 4-104 38"/>
+    <path d="M1020 270c48-16 86-4 118 34"/>
+  </g>
+  <path d="M0 675h1200" stroke="#d7c8ad" stroke-width="8"/>
+</svg>

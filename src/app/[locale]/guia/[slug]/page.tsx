@@ -43,6 +43,9 @@ import { ShoppingGuideMap } from "@/components/ShoppingGuideMap";
 import { ShoppingStoreDirectory } from "@/components/ShoppingStoreDirectory";
 import { SupermarketGuideMap } from "@/components/SupermarketGuideMap";
 import { ArrivalChecklist, SupermarketExternalLink, SupermarketFilterGrid } from "@/components/SupermarketGuideTools";
+import { TransportGuideMap } from "@/components/TransportGuideMap";
+import { TransportOfficialLink } from "@/components/TransportOfficialLink";
+import { TransportPlanner } from "@/components/TransportPlanner";
 import { bioparcGuideContent, bioparcOfficialLinks } from "@/config/bioparcGuide";
 import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
@@ -51,6 +54,7 @@ import { excursionsGuideContent } from "@/config/excursionsGuide";
 import { restaurantGuideContent } from "@/config/restaurantGuide";
 import { shoppingGuideContent } from "@/config/shoppingGuide";
 import { supermarketGuideContent } from "@/config/supermarketGuide";
+import { transportGuideContent } from "@/config/transportGuide";
 import { thingsToDoGuideContent } from "@/config/thingsToDoGuide";
 import { thingsToDoEventsContent } from "@/config/thingsToDoEvents";
 import {
@@ -64,6 +68,7 @@ import { property } from "@/config/property";
 import { miramarStoresDirectoryUrl, shoppingStores } from "@/data/shoppingStores";
 import { excursions, secondaryExcursionIdeas } from "@/data/excursions";
 import { supermarkets } from "@/data/supermarkets";
+import { transportLastVerified } from "@/data/transport";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
 import { siteUrl } from "@/lib/urls";
@@ -117,6 +122,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isSupermarketGuide = category.key === "supermarkets";
   const isRestaurantGuide = category.key === "restaurants";
   const isShoppingGuide = category.key === "shopping";
+  const isTransportGuide = category.key === "transport";
   const isExcursionsGuide = category.key === "excursions";
   const isThingsToDoGuide = category.key === "thingsToDo";
   const isBioparcGuide = category.key === "bioparc";
@@ -125,6 +131,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supermarketContent = supermarketGuideContent[locale];
   const restaurantContent = restaurantGuideContent[locale];
   const shoppingContent = shoppingGuideContent[locale];
+  const transportContent = transportGuideContent[locale];
   const excursionsContent = excursionsGuideContent[locale];
   const thingsToDoContent = thingsToDoGuideContent[locale];
   const bioparcContent = bioparcGuideContent[locale];
@@ -138,13 +145,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ? restaurantContent.metaTitle
           : isShoppingGuide
             ? shoppingContent.metaTitle
-            : isExcursionsGuide
-              ? excursionsContent.metaTitle
-              : isThingsToDoGuide
-                ? thingsToDoContent.metaTitle
-                : isBioparcGuide
-                  ? bioparcContent.metaTitle
-                  : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+            : isTransportGuide
+              ? transportContent.metaTitle
+              : isExcursionsGuide
+                ? excursionsContent.metaTitle
+                : isThingsToDoGuide
+                  ? thingsToDoContent.metaTitle
+                  : isBioparcGuide
+                    ? bioparcContent.metaTitle
+                    : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
   const description = isAirportGuide
     ? airportContent.metaDescription
     : isBeachGuide
@@ -155,13 +164,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ? restaurantContent.metaDescription
           : isShoppingGuide
             ? shoppingContent.metaDescription
-            : isExcursionsGuide
-              ? excursionsContent.metaDescription
-              : isThingsToDoGuide
-                ? thingsToDoContent.metaDescription
-                : isBioparcGuide
-                  ? bioparcContent.metaDescription
-                  : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+            : isTransportGuide
+              ? transportContent.metaDescription
+              : isExcursionsGuide
+                ? excursionsContent.metaDescription
+                : isThingsToDoGuide
+                  ? thingsToDoContent.metaDescription
+                  : isBioparcGuide
+                    ? bioparcContent.metaDescription
+                    : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
   const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
@@ -183,7 +194,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
             : isExcursionsGuide
               ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
-              : undefined
+              : isTransportGuide
+                ? ["/images/guide/transport-fuengirola.svg"]
+                : undefined
     },
     twitter: {
       card: "summary_large_image",
@@ -197,7 +210,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
             : isExcursionsGuide
               ? ["/images/guide/excursions/ronda-puente-nuevo.svg"]
-              : undefined
+              : isTransportGuide
+                ? ["/images/guide/transport-fuengirola.svg"]
+                : undefined
     }
   };
 }
@@ -234,6 +249,10 @@ export default async function GuideCategoryPage({ params }: Props) {
 
   if (category.key === "shopping") {
     return <ShoppingGuidePage locale={locale} dictionary={t} />;
+  }
+
+  if (category.key === "transport") {
+    return <TransportGuidePage locale={locale} dictionary={t} />;
   }
 
   if (category.key === "excursions") {
@@ -1692,6 +1711,289 @@ function BioparcGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
     </div>
+  );
+}
+
+function TransportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
+  const content = transportGuideContent[locale];
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "transport")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Stay Fuengirola", item: `${siteUrl}/${locale}` },
+      { "@type": "ListItem", position: 2, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 3, name: content.breadcrumbArticle, item: articleUrl }
+    ]
+  };
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.h1,
+    description: content.metaDescription,
+    mainEntityOfPage: articleUrl,
+    image: [`${siteUrl}/images/guide/transport-fuengirola.svg`],
+    author: { "@type": "Organization", name: property.brandName },
+    publisher: { "@type": "Organization", name: property.brandName },
+    about: content.schemaAbout,
+    inLanguage: locale,
+    dateModified: transportLastVerified
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  };
+
+  return (
+    <div className="shell">
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
+      <main className="section guide-page">
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
+        <article className="container guide-article transport-article">
+          <Link className="text-link" href={getGuidePath(locale)}>
+            <ArrowLeft aria-hidden="true" size={18} />
+            {content.backLabel}
+          </Link>
+
+          <header className="guide-hero-card bioparc-hero transport-hero">
+            <div className="bioparc-hero-copy">
+              <span className="guide-hero-icon">
+                <TrainFront aria-hidden="true" size={30} />
+              </span>
+              <p className="guide-kicker">{content.kicker}</p>
+              <h1>{content.h1}</h1>
+              <p>{content.intro}</p>
+            </div>
+            <div className="bioparc-hero-image">
+              <Image
+                src="/images/guide/transport-fuengirola.svg"
+                alt={content.heroImageAlt}
+                width={1200}
+                height={760}
+                sizes="(max-width: 960px) calc(100vw - 32px), 420px"
+                priority
+              />
+            </div>
+          </header>
+
+          <section className="shopping-quick-card transport-quick-card" aria-labelledby="transport-quick-title">
+            <h2 id="transport-quick-title">{content.quickTitle}</h2>
+            <div className="shopping-quick-grid excursion-quick-grid">
+              {content.quickItems.map((item) => (
+                <a className="shopping-quick-item" href={item.href} key={item.title}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.recommendation}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <TransportPlanner content={content.planner} locale={locale} />
+
+          <section className="guide-content-section" id="comparison">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="shopping-table transport-comparison" role="table">
+              <div className="shopping-table-row shopping-table-head" role="row">
+                <strong role="columnheader">{content.comparisonHeaders.mode}</strong>
+                <span role="columnheader">{content.comparisonHeaders.bestFor}</span>
+                <span role="columnheader">{content.comparisonHeaders.advantages}</span>
+                <span role="columnheader">{content.comparisonHeaders.note}</span>
+              </div>
+              {content.comparisonRows.map((row) => (
+                <div className="shopping-table-row" role="row" key={row.mode}>
+                  <strong role="cell">{row.mode}</strong>
+                  <span role="cell">{row.bestFor}</span>
+                  <span role="cell">{row.advantages}</span>
+                  <span role="cell">{row.note}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {content.sections.slice(0, 3).map((section) => (
+            <TransportArticleSection key={section.id} locale={locale} section={section} />
+          ))}
+
+          <section className="guide-content-section">
+            <h2>{content.stationTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.stationCards.map((station) => (
+                <article className="bioparc-info-card" key={station.title}>
+                  <TrainFront aria-hidden="true" size={22} />
+                  <strong>{station.title}</strong>
+                  <span>{station.text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="train-routes">
+            <h2>{content.trainRoutesTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.routeCards.map((route) => (
+                <article className="bioparc-info-card" key={route.title}>
+                  <TrainFront aria-hidden="true" size={22} />
+                  <strong>{route.title}</strong>
+                  <small>{route.mode}</small>
+                  <span>{route.text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {content.sections.slice(3, 11).map((section) => (
+            <TransportArticleSection key={section.id} locale={locale} section={section} />
+          ))}
+
+          <section className="guide-content-section" id="quick-routes">
+            <h2>{content.quickRoutesTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.quickRoutes.map((route) => (
+                <article className="bioparc-info-card" key={route.title}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{route.title}</strong>
+                  <span>{route.recommended}</span>
+                  <small>{route.alternative}</small>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {content.sections.slice(11).map((section) => (
+            <TransportArticleSection key={section.id} locale={locale} section={section} />
+          ))}
+
+          <section className="guide-content-section shopping-map-section" aria-labelledby="transport-map-title">
+            <h2 id="transport-map-title">{content.mapTitle}</h2>
+            <TransportGuideMap content={content} />
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.tipsTitle}</h2>
+            <ul className="guide-check-list">
+              {content.tips.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="guide-content-section" id="official-links">
+            <h2>{content.officialTitle}</h2>
+            <p>{content.officialNote}</p>
+            <div className="bioparc-official-grid">
+              {content.officialLinks.map((link) => (
+                <TransportOfficialLink className="guide-related-card" destination={link.destination} href={link.href} key={link.title} locale={locale} mode={link.mode}>
+                  <ExternalLink aria-hidden="true" size={20} />
+                  <strong>{link.title}</strong>
+                  <span>{content.changingNote}</span>
+                </TransportOfficialLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
+            <div className="guide-faq-list">
+              {content.faqs.map((item) => (
+                <details className="guide-faq-item" key={item.question}>
+                  <summary>
+                    <CircleHelp aria-hidden="true" size={18} />
+                    {item.question}
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-related" aria-labelledby="transport-related-title">
+            <h2 id="transport-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid">
+              {content.related.map((item) => (
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.key}
+                  href={getGuideCategoryPath(locale, item.key)}
+                  key={item.key}
+                  locale={locale}
+                  sourceGuide="transport"
+                >
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </GuideInternalLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-cta transport-cta">
+            <TrainFront aria-hidden="true" size={30} />
+            <h2>{content.ctaTitle}</h2>
+            <p>{content.ctaText}</p>
+            <BookingButton label={content.ctaButton} locale={locale} placement="transport-guide" />
+          </section>
+        </article>
+      </main>
+      <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
+    </div>
+  );
+}
+
+function TransportArticleSection({
+  locale,
+  section
+}: {
+  locale: Locale;
+  section: { id: string; title: string; paragraphs: string[]; bullets?: string[]; tip?: string; links?: string[] };
+}) {
+  const linkMode = section.id === "train" || section.id === "train-ticket" ? "train" : section.id === "urban-bus" ? "urban_bus" : section.id === "taxi" ? "taxi" : section.id === "parking" ? "parking" : "intercity_bus";
+  const linkDestination = section.id === "train-ticket" ? "tickets" : section.id === "parking" ? "map" : section.id === "taxi" ? "official_site" : "timetable";
+  const href = section.id === "taxi" ? "https://pidetaxi.es/" : section.id === "urban-bus" ? "https://www.transportefuengirola.com/" : section.id === "parking" ? "https://mapas.fuengirola.es/es/inicio" : section.id === "mijas" ? "https://siu.ctmam.ctan.es/es/horarios_lineas_tabla.php?linea=10" : "https://www.renfe.com/es/es/cercanias/cercanias-malaga/lineas";
+  return (
+    <section className="guide-content-section" id={section.id}>
+      <h2>{section.title}</h2>
+      {section.paragraphs.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+      {section.bullets ? (
+        <ul className="guide-check-list">
+          {section.bullets.map((item) => (
+            <li key={item}>
+              <CheckCircle2 aria-hidden="true" size={18} />
+              {item}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {section.tip ? <p className="map-note">{section.tip}</p> : null}
+      {section.links ? (
+        <div className="transport-link-row">
+          {section.links.map((label) => (
+            <TransportOfficialLink className="text-link" destination={linkDestination} href={href} key={label} locale={locale} mode={linkMode}>
+              <ExternalLink aria-hidden="true" size={18} />
+              {label}
+            </TransportOfficialLink>
+          ))}
+        </div>
+      ) : null}
+    </section>
   );
 }
 
