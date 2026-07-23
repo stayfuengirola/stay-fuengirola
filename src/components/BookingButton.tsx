@@ -13,7 +13,7 @@ export function BookingButton({
 }: {
   label: string;
   locale: Locale;
-  placement?: "floating" | "hero" | "guide" | "footer" | "supermarkets-guide" | "transport-guide";
+  placement?: "floating" | "hero" | "guide" | "footer" | "supermarkets-guide" | "transport-guide" | "restaurants-guide";
   className?: string;
 }) {
   return (

@@ -39,6 +39,7 @@ import { ExcursionsGuideMap } from "@/components/ExcursionsGuideMap";
 import { GuideInternalLink } from "@/components/GuideInternalLink";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
+import { RestaurantDirectory, RestaurantGuideMap } from "@/components/RestaurantGuideTools";
 import { ShoppingGuideMap } from "@/components/ShoppingGuideMap";
 import { ShoppingStoreDirectory } from "@/components/ShoppingStoreDirectory";
 import { SupermarketGuideMap } from "@/components/SupermarketGuideMap";
@@ -2001,6 +2002,7 @@ function RestaurantGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
   const content = restaurantGuideContent[locale];
   const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "restaurants")}`;
   const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const restaurantById = new Map(content.restaurants.map((restaurant) => [restaurant.id, restaurant]));
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -2020,24 +2022,31 @@ function RestaurantGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
     publisher: { "@type": "Organization", name: property.brandName },
     about: content.schemaAbout,
     inLanguage: locale,
-    dateModified: "2026-07-17"
+    dateModified: "2026-07-23"
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
   };
 
   return (
     <div className="shell">
       <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
       <main className="section guide-page">
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-        />
-        <article className="container guide-article">
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+          <script
+            type="application/ld+json"
+            key={index}
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
+        <article className="container guide-article restaurant-article">
           <Link className="text-link" href={getGuidePath(locale)}>
             <ArrowLeft aria-hidden="true" size={18} />
             {content.backLabel}
@@ -2052,33 +2061,151 @@ function RestaurantGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
             <p>{content.intro}</p>
           </header>
 
-          {content.restaurants.map((restaurant) => (
-            <section className="guide-content-section" id={restaurant.id} key={restaurant.id}>
-              <h2>{restaurant.name}</h2>
-              <p className="guide-kicker">{restaurant.subtitle}</p>
-              <p>{restaurant.description}</p>
-              <ul className="guide-check-list">
-                <li>
-                  <MapPin aria-hidden="true" size={18} />
-                  {restaurant.address}
-                </li>
-                <li>
-                  <Clock aria-hidden="true" size={18} />
-                  {restaurant.hours}
-                </li>
-              </ul>
-              <p>
-                <strong>{restaurant.tip}</strong>
-              </p>
-            </section>
-          ))}
+          <section className="guide-content-section restaurant-chooser-section">
+            <h2>{content.chooserTitle}</h2>
+            <p>{content.chooserIntro}</p>
+            <div className="restaurant-chooser-grid">
+              {content.chooserItems.map((item) => (
+                <a className="restaurant-choice-card" href={`#${item.restaurantId}`} key={`${item.restaurantId}-${item.label}`}>
+                  <span aria-hidden="true">{item.icon}</span>
+                  <strong>{item.label}</strong>
+                  <small>{item.text}</small>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.favoritesTitle}</h2>
+            <p>{content.favoritesIntro}</p>
+            <div className="restaurant-favorite-grid">
+              {content.favorites.map((favorite) => (
+                <a className="restaurant-favorite-card" href={`#${favorite.restaurantId}`} key={favorite.restaurantId}>
+                  <Star aria-hidden="true" size={20} />
+                  <strong>{favorite.title}</strong>
+                  <span>{favorite.text}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.mapTitle}</h2>
+            <p>{content.mapIntro}</p>
+            <RestaurantGuideMap content={content} locale={locale} />
+          </section>
+
+          <section className="guide-content-section" aria-labelledby="restaurant-list-title">
+            <h2 id="restaurant-list-title">{content.breadcrumbArticle}</h2>
+            <RestaurantDirectory content={content} locale={locale} />
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="beach-comparison restaurant-comparison" role="table" aria-label={content.comparisonTitle}>
+              <div className="beach-comparison-row beach-comparison-head" role="row">
+                <span role="columnheader">{content.comparisonHeaders.restaurant}</span>
+                <span role="columnheader">{content.comparisonHeaders.type}</span>
+                <span role="columnheader">{content.comparisonHeaders.ideal}</span>
+                <span role="columnheader">{content.comparisonHeaders.price}</span>
+                <span role="columnheader">{content.comparisonHeaders.reserve}</span>
+                <span role="columnheader">{content.comparisonHeaders.zone}</span>
+              </div>
+              {content.restaurants.map((restaurant) => (
+                <div className="beach-comparison-row" role="row" key={restaurant.id}>
+                  <strong role="cell">{restaurant.name}</strong>
+                  <span role="cell">{restaurant.type}</span>
+                  <span role="cell">{restaurant.recommendedFor}</span>
+                  <span role="cell">{restaurant.price}</span>
+                  <span role="cell">{restaurant.reserve}</span>
+                  <span role="cell">{restaurant.location}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section">
+            <h2>{content.routesTitle}</h2>
+            <div className="restaurant-route-grid">
+              {content.routes.map((route) => (
+                <article className="restaurant-route-card" key={route.title}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <h3>{route.title}</h3>
+                  <p>{route.text}</p>
+                  <div>
+                    {route.restaurantIds.map((id) => {
+                      const restaurant = restaurantById.get(id);
+                      if (!restaurant) return null;
+                      return (
+                        <a href={`#${id}`} key={id}>
+                          {restaurant.name}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
 
           <section className="guide-recommendation">
             <Utensils aria-hidden="true" size={28} />
             <div>
-              <p>{content.closing}</p>
+              <h2>{content.tipsTitle}</h2>
+              <ul className="guide-check-list restaurant-tips-list">
+                {content.tips.map((tip) => (
+                  <li key={tip}>
+                    <CheckCircle2 aria-hidden="true" size={18} />
+                    {tip}
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
+
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
+            <div className="guide-faq-list">
+              {content.faqs.map((item) => (
+                <details className="guide-faq-item" key={item.question}>
+                  <summary>
+                    <CircleHelp aria-hidden="true" size={18} />
+                    {item.question}
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-related" aria-labelledby="restaurant-related-title">
+            <h2 id="restaurant-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid">
+              {content.related.map((item) => (
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.key}
+                  href={getGuideCategoryPath(locale, item.key)}
+                  key={item.key}
+                  locale={locale}
+                  sourceGuide="restaurants"
+                >
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </GuideInternalLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-cta restaurant-cta">
+            <Utensils aria-hidden="true" size={30} />
+            <h2>{content.ctaTitle}</h2>
+            <p>{content.ctaText}</p>
+            <BookingButton label={content.ctaButton} locale={locale} placement="restaurants-guide" />
+          </section>
+
+          <p className="map-note">{content.labels.sourceNote}</p>
         </article>
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />

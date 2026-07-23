@@ -21,7 +21,11 @@ export type AnalyticsEventName =
   | "supermarket_filter_use"
   | "shopping_list_copy"
   | "transport_official_click"
-  | "transport_planner_use";
+  | "transport_planner_use"
+  | "restaurant_click"
+  | "restaurant_filter"
+  | "restaurant_map_click"
+  | "restaurant_web_click";
 
 export function isAnalyticsBuildEnabled() {
   const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV ?? process.env.VERCEL_ENV;

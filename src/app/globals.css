@@ -341,6 +341,152 @@ img { max-width: 100%; display: block; }
 }
 .guide-cta svg { color: var(--blue); }
 .guide-cta p { max-width: 620px; margin: 0; color: var(--muted); }
+.restaurant-article { overflow: visible; }
+.restaurant-chooser-grid,
+.restaurant-favorite-grid,
+.restaurant-card-grid,
+.restaurant-route-grid {
+  display: grid;
+  gap: 14px;
+}
+.restaurant-chooser-grid { grid-template-columns: repeat(3, 1fr); margin-top: 20px; }
+.restaurant-favorite-grid { grid-template-columns: repeat(5, 1fr); margin-top: 20px; }
+.restaurant-card-grid { grid-template-columns: repeat(2, 1fr); margin-top: 20px; align-items: stretch; }
+.restaurant-route-grid { grid-template-columns: repeat(2, 1fr); margin-top: 18px; }
+.restaurant-choice-card,
+.restaurant-favorite-card,
+.restaurant-route-card,
+.restaurant-card {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+  transform: none;
+  will-change: auto;
+  backface-visibility: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(18,57,70,.05);
+}
+.restaurant-choice-card {
+  min-height: 126px;
+  padding: 18px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+.restaurant-choice-card span { font-size: 1.45rem; line-height: 1; }
+.restaurant-choice-card strong,
+.restaurant-favorite-card strong,
+.restaurant-route-card h3,
+.restaurant-card h2 {
+  color: var(--blue-deep);
+  font-family: Georgia, "Times New Roman", serif;
+}
+.restaurant-choice-card small,
+.restaurant-favorite-card span,
+.restaurant-route-card p { color: var(--muted); line-height: 1.45; }
+.restaurant-favorite-card {
+  min-height: 170px;
+  padding: 18px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+.restaurant-favorite-card svg,
+.restaurant-route-card svg { color: var(--blue); }
+.restaurant-card { padding: clamp(20px, 3vw, 26px); display: grid; gap: 16px; }
+.restaurant-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.restaurant-type { display: inline-flex; align-items: center; gap: 7px; color: var(--green); font-weight: 900; font-size: .92rem; }
+.restaurant-type svg { color: var(--blue); }
+.restaurant-price { color: var(--blue-deep); font-weight: 900; white-space: nowrap; }
+.restaurant-card h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.08; }
+.restaurant-card p { margin: 0; color: #405157; }
+.restaurant-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.restaurant-badges span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #fffaf0;
+  border: 1px solid var(--line);
+  color: var(--blue-deep);
+  font-size: .78rem;
+  font-weight: 900;
+}
+.restaurant-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.restaurant-fact {
+  min-height: 116px;
+  padding: 14px;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  border-radius: 8px;
+  background: #fffaf0;
+  border: 1px solid var(--line);
+}
+.restaurant-fact strong { color: var(--blue-deep); font-size: .92rem; }
+.restaurant-fact span { color: var(--muted); font-size: .93rem; line-height: 1.45; }
+.restaurant-meta-list { margin-top: 0; gap: 9px; }
+.restaurant-meta-list li { font-size: .95rem; }
+.restaurant-meta-list strong { color: var(--blue-deep); }
+.restaurant-tip-card {
+  padding: 16px;
+  display: grid;
+  gap: 6px;
+  background: #eef7f4;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.restaurant-tip-card strong { color: var(--green); }
+.restaurant-tip-card span { color: #405157; }
+.restaurant-action-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.restaurant-guide-map-frame {
+  height: 430px;
+  margin-top: 18px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 8px;
+  contain: layout paint;
+}
+.restaurant-guide-map {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  z-index: 0;
+  contain: layout paint;
+}
+.restaurant-guide-map .leaflet-pane,
+.restaurant-guide-map .leaflet-map-pane,
+.restaurant-guide-map .leaflet-tile-pane { z-index: 1; }
+.restaurant-guide-map .leaflet-control-container { position: relative; z-index: 5; }
+.restaurant-map-marker span {
+  background: var(--blue);
+  color: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 10px 24px rgba(18,57,70,.16);
+}
+.restaurant-comparison .beach-comparison-row { grid-template-columns: 1.05fr 1fr 1.2fr .55fr .8fr .85fr; }
+.restaurant-route-card {
+  padding: 20px;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+.restaurant-route-card h3 { margin: 0; font-size: 1.25rem; }
+.restaurant-route-card div { display: flex; flex-wrap: wrap; gap: 8px; }
+.restaurant-route-card a {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #fffaf0;
+  border: 1px solid var(--line);
+  color: var(--blue-deep);
+  font-weight: 800;
+  font-size: .84rem;
+}
+.restaurant-tips-list { margin-top: 0; }
+.restaurant-cta { margin: 14px 0 24px; }
 .beach-guide-hero { overflow: hidden; }
 .beach-map-section { position: relative; z-index: 0; padding-bottom: 24px; overflow: hidden; isolation: isolate; }
 .beach-guide-map { height: 420px; margin-top: 18px; contain: none; clip-path: none; transform: none; will-change: auto; }
@@ -718,7 +864,7 @@ img { max-width: 100%; display: block; }
   .nav { display: none; }
   .hamburger { display: inline-grid; }
   .mobile-nav { position: fixed; top: 70px; left: 0; right: 0; background: #fffaf0; border-bottom: 1px solid var(--line); padding: 16px; display: grid; gap: 12px; }
-  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid, .airport-options, .guide-related-grid, .beach-quick-grid, .beach-feature-grid, .beach-section-grid, .beach-detail-grid, .concert-card-grid, .annual-events-grid, .permanent-activity-grid, .bioparc-hero, .bioparc-card-grid, .bioparc-habitat-grid, .bioparc-split-section, .bioparc-arrival-grid, .bioparc-official-grid, .shopping-quick-grid, .shopping-store-grid, .shopping-section-grid, .shopping-comparison-cards, .excursion-quick-grid, .excursion-card-grid, .excursion-card-grid.compact, .excursion-planner-controls, .excursion-editorial, .excursion-detail-grid, .excursion-official-grid, .transport-planner-controls { grid-template-columns: 1fr; }
+  .quick-grid, .services-grid, .area-grid, .reviews-grid, .location-grid, .split, .footer-grid, .score-panel, .rules-grid, .amenities, .winter-grid, .explore-grid, .guide-grid, .airport-options, .guide-related-grid, .beach-quick-grid, .beach-feature-grid, .beach-section-grid, .beach-detail-grid, .concert-card-grid, .annual-events-grid, .permanent-activity-grid, .bioparc-hero, .bioparc-card-grid, .bioparc-habitat-grid, .bioparc-split-section, .bioparc-arrival-grid, .bioparc-official-grid, .shopping-quick-grid, .shopping-store-grid, .shopping-section-grid, .shopping-comparison-cards, .excursion-quick-grid, .excursion-card-grid, .excursion-card-grid.compact, .excursion-planner-controls, .excursion-editorial, .excursion-detail-grid, .excursion-official-grid, .transport-planner-controls, .restaurant-chooser-grid, .restaurant-favorite-grid, .restaurant-card-grid, .restaurant-route-grid, .restaurant-detail-grid { grid-template-columns: 1fr; }
   .quick { transform: none; padding-top: 18px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .gallery-button:first-child { grid-column: span 2; min-height: 320px; }
@@ -729,6 +875,7 @@ img { max-width: 100%; display: block; }
   .shopping-guide-map { height: 330px; }
   .excursion-guide-map { height: 330px; }
   .transport-guide-map { height: 330px; }
+  .restaurant-guide-map-frame { height: 330px; }
   .leaflet-map { min-height: 300px; height: 100%; }
   .beach-map-section { z-index: 0; margin-bottom: 10px; }
   .beach-quick-card { z-index: 5; margin-top: 0; -webkit-transform: translateZ(0); transform: translateZ(0); }
@@ -742,6 +889,8 @@ img { max-width: 100%; display: block; }
   .bioparc-official-grid .guide-related-card { min-height: auto; }
   .shopping-quick-card { padding: 20px; }
   .shopping-store-card { min-height: auto; }
+  .restaurant-filter-bar { margin-inline: -16px; padding-inline: 16px; }
+  .restaurant-card, .restaurant-choice-card, .restaurant-favorite-card, .restaurant-route-card { min-height: auto; }
   .excursion-card { grid-template-rows: 180px 1fr; }
   .excursion-editorial-image { position: relative; top: auto; }
   .excursion-filter-bar { margin-inline: -16px; padding-inline: 16px; }
@@ -785,6 +934,7 @@ img { max-width: 100%; display: block; }
   .beach-comparison { border: 0; overflow: visible; background: transparent; box-shadow: none; display: grid; gap: 12px; }
   .beach-comparison-head { display: none; }
   .beach-comparison-row { grid-template-columns: 1fr; gap: 6px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
+  .restaurant-comparison .beach-comparison-row { grid-template-columns: 1fr; }
   .bioparc-comparison .beach-comparison-row { grid-template-columns: 1fr; }
   .shopping-table { border: 0; overflow: visible; background: transparent; box-shadow: none; display: grid; gap: 12px; }
   .shopping-table-row { grid-template-columns: 1fr; gap: 6px; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 10px 25px rgba(18,57,70,.05); }
