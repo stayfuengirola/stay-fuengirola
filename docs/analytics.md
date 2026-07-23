@@ -40,6 +40,7 @@ Los eventos se envian desde `src/lib/analytics.ts`.
 | `event_info_click` | `event_slug`, `event_category`, `venue`, `page_path`, `language` |
 | `ticket_click` | `event_slug`, `venue`, `page_path`, `language` |
 | `guide_internal_click` | `source_guide`, `destination`, `page_path`, `language` |
+| `attraction_official_click` | `attraction`, `destination`, `page_path`, `language` |
 
 ## Eventos clave en GA4
 
@@ -83,4 +84,3 @@ En produccion:
 5. Hacer clic en Booking y WhatsApp y comprobar `booking_click` y `whatsapp_click`.
 6. Cambiar idioma y comprobar `language_change`.
 7. Abrir GA4 DebugView o Realtime para confirmar eventos.
-

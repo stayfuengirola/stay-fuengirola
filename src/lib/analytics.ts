@@ -12,7 +12,8 @@ export type AnalyticsEventName =
   | "language_change"
   | "event_info_click"
   | "ticket_click"
-  | "guide_internal_click";
+  | "guide_internal_click"
+  | "attraction_official_click";
 
 export function isAnalyticsBuildEnabled() {
   const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV ?? process.env.VERCEL_ENV;

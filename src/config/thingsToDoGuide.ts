@@ -34,7 +34,7 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
         id: "bioparc-fuengirola",
         title: "Bioparc Fuengirola",
         paragraphs: [
-          "Un zoo de vanguardia sin jaulas, con más de 200 especies recreadas en su hábitat natural. Perfecto para ir en familia, y a un paseo corto desde el centro. Reserva entrada online para evitar colas en temporada alta."
+          "Un parque de animales con hábitats recreados y un recorrido inmersivo en el centro de Fuengirola. Es un plan cómodo para familias y conviene revisar horarios, entradas y agenda diaria antes de ir."
         ]
       },
       {
@@ -70,7 +70,7 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
         id: "bioparc-fuengirola",
         title: "Bioparc Fuengirola",
         paragraphs: [
-          "A cutting-edge, cageless zoo with over 200 species recreated in their natural habitat. Perfect for families, and just a short walk from the center. Book tickets online to skip the queues in high season."
+          "An animal park with recreated habitats and an immersive route in central Fuengirola. It is a comfortable family plan, and it is worth checking opening times, tickets and the daily agenda before going."
         ]
       },
       {
@@ -106,7 +106,7 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
         id: "bioparc-fuengirola",
         title: "Bioparc Fuengirola",
         paragraphs: [
-          "Moderni, häkitön eläintarha, jossa on yli 200 lajia niiden luonnollista elinympäristöä muistuttavissa tiloissa. Täydellinen perheille, ja lyhyen kävelymatkan päässä keskustasta. Varaa liput etukäteen verkosta välttääksesi jonot sesonkiaikana."
+          "Eläinpuisto, jossa on rakennettuja elinympäristöjä ja elämyksellinen reitti Fuengirolan keskustassa. Se on mukava perhekohde, ja aukioloajat, liput ja päiväohjelma kannattaa tarkistaa ennen lähtöä."
         ]
       },
       {
@@ -142,7 +142,7 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
         id: "bioparc-fuengirola",
         title: "Bioparc Fuengirola",
         paragraphs: [
-          "En modern djurpark utan burar, med över 200 arter återskapade i sin naturliga miljö. Perfekt för familjer, och bara en kort promenad från centrum. Boka biljetter online för att slippa köer under högsäsong."
+          "En djurpark med återskapade habitat och en upplevelsebaserad rutt i centrala Fuengirola. Det är en bekväm familjeaktivitet, och öppettider, biljetter och dagsprogram bör kontrolleras före besöket."
         ]
       },
       {
@@ -178,7 +178,7 @@ export const thingsToDoGuideContent: Record<Locale, ThingsToDoGuideContent> = {
         id: "bioparc-fuengirola",
         title: "Bioparc Fuengirola",
         paragraphs: [
-          "En moderne dyrepark uten bur, med over 200 arter gjenskapt i sitt naturlige habitat. Perfekt for familier, og bare en kort spasertur fra sentrum. Bestill billetter på nett for å unngå køer i høysesongen."
+          "En dyrepark med gjenskapte habitater og en opplevelsesbasert rute i Fuengirola sentrum. Det er en behagelig familieaktivitet, og åpningstider, billetter og dagsprogram bør sjekkes før besøket."
         ]
       },
       {

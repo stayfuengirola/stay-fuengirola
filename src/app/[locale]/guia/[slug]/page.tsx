@@ -11,8 +11,10 @@ import {
   CircleHelp,
   Clock,
   Dog,
+  ExternalLink,
   Euro,
   Footprints,
+  Leaf,
   Luggage,
   MapPin,
   MapPinned,
@@ -27,11 +29,14 @@ import {
   Utensils,
   Waves
 } from "lucide-react";
+import { AttractionOfficialLink } from "@/components/AttractionOfficialLink";
 import { BeachGuideMap } from "@/components/BeachGuideMap";
+import { BioparcGuideMap } from "@/components/BioparcGuideMap";
 import { EventsSection } from "@/components/EventsSection";
 import { GuideInternalLink } from "@/components/GuideInternalLink";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
+import { bioparcGuideContent, bioparcOfficialLinks } from "@/config/bioparcGuide";
 import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
 import { beachGuideContent } from "@/config/beachGuide";
@@ -56,6 +61,22 @@ type Props = { params: Promise<{ locale: string; slug: string }> };
 
 const optionIcons = [TrainFront, CarTaxiFront, Car, Luggage] as const;
 const relatedKeys = ["beaches", "supermarkets", "restaurants", "transport"] as const;
+const bioparcIconMap = {
+  map: MapPin,
+  family: Users,
+  clock: Clock,
+  accessibility: Accessibility,
+  ticket: Euro,
+  sun: Sun,
+  leaf: Leaf,
+  car: Car,
+  taxi: CarTaxiFront,
+  walk: Footprints,
+  utensils: Utensils,
+  parking: Car,
+  bag: ShoppingBag,
+  calendar: Clock
+} as const;
 const beachFeatureIcons = {
   families: Users,
   water: Waves,
@@ -84,11 +105,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isRestaurantGuide = category.key === "restaurants";
   const isShoppingGuide = category.key === "shopping";
   const isThingsToDoGuide = category.key === "thingsToDo";
+  const isBioparcGuide = category.key === "bioparc";
   const airportContent = airportGuideContent[locale];
   const beachContent = beachGuideContent[locale];
   const restaurantContent = restaurantGuideContent[locale];
   const shoppingContent = shoppingGuideContent[locale];
   const thingsToDoContent = thingsToDoGuideContent[locale];
+  const bioparcContent = bioparcGuideContent[locale];
   const title = isAirportGuide
     ? airportContent.metaTitle
     : isBeachGuide
@@ -99,7 +122,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ? shoppingContent.metaTitle
           : isThingsToDoGuide
             ? thingsToDoContent.metaTitle
-            : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
+            : isBioparcGuide
+              ? bioparcContent.metaTitle
+              : `${t.guide[category.key]} | ${t.guide.title} | Stay Fuengirola`;
   const description = isAirportGuide
     ? airportContent.metaDescription
     : isBeachGuide
@@ -110,7 +135,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
           ? shoppingContent.metaDescription
           : isThingsToDoGuide
             ? thingsToDoContent.metaDescription
-            : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
+            : isBioparcGuide
+              ? bioparcContent.metaDescription
+              : `${t.guide[`${category.key}Text`]} ${t.guide.comingSoon}.`;
   const url = `${siteUrl}${getGuideCategoryPath(locale, category.key)}`;
 
   return {
@@ -123,13 +150,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url,
       siteName: property.brandName,
       locale,
-      type: "article"
+      type: "article",
+      images: isBeachGuide
+        ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"]
+        : isBioparcGuide
+          ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
+          : undefined
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: isBeachGuide ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"] : undefined
+      images: isBeachGuide
+        ? ["/images/guide/playas/01-playa-fuengirola-sombrillas.webp"]
+        : isBioparcGuide
+          ? ["/images/guide/bioparc/bioparc-fuengirola-entrada.svg"]
+          : undefined
     }
   };
 }
@@ -166,6 +202,10 @@ export default async function GuideCategoryPage({ params }: Props) {
 
   if (category.key === "thingsToDo") {
     return <ThingsToDoGuidePage locale={locale} dictionary={t} />;
+  }
+
+  if (category.key === "bioparc") {
+    return <BioparcGuidePage locale={locale} dictionary={t} />;
   }
 
   return (
@@ -342,7 +382,24 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
           </header>
 
           {content.activities.map((activity) => (
-            <ArticleSection section={activity} key={activity.id} />
+            <section className="guide-content-section" id={activity.id} key={activity.id}>
+              <h2>{activity.title}</h2>
+              {activity.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              {activity.id === "bioparc-fuengirola" ? (
+                <GuideInternalLink
+                  className="text-link"
+                  destination="bioparc"
+                  href={getGuideCategoryPath(locale, "bioparc")}
+                  locale={locale}
+                  sourceGuide="things-to-do"
+                >
+                  <MapPinned aria-hidden="true" size={18} />
+                  {t.guide.readGuide}
+                </GuideInternalLink>
+              ) : null}
+            </section>
           ))}
 
           <section className="guide-content-section events-guide-section" id="eventos-conciertos">
@@ -357,6 +414,355 @@ function ThingsToDoGuidePage({ locale, dictionary: t }: { locale: Locale; dictio
             </div>
 
             <EventsSection content={eventsContent} events={fuengirolaEvents} locale={locale} permanentActivities={permanentActivities} />
+          </section>
+        </article>
+      </main>
+      <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />
+    </div>
+  );
+}
+
+function BioparcGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary: ReturnType<typeof getDictionary> }) {
+  const content = bioparcGuideContent[locale];
+  const articleUrl = `${siteUrl}${getGuideCategoryPath(locale, "bioparc")}`;
+  const guideUrl = `${siteUrl}${getGuidePath(locale)}`;
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Stay Fuengirola", item: `${siteUrl}/${locale}` },
+      { "@type": "ListItem", position: 2, name: content.breadcrumbGuide, item: guideUrl },
+      { "@type": "ListItem", position: 3, name: content.breadcrumbArticle, item: articleUrl }
+    ]
+  };
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: content.h1,
+    description: content.metaDescription,
+    mainEntityOfPage: articleUrl,
+    author: { "@type": "Organization", name: property.brandName },
+    publisher: { "@type": "Organization", name: property.brandName },
+    about: content.schemaAbout,
+    inLanguage: locale,
+    dateModified: "2026-07-23"
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
+  };
+
+  function officialLinksForSection(sectionId: string) {
+    if (sectionId === "horarios" || sectionId === "hours" || sectionId === "aukioloajat" || sectionId === "oppettider" || sectionId === "apningstider") {
+      return ["hours"] as const;
+    }
+    if (sectionId === "entradas" || sectionId === "tickets" || sectionId === "liput" || sectionId === "biljetter") {
+      return ["tickets"] as const;
+    }
+    if (sectionId === "actividades" || sectionId === "activities" || sectionId === "aktiviteetit" || sectionId === "aktiviteter") {
+      return ["agenda"] as const;
+    }
+    if (sectionId === "accesibilidad" || sectionId === "accessibility" || sectionId === "esteettomyys" || sectionId === "tillganglighet" || sectionId === "tilgjengelighet") {
+      return ["accessibility"] as const;
+    }
+    if (sectionId === "comer" || sectionId === "food" || sectionId === "ruoka" || sectionId === "mat") {
+      return ["rules"] as const;
+    }
+    if (sectionId === "aparcamiento" || sectionId === "parking" || sectionId === "pysakointi" || sectionId === "parkering") {
+      return ["parking"] as const;
+    }
+    return [] as const;
+  }
+
+  return (
+    <div className="shell">
+      <Header locale={locale} nav={t.nav} menuLabel={t.common.menu} />
+      <main className="section guide-page">
+        {[articleJsonLd, breadcrumbJsonLd, faqJsonLd].map((jsonLd, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        ))}
+        <article className="container guide-article bioparc-article">
+          <Link className="text-link" href={getGuidePath(locale)}>
+            <ArrowLeft aria-hidden="true" size={18} />
+            {t.guide.back}
+          </Link>
+
+          <header className="guide-hero-card bioparc-hero">
+            <div className="bioparc-hero-copy">
+              <span className="guide-hero-icon">
+                <Leaf aria-hidden="true" size={30} />
+              </span>
+              <p className="guide-kicker">{content.kicker}</p>
+              <h1>{content.h1}</h1>
+              <p>{content.intro}</p>
+            </div>
+            <div className="bioparc-hero-image">
+              <Image
+                src="/images/guide/bioparc/bioparc-fuengirola-entrada.svg"
+                alt={content.heroImageAlt}
+                width={1200}
+                height={760}
+                priority
+                sizes="(max-width: 960px) calc(100vw - 64px), 420px"
+              />
+            </div>
+          </header>
+
+          <section className="bioparc-quick-card" aria-labelledby="bioparc-quick-title">
+            <h2 id="bioparc-quick-title">{content.quickTitle}</h2>
+            <div className="bioparc-card-grid">
+              {content.quickItems.map((item) => {
+                const Icon = bioparcIconMap[item.icon];
+                return (
+                  <div className="bioparc-info-card" key={item.title}>
+                    <Icon aria-hidden="true" size={24} />
+                    <strong>{item.title}</strong>
+                    <span>{item.text}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {content.sections.slice(0, 1).map((section) => (
+            <section className="guide-content-section bioparc-split-section" id={section.id} key={section.id}>
+              <div>
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+              {section.image && section.imageAlt ? (
+                <div className="bioparc-section-image">
+                  <Image src={section.image} alt={section.imageAlt} width={1200} height={760} sizes="(max-width: 960px) calc(100vw - 32px), 380px" loading="lazy" />
+                </div>
+              ) : null}
+            </section>
+          ))}
+
+          <section className="guide-content-section" id="habitats">
+            <h2>{content.habitatsTitle}</h2>
+            <p>{content.habitatsIntro}</p>
+            <div className="bioparc-card-grid bioparc-habitat-grid">
+              {content.habitats.map((habitat) => (
+                <article className="bioparc-info-card" key={habitat.title}>
+                  <Leaf aria-hidden="true" size={24} />
+                  <strong>{habitat.title}</strong>
+                  <span>{habitat.text}</span>
+                  <small>{habitat.examples.join(" · ")}</small>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="animales">
+            <h2>{content.animalsTitle}</h2>
+            <p>{content.animalsNote}</p>
+            <div className="bioparc-card-grid">
+              {content.animals.map((animal) => (
+                <article className="bioparc-info-card" key={animal.title}>
+                  <Leaf aria-hidden="true" size={24} />
+                  <strong>{animal.title}</strong>
+                  <span>{animal.text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="como-llegar">
+            <h2>{content.arrivalTitle}</h2>
+            <p>{content.arrivalIntro}</p>
+            <div className="bioparc-card-grid bioparc-arrival-grid">
+              {content.arrivalOptions.map((option) => {
+                const Icon = bioparcIconMap[option.icon];
+                return (
+                  <article className="bioparc-info-card" key={option.title}>
+                    <Icon aria-hidden="true" size={24} />
+                    <strong>{option.title}</strong>
+                    <span>{option.text}</span>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="guide-content-section bioparc-map-section" aria-labelledby="bioparc-map-title">
+            <h2 id="bioparc-map-title">{content.mapTitle}</h2>
+            <BioparcGuideMap content={content} />
+          </section>
+
+          {content.sections.slice(1).map((section) => {
+            const links = officialLinksForSection(section.id);
+            return (
+              <section className="guide-content-section" id={section.id} key={section.id}>
+                <h2>{section.title}</h2>
+                {section.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+                {links.length > 0 ? (
+                  <div className="bioparc-link-row">
+                    {links.map((destination) => (
+                      <AttractionOfficialLink
+                        className="text-link"
+                        destination={destination}
+                        href={bioparcOfficialLinks[destination]}
+                        key={destination}
+                        locale={locale}
+                      >
+                        <ExternalLink aria-hidden="true" size={18} />
+                        {content.officialButtons[destination]}
+                      </AttractionOfficialLink>
+                    ))}
+                  </div>
+                ) : null}
+              </section>
+            );
+          })}
+
+          <section className="guide-content-section" id="mejor-momento">
+            <h2>{content.bestTimeTitle}</h2>
+            <ul className="guide-check-list">
+              {content.bestTimeTips.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+            <div className="guide-recommendation bioparc-tip-card">
+              <Star aria-hidden="true" size={28} />
+              <div>
+                <h2>{content.stayTipTitle}</h2>
+                <p>{content.stayTipText}</p>
+              </div>
+            </div>
+          </section>
+
+          <section className="guide-content-section bioparc-split-section" id="ninos">
+            <div>
+              <h2>{content.kidsTitle}</h2>
+              <p>{content.kidsText}</p>
+              <div className="bioparc-feature-note">
+                <Users aria-hidden="true" size={22} />
+                <strong>{content.kidsCard}</strong>
+              </div>
+            </div>
+            <div className="bioparc-section-image">
+              <Image src="/images/guide/bioparc/bioparc-fuengirola-familias.svg" alt={content.kidsTitle} width={1200} height={760} sizes="(max-width: 960px) calc(100vw - 32px), 380px" loading="lazy" />
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="que-llevar">
+            <h2>{content.whatToBringTitle}</h2>
+            <div className="bioparc-card-grid">
+              {content.whatToBring.map((item) => (
+                <div className="bioparc-mini-card" key={item}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="consejos">
+            <h2>{content.stayAdviceTitle}</h2>
+            <ul className="guide-check-list">
+              {content.stayAdvice.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="guide-content-section" id="plan-dia">
+            <h2>{content.dayPlanTitle}</h2>
+            <p>{content.dayPlanIntro}</p>
+            <div className="event-timeline bioparc-timeline">
+              {content.dayPlan.map((item) => (
+                <div className="event-timeline-item" key={`${item.time}-${item.text}`}>
+                  <strong>{item.time}</strong>
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="comparativa">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="beach-comparison bioparc-comparison" role="table">
+              {content.comparison.map((row) => (
+                <div className="beach-comparison-row" role="row" key={row.label}>
+                  <strong role="cell">{row.label}</strong>
+                  <span role="cell">{row.value}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
+            <div className="guide-faq-list">
+              {content.faqs.map((item) => (
+                <details className="guide-faq-item" key={item.question}>
+                  <summary>
+                    <CircleHelp aria-hidden="true" size={18} />
+                    {item.question}
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="informacion-oficial">
+            <h2>{content.officialInfoTitle}</h2>
+            <p>{content.editorialNote}</p>
+            <div className="bioparc-official-grid">
+              {(Object.keys(bioparcOfficialLinks) as Array<keyof typeof bioparcOfficialLinks>).map((destination) => (
+                <AttractionOfficialLink
+                  className="guide-related-card"
+                  destination={destination}
+                  href={bioparcOfficialLinks[destination]}
+                  key={destination}
+                  locale={locale}
+                >
+                  <ExternalLink aria-hidden="true" size={20} />
+                  <strong>{content.officialButtons[destination]}</strong>
+                </AttractionOfficialLink>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-related" aria-labelledby="bioparc-related-title">
+            <h2 id="bioparc-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid beach-related-grid">
+              {content.related.map((item) => (
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.key}
+                  href={getGuideCategoryPath(locale, item.key)}
+                  key={item.key}
+                  locale={locale}
+                  sourceGuide="bioparc"
+                >
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </GuideInternalLink>
+              ))}
+            </div>
           </section>
         </article>
       </main>

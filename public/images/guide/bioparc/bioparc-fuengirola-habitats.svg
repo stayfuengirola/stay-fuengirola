@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Habitats placeholder</title>
+  <desc id="desc">Editorial placeholder for recreated habitats at Bioparc Fuengirola.</desc>
+  <rect width="1200" height="760" fill="#fffaf0"/>
+  <rect x="70" y="70" width="1060" height="620" rx="18" fill="#eef7f4"/>
+  <path d="M225 614c44-190 141-333 292-430 89 130 135 274 139 430z" fill="#789b82" opacity=".36"/>
+  <path d="M548 614c52-220 178-360 380-420 58 132 84 272 79 420z" fill="#096b86" opacity=".2"/>
+  <path d="M70 597c156-44 298-66 426-66 198 0 366 58 634 16v143H70z" fill="#ffffff" opacity=".78"/>
+  <text x="600" y="634" text-anchor="middle" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#044e63">Hábitats recreados</text>
+</svg>

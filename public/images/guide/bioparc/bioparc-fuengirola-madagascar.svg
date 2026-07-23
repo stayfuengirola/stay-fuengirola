@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Madagascar placeholder</title>
+  <desc id="desc">Editorial placeholder inspired by lush botanical shapes.</desc>
+  <rect width="1200" height="760" fill="#fffaf0"/>
+  <rect x="70" y="70" width="1060" height="620" rx="18" fill="#f5ead7"/>
+  <path d="M315 640c-20-190 42-344 185-462 116 126 176 280 180 462z" fill="#096b86" opacity=".18"/>
+  <path d="M580 640c-11-171 53-305 192-401 93 110 142 243 145 401z" fill="#789b82" opacity=".42"/>
+  <circle cx="410" cy="316" r="44" fill="#ffffff" opacity=".78"/>
+  <circle cx="742" cy="352" r="58" fill="#ffffff" opacity=".7"/>
+  <text x="600" y="604" text-anchor="middle" font-family="Georgia, serif" font-size="54" font-weight="700" fill="#044e63">Madagascar</text>
+</svg>

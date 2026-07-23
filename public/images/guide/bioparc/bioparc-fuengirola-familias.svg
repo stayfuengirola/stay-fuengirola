@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Family visit placeholder</title>
+  <desc id="desc">Warm editorial placeholder for a family visit image.</desc>
+  <rect width="1200" height="760" fill="#fffaf0"/>
+  <rect x="70" y="70" width="1060" height="620" rx="18" fill="#f5ead7"/>
+  <circle cx="285" cy="308" r="76" fill="#789b82" opacity=".45"/>
+  <circle cx="465" cy="275" r="95" fill="#096b86" opacity=".18"/>
+  <circle cx="674" cy="312" r="72" fill="#789b82" opacity=".4"/>
+  <path d="M190 552c85-122 197-183 336-183 157 0 286 66 387 197H190z" fill="#ffffff" opacity=".82"/>
+  <text x="600" y="472" text-anchor="middle" font-family="Georgia, serif" font-size="54" font-weight="700" fill="#044e63">Plan familiar</text>
+  <text x="600" y="522" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#66757b">imagen pendiente</text>
+</svg>

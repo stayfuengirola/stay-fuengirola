@@ -57,6 +57,11 @@ export const guideCategories = [
     slugs: { es: "que-hacer", en: "things-to-do", fi: "mita-tehda", sv: "saker-att-gora", no: "ting-a-gjore" }
   },
   {
+    key: "bioparc",
+    status: "published",
+    slugs: { es: "bioparc-fuengirola", en: "bioparc-fuengirola", fi: "bioparc-fuengirola", sv: "bioparc-fuengirola", no: "bioparc-fuengirola" }
+  },
+  {
     key: "rain",
     status: "draft",
     slugs: {

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Bioparc Fuengirola entrance placeholder</title>
+  <desc id="desc">Warm editorial placeholder for a future authorized photograph of Bioparc Fuengirola.</desc>
+  <rect width="1200" height="760" fill="#fffaf0"/>
+  <rect x="70" y="70" width="1060" height="620" rx="18" fill="#eef7f4"/>
+  <path d="M70 530c150-58 292-86 426-84 170 3 312 55 460 55 70 0 128-11 174-30v219H70z" fill="#789b82" opacity=".35"/>
+  <path d="M240 505c32-128 116-228 254-300 70 86 107 186 112 300z" fill="#096b86" opacity=".18"/>
+  <path d="M656 510c38-154 138-254 300-300 52 98 76 197 72 300z" fill="#096b86" opacity=".2"/>
+  <rect x="346" y="302" width="508" height="154" rx="14" fill="#ffffff" opacity=".82"/>
+  <text x="600" y="374" text-anchor="middle" font-family="Georgia, serif" font-size="58" font-weight="700" fill="#044e63">Bioparc Fuengirola</text>
+  <text x="600" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#66757b">placeholder visual</text>
+</svg>
