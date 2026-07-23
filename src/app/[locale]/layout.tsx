@@ -25,7 +25,7 @@ export default async function LocaleLayout({
       <body>
         {children}
         <WhatsAppButton locale={locale} label={t.common.whatsapp} className="whatsapp-float" />
-        <FloatingBookingButton label={t.common.booking} />
+        <FloatingBookingButton label={t.common.booking} locale={locale} />
         <GoogleAnalytics />
       </body>
     </html>

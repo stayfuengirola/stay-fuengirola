@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cookieConsentStorageKey } from "@/config/analytics";
+import { cookieConsentStorageKey } from "@/lib/analytics";
 
 export function CookieConsent({ title, text, accept, reject }: { title: string; text: string; accept: string; reject: string }) {
   const [visible, setVisible] = useState(false);

@@ -38,6 +38,7 @@ import {
 } from "@/config/events";
 import { ThingsToDoEventsContent } from "@/config/thingsToDoEvents";
 import { Locale } from "@/i18n/locales";
+import { currentPagePath, languageParam, trackEvent } from "@/lib/analytics";
 
 type FilterKey = "all" | Extract<EventCategory, "concert" | "festival" | "fair" | "family" | "culture" | "sport">;
 
@@ -271,13 +272,38 @@ function EventCard({
         <p>{event.description[locale]}</p>
         <div className="event-actions">
           {event.officialUrl ? (
-            <a href={event.officialUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={event.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent("event_info_click", {
+                  event_slug: event.slug,
+                  event_category: event.category,
+                  venue: event.venue[locale],
+                  page_path: currentPagePath(),
+                  language: languageParam(locale)
+                })
+              }
+            >
               {content.officialInfoLabel}
               <ExternalLink aria-hidden="true" size={14} />
             </a>
           ) : null}
           {canShowTickets ? (
-            <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={event.ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent("ticket_click", {
+                  event_slug: event.slug,
+                  venue: event.venue[locale],
+                  page_path: currentPagePath(),
+                  language: languageParam(locale)
+                })
+              }
+            >
               <Ticket aria-hidden="true" size={16} />
               {content.ticketLabel}
               <ExternalLink aria-hidden="true" size={14} />

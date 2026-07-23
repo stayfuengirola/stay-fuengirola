@@ -1,7 +1,10 @@
+"use client";
+
 import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import { getWhatsappUrl } from "@/config/whatsapp";
 import { Locale } from "@/i18n/locales";
+import { currentPagePath, languageParam, trackEvent } from "@/lib/analytics";
 
 export function WhatsAppButton({
   locale,
@@ -21,6 +24,14 @@ export function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
+      onClick={() => {
+        if (!isFloating) return;
+        trackEvent("whatsapp_click", {
+          placement: "floating",
+          page_path: currentPagePath(),
+          language: languageParam(locale)
+        });
+      }}
     >
       {isFloating ? (
         <Image

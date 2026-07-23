@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { BeachGuideMap } from "@/components/BeachGuideMap";
 import { EventsSection } from "@/components/EventsSection";
+import { GuideInternalLink } from "@/components/GuideInternalLink";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
 import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
@@ -659,11 +660,18 @@ function BeachGuidePage({ locale, dictionary: t }: { locale: Locale; dictionary:
             <h2 id="beach-related-title">{content.relatedTitle}</h2>
             <div className="guide-related-grid beach-related-grid">
               {content.related.map((item) => (
-                <Link className="guide-related-card" href={relatedHref(item.hrefKey)} key={item.title}>
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.hrefKey}
+                  href={relatedHref(item.hrefKey)}
+                  key={item.title}
+                  locale={locale}
+                  sourceGuide="beaches"
+                >
                   <MapPinned aria-hidden="true" size={22} />
                   <strong>{item.title}</strong>
                   <span>{item.text}</span>
-                </Link>
+                </GuideInternalLink>
               ))}
             </div>
           </section>
@@ -827,11 +835,18 @@ function AirportGuidePage({ locale, dictionary: t }: { locale: Locale; dictionar
               {relatedKeys.map((key) => {
                 const related = content.related[key];
                 return (
-                  <Link className="guide-related-card" href={getGuideCategoryPath(locale, key)} key={key}>
+                  <GuideInternalLink
+                    className="guide-related-card"
+                    destination={key}
+                    href={getGuideCategoryPath(locale, key)}
+                    key={key}
+                    locale={locale}
+                    sourceGuide="airport"
+                  >
                     <MapPinned aria-hidden="true" size={22} />
                     <strong>{related.title}</strong>
                     <span>{related.text}</span>
-                  </Link>
+                  </GuideInternalLink>
                 );
               })}
             </div>

@@ -2,25 +2,30 @@
 
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-import { cookieConsentStorageKey, googleAnalyticsId } from "@/config/analytics";
+import { Suspense, useEffect, useRef, useState } from "react";
+import {
+  GA_MEASUREMENT_ID,
+  canUseAnalytics,
+  cookieConsentStorageKey,
+  isAnalyticsBuildEnabled,
+  syncAnalyticsOptOutFromUrl,
+  trackPageView
+} from "@/lib/analytics";
 
 function PageViewTracker({ ready }: { ready: boolean }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const lastPagePath = useRef<string>("");
 
   useEffect(() => {
-    if (!ready || !pathname || typeof window.gtag !== "function") return;
+    if (!ready || !pathname) return;
 
     const query = searchParams.toString();
     const pagePath = query ? `${pathname}?${query}` : pathname;
+    if (lastPagePath.current === pagePath) return;
 
-    window.gtag("event", "page_view", {
-      page_path: pagePath,
-      page_location: window.location.href,
-      page_title: document.title,
-      send_to: googleAnalyticsId
-    });
+    lastPagePath.current = pagePath;
+    trackPageView(pagePath);
   }, [pathname, ready, searchParams]);
 
   return null;
@@ -28,10 +33,18 @@ function PageViewTracker({ ready }: { ready: boolean }) {
 
 export function GoogleAnalytics() {
   const [ready, setReady] = useState(false);
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    syncAnalyticsOptOutFromUrl();
+    setEnabled(canUseAnalytics());
+  }, []);
+
+  if (!isAnalyticsBuildEnabled() || !enabled) return null;
 
   return (
     <>
-      <Script src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`} strategy="afterInteractive" />
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
       <Script id="google-analytics" strategy="afterInteractive" onReady={() => setReady(true)}>
         {`
           window.dataLayer = window.dataLayer || [];
@@ -41,7 +54,7 @@ export function GoogleAnalytics() {
             analytics_storage: storedConsent === 'accepted' ? 'granted' : 'denied'
           });
           gtag('js', new Date());
-          gtag('config', '${googleAnalyticsId}', { send_page_view: false });
+          gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
         `}
       </Script>
       <Suspense fallback={null}>

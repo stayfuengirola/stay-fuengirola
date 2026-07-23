@@ -54,10 +54,13 @@ El texto alternativo se toma de las traducciones cuando existe una coincidencia;
 Configura el dominio final antes de publicar:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://tu-dominio.com
+NEXT_PUBLIC_SITE_URL=https://stayfuengirola.com
+NEXT_PUBLIC_GA_ID=G-BGY4YR7ZKH
 ```
 
 La web incluye metadata por idioma, canonical, `hreflang`, Open Graph, `sitemap.xml`, `robots.txt` y JSON-LD sin precio, licencia, coordenadas ni direccion completa.
+
+La integracion de Google Analytics 4 esta documentada en `docs/analytics.md`. Solo se activa en produccion para `stayfuengirola.com` y `www.stayfuengirola.com`; no carga en local ni previews.
 
 ## Desplegar en Vercel
 
@@ -65,4 +68,5 @@ La web incluye metadata por idioma, canonical, `hreflang`, Open Graph, `sitemap.
 2. Framework preset: Next.js.
 3. Build command: `npm run build`.
 4. Output directory: deja el valor por defecto de Next.js.
-5. Anade `NEXT_PUBLIC_SITE_URL` con el dominio final cuando este disponible.
+5. Anade `NEXT_PUBLIC_SITE_URL` con el dominio final.
+6. Anade `NEXT_PUBLIC_GA_ID` con el ID de medicion de GA4.

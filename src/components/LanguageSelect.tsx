@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { getGuideCategoryByAnySlug, getGuideCategoryBySlug, getGuideCategoryPath, getGuidePath, isGuideBaseSegment } from "@/config/guides";
 import { Locale, localeLabels, locales } from "@/i18n/locales";
+import { currentPagePath, trackEvent } from "@/lib/analytics";
 
 export function LanguageSelect({ locale }: { locale: Locale }) {
   const router = useRouter();
@@ -11,6 +12,17 @@ export function LanguageSelect({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
 
   function changeLocale(nextLocale: Locale) {
+    if (nextLocale === locale) {
+      setOpen(false);
+      return;
+    }
+
+    trackEvent("language_change", {
+      from_language: locale,
+      to_language: nextLocale,
+      page_path: currentPagePath()
+    });
+
     const parts = pathname.split("/");
     const currentLocale = parts[1] as Locale;
     const guideSegment = parts[2];
