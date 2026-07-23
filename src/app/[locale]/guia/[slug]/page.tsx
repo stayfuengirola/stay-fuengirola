@@ -36,6 +36,8 @@ import { EventsSection } from "@/components/EventsSection";
 import { GuideInternalLink } from "@/components/GuideInternalLink";
 import { Header } from "@/components/Header";
 import { CookieConsent } from "@/components/CookieConsent";
+import { ShoppingGuideMap } from "@/components/ShoppingGuideMap";
+import { ShoppingStoreDirectory } from "@/components/ShoppingStoreDirectory";
 import { bioparcGuideContent, bioparcOfficialLinks } from "@/config/bioparcGuide";
 import { fuengirolaEvents, getPublishedEvents, permanentActivities } from "@/config/events";
 import { airportGuideContent } from "@/config/guideArticles";
@@ -52,6 +54,7 @@ import {
   guideCategories
 } from "@/config/guides";
 import { property } from "@/config/property";
+import { miramarStoresDirectoryUrl, shoppingStores } from "@/data/shoppingStores";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, Locale, locales } from "@/i18n/locales";
 import { siteUrl } from "@/lib/urls";
@@ -253,7 +256,16 @@ function ShoppingGuidePage({ locale, dictionary: t }: { locale: Locale; dictiona
     publisher: { "@type": "Organization", name: property.brandName },
     about: content.schemaAbout,
     inLanguage: locale,
-    dateModified: "2026-07-17"
+    dateModified: "2026-07-23"
+  };
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer }
+    }))
   };
 
   return (
@@ -270,6 +282,11 @@ function ShoppingGuidePage({ locale, dictionary: t }: { locale: Locale; dictiona
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
         <article className="container guide-article">
           <Link className="text-link" href={getGuidePath(locale)}>
             <ArrowLeft aria-hidden="true" size={18} />
@@ -283,11 +300,228 @@ function ShoppingGuidePage({ locale, dictionary: t }: { locale: Locale; dictiona
             <p className="guide-kicker">{content.kicker}</p>
             <h1>{content.h1}</h1>
             <p>{content.intro}</p>
+            <nav className="shopping-anchor-nav" aria-label={content.quickTitle}>
+              {content.quickNav.map((item) => (
+                <a href={item.href} key={item.href}>{item.label}</a>
+              ))}
+            </nav>
           </header>
 
-          {content.sections.map((section) => (
-            <ArticleSection section={section} key={section.id} />
-          ))}
+          <section className="shopping-quick-card" aria-labelledby="shopping-quick-title">
+            <h2 id="shopping-quick-title">{content.quickTitle}</h2>
+            <div className="shopping-quick-grid">
+              {content.quickLinks.map((item) => (
+                <a className="shopping-quick-item" href={item.target} key={item.title}>
+                  <ShoppingBag aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="miramar">
+            <h2>{content.miramarTitle}</h2>
+            {content.miramarIntro.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <div className="shopping-ideal-card">
+              <h3>{content.idealTitle}</h3>
+              <ul className="guide-check-list">
+                {content.idealItems.map((item) => (
+                  <li key={item}>
+                    <CheckCircle2 aria-hidden="true" size={18} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="directorio">
+            <h2>{content.directoryTitle}</h2>
+            <p>{content.directoryIntro}</p>
+            <ShoppingStoreDirectory content={content} locale={locale} stores={shoppingStores} />
+            <a className="text-link" href={miramarStoresDirectoryUrl} target="_blank" rel="noopener noreferrer">
+              <ExternalLink aria-hidden="true" size={18} />
+              {content.labels.showDirectory}
+            </a>
+          </section>
+
+          {content.categorySections.map((section) => {
+            const sectionStores = shoppingStores.filter((store) => store.active && section.categories.includes(store.category));
+            return (
+              <section className="guide-content-section" id={section.id} key={section.id}>
+                <h2>{section.title}</h2>
+                <p>{section.intro}</p>
+                {section.note ? <p className="map-note">{section.note}</p> : null}
+                <div className="shopping-store-grid shopping-section-grid">
+                  {sectionStores.map((store) => (
+                    <article className="shopping-store-card" key={store.id}>
+                      <div className="shopping-store-head">
+                        <span>{content.categoryLabels[store.category]}</span>
+                        <span>{content.areaLabels[store.area]}</span>
+                      </div>
+                      <h3>{store.name}</h3>
+                      <p>{content.storeDescriptions[store.descriptionKey]}</p>
+                    </article>
+                  ))}
+                </div>
+                {section.id === "deporte" ? (
+                  <div className="shopping-ideal-card">
+                    <h3>{content.beachForgotTitle}</h3>
+                    <div className="shopping-mini-grid">
+                      {content.beachForgotItems.map((item) => (
+                        <span key={item}>{item}</span>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+            );
+          })}
+
+          <section className="guide-content-section" id="parque-comercial">
+            <h2>{content.retailTitle}</h2>
+            <p>{content.retailText}</p>
+            <div className="shopping-comparison-cards">
+              {content.retailComparison.map((item) => (
+                <article className="bioparc-info-card" key={item.title}>
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="centro-historico">
+            <h2>{content.historicTitle}</h2>
+            {content.historicParagraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <div className="shopping-ideal-card">
+              <h3>{content.historicIdeasTitle}</h3>
+              <div className="shopping-mini-grid">
+                {content.historicIdeas.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="mercadillos">
+            <h2>{content.marketsTitle}</h2>
+            <p>{content.marketsIntro}</p>
+            <div className="shopping-store-grid">
+              {content.markets.map((market) => (
+                <article className="shopping-store-card" key={market.title}>
+                  <div className="shopping-store-head">
+                    <span>{market.when}</span>
+                  </div>
+                  <h3>{market.title}</h3>
+                  <p>{market.text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="mercados-municipales">
+            <h2>{content.municipalMarketsTitle}</h2>
+            <p>{content.municipalMarketsText}</p>
+          </section>
+
+          <section className="guide-content-section" id="comparativa">
+            <h2>{content.comparisonTitle}</h2>
+            <div className="shopping-table" role="table">
+              {content.comparison.map((row) => (
+                <div className="shopping-table-row" role="row" key={row.zone}>
+                  <strong role="cell">{row.zone}</strong>
+                  <span role="cell">{row.bestFor}</span>
+                  <span role="cell">{row.fromApartment}</span>
+                  <span role="cell">{row.type}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="viajeros">
+            <h2>{content.travellerTitle}</h2>
+            <div className="shopping-store-grid">
+              {content.travellers.map((item) => (
+                <article className="bioparc-info-card" key={item.title}>
+                  <Users aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="consejos">
+            <h2>{content.tipsTitle}</h2>
+            <ul className="guide-check-list">
+              {content.tips.map((tip) => (
+                <li key={tip}>
+                  <CheckCircle2 aria-hidden="true" size={18} />
+                  {tip}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="guide-content-section shopping-map-section" aria-labelledby="shopping-map-title">
+            <h2 id="shopping-map-title">{content.mapTitle}</h2>
+            <ShoppingGuideMap content={content} />
+          </section>
+
+          <section className="guide-content-section" id="faq">
+            <h2>{content.faqTitle}</h2>
+            <div className="guide-faq-list">
+              {content.faqs.map((item) => (
+                <details className="guide-faq-item" key={item.question}>
+                  <summary>
+                    <CircleHelp aria-hidden="true" size={18} />
+                    {item.question}
+                  </summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-content-section" id="informacion-oficial">
+            <h2>{content.officialTitle}</h2>
+            <p>{content.editorialNote}</p>
+            <div className="bioparc-official-grid">
+              {content.officialLinks.map((item) => (
+                <a className="guide-related-card" href={item.href} target="_blank" rel="noopener noreferrer" key={item.href}>
+                  <ExternalLink aria-hidden="true" size={20} />
+                  <strong>{item.title}</strong>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <section className="guide-related" aria-labelledby="shopping-related-title">
+            <h2 id="shopping-related-title">{content.relatedTitle}</h2>
+            <div className="guide-related-grid">
+              {content.related.map((item) => (
+                <GuideInternalLink
+                  className="guide-related-card"
+                  destination={item.key}
+                  href={getGuideCategoryPath(locale, item.key)}
+                  key={item.key}
+                  locale={locale}
+                  sourceGuide="shopping"
+                >
+                  <MapPinned aria-hidden="true" size={22} />
+                  <strong>{item.title}</strong>
+                  <span>{item.text}</span>
+                </GuideInternalLink>
+              ))}
+            </div>
+          </section>
         </article>
       </main>
       <CookieConsent title={t.cookies.title} text={t.cookies.text} accept={t.cookies.accept} reject={t.cookies.reject} />

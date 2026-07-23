@@ -13,7 +13,8 @@ export type AnalyticsEventName =
   | "event_info_click"
   | "ticket_click"
   | "guide_internal_click"
-  | "attraction_official_click";
+  | "attraction_official_click"
+  | "shopping_store_click";
 
 export function isAnalyticsBuildEnabled() {
   const vercelEnv = process.env.NEXT_PUBLIC_VERCEL_ENV ?? process.env.VERCEL_ENV;
